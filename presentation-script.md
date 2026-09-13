@@ -198,3 +198,42 @@ straight into conditionals and functions.
 | 13 | Shortcuts | 5. Arithmetic operations |
 | 14 | Three progressive exercises | 6. Exercises |
 | 15 | Wrap-up & next steps | — |
+
+---
+
+## Accessibility notes (WCAG 2.x, Level AA)
+
+The deck was reviewed and updated against WCAG's four principles —
+perceivable, operable, understandable, robust. Worth knowing as a
+facilitator:
+
+- **Screen readers announce slide changes automatically** (an
+  `aria-live` region reports "Slide 6 of 16: Environment setup" on every
+  Prev/Next/menu jump) without moving keyboard focus off the nav buttons —
+  so keep using Prev/Next/arrow keys normally even if a participant is
+  using a screen reader.
+- **All text meets 4.5:1 contrast** against its background (verified
+  numerically, not just eyeballed), including hint text, code comments,
+  and placeholder copy that was previously too faint.
+- **Every interactive control is at least 44×44px** (menu button, Run/Reset,
+  Prev/Next, disclosure toggles, slide-index items) for participants using
+  a switch, head pointer, or who have tremor/motor conditions.
+- **The slide-index drawer is a real modal dialog**: opening it traps
+  keyboard focus inside, Escape or the ✕ button closes it and returns
+  focus to the button that opened it, and its contents are `inert`
+  (fully unreachable) while closed.
+- **Notes are never color-only**: each of the four callout types (real-world,
+  pairing, challenge, feedback) is also identified by a distinct icon shape
+  and a text heading, and the "current slide" marker in the index uses bold
+  text + a left bar in addition to color.
+- **A "Skip to slide content" link** appears for keyboard users on first
+  Tab press, letting them bypass the top toolbar.
+- Decorative icons (arrows, dots, note glyphs) are hidden from assistive
+  tech (`aria-hidden`); the code-runner output panels announce results
+  live so screen-reader users hear what the code printed without needing
+  to hunt for it.
+
+If you're presenting to a group that includes assistive-technology users,
+it's worth a 30-second mention at the top: "this deck works with a
+keyboard alone — arrow keys move between slides, Tab moves between
+controls on the current slide."

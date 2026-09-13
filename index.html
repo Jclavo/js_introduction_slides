@@ -10,11 +10,14 @@
 </head>
 <body>
 
+<a class="skip-link" href="#deck-stage">Skip to slide content</a>
+
 <!-- Reusable inline icons -->
-<svg width="0" height="0" style="position:absolute">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
     <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 4.9 4.9 6.4 10.6 12l-5.7 5.6 1.5 1.5L12 13.4l5.6 5.7 1.5-1.5-5.7-5.6 5.7-5.6-1.5-1.5L12 10.6z"/></symbol>
     <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
     <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
     <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
@@ -24,23 +27,28 @@
   </defs>
 </svg>
 
+<!-- Announces slide changes to screen reader / AT users without moving keyboard focus -->
+<div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
 <div id="deck-app">
 
   <!-- Top bar -->
   <div class="deck-topbar">
     <div class="brand">
-      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)"><use href="#icon-braces"/></svg>
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
       <span class="brand-text">JavaScript Workshop</span>
     </div>
-    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="slide-counter" id="slide-counter">01 / 16</div>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open slide index">
-      <svg viewBox="0 0 24 24"><use href="#icon-menu"/></svg>
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Slide progress" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1" aria-valuetext="Slide 1 of 16">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 16</div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open slide index" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
     </button>
   </div>
 
   <!-- Stage -->
-  <div class="deck-stage">
+  <div class="deck-stage" id="deck-stage" tabindex="-1">
 
     <!-- 1. Cover -->
     <section class="slide active" data-title="Introduction to JavaScript">
@@ -63,7 +71,7 @@
         <h1 style="font-size:clamp(2.4rem,6vw,4rem); margin-bottom:14px;">JavaScript, from a blank tab to your first program</h1>
         <p class="slide-sub" style="max-width:56ch;">A one-day workshop covering what JavaScript is, how to set up your environment, first steps, core syntax, arithmetic, and a set of hands-on exercises. Every code example on these slides runs live &mdash; press "Run" and watch the output panel.</p>
         <div class="note note--realworld" style="max-width:640px;">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)"><use href="#icon-globe"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
           <div><h4>Before we start</h4><p>No prior programming experience is assumed. If you've written any code before, great &mdash; you'll move a little faster through the early slides.</p></div>
         </div>
       </div>
@@ -108,19 +116,19 @@
       <p class="slide-sub">These callouts show up on slides whenever they're relevant &mdash; look out for the colored icon on the left edge of the box.</p>
       <div class="slide-body" style="grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);">
         <div class="note note--realworld">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)"><use href="#icon-globe"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
           <div><h4>Real-world scenario</h4><p>A concrete example of where the concept shows up in actual production code, not just theory.</p></div>
         </div>
         <div class="note note--pairing">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)"><use href="#icon-pair"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
           <div><h4>Pair programming</h4><p>An activity to do with the person next to you &mdash; one types, one reads the instructions, then swap.</p></div>
         </div>
         <div class="note note--challenge">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)"><use href="#icon-flag"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
           <div><h4>Progressive challenge</h4><p>An optional harder variant of the exercise, for anyone who finishes early.</p></div>
         </div>
         <div class="note note--feedback">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#icon-chat"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
           <div><h4>Feedback check-in</h4><p>A moment to rate your confidence 1&ndash;5 so the pace can adjust before moving on.</p></div>
         </div>
       </div>
@@ -178,7 +186,7 @@
         </div>
       </div>
       <div class="note note--realworld">
-        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)"><use href="#icon-globe"/></svg>
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
         <div><h4>Real-world scenario</h4><p>A checkout page that greys out the "Pay" button until every field is filled in is browser JavaScript. The service that actually charges the card afterward is very likely Node.js, or another server-side language.</p></div>
       </div>
     </section>
@@ -228,10 +236,10 @@ console.log("Hello from " + "your name here" + "!");</textarea>
             <button class="reset-btn">Reset</button>
             <span class="run-hint">Ctrl / Cmd + Enter also runs it</span>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="note note--pairing">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)"><use href="#icon-pair"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
           <div><h4>Pair programming</h4><p>Turn to your neighbor. One of you edits the text in the box above, the other reads out loud what they predict the output will be &mdash; then press Run to check. Swap roles and try again with your own console.log message.</p></div>
         </div>
       </div>
@@ -254,7 +262,7 @@ console.log("The answer is", 42);</textarea>
             <button class="run-btn">Run ▸</button>
             <button class="reset-btn">Reset</button>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="card">
           <h2>Three ways to run this same code</h2>
@@ -330,7 +338,7 @@ console.log(workshopName, attendeeCount, typeof aString, typeof aNumber);</texta
             <button class="run-btn">Run ▸</button>
             <button class="reset-btn">Reset</button>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="card">
           <h2>var vs let vs const</h2>
@@ -379,7 +387,7 @@ console.log(typeof canEnter);   // "boolean"</textarea>
             <button class="run-btn">Run ▸</button>
             <button class="reset-btn">Reset</button>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
     </section>
@@ -421,7 +429,7 @@ console.log(10 + 4 + "");  // "14", now stringified</textarea>
             <button class="run-btn">Run ▸</button>
             <button class="reset-btn">Reset</button>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
     </section>
@@ -454,10 +462,10 @@ console.log(itemsInCart); // 3</textarea>
             <button class="run-btn">Run ▸</button>
             <button class="reset-btn">Reset</button>
           </div>
-          <div class="output-panel"></div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="note note--realworld">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)"><use href="#icon-globe"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
           <div><h4>Real-world scenario</h4><p>A shopping cart total, a game score, or a page-view counter are almost always updated with <code>+=</code> or <code>++</code> rather than being fully recalculated each time.</p></div>
         </div>
       </div>
@@ -478,7 +486,7 @@ console.log(itemsInCart); // 3</textarea>
             <textarea class="code-input" spellcheck="false" rows="4">// TODO: declare firstName, age, and hasUsedJS below
 // then log all three in one console.log call</textarea>
             <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel"></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
           </div>
           <details class="disclosure">
             <summary>Hint</summary>
@@ -501,7 +509,7 @@ console.log(itemsInCart); // 3</textarea>
 // TODO: divide the new total by 3 people
 // TODO: console.log the amount owed per person</textarea>
             <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel"></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
           </div>
           <details class="disclosure">
             <summary>Hint</summary>
@@ -523,7 +531,7 @@ console.log(itemsInCart); // 3</textarea>
 // TODO: log whether "number" is even, using % and ===
 </textarea>
             <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel"></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
           </div>
           <details class="disclosure">
             <summary>Hint</summary>
@@ -536,7 +544,7 @@ console.log(itemsInCart); // 3</textarea>
         </div>
 
         <div class="note note--challenge">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)"><use href="#icon-flag"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
           <div><h4>Progressive challenge</h4><p>Finished early? In Exercise 2, add a variable for a discount percentage and apply it before the service charge. In Exercise 3, do the same check for divisibility by 3 instead of 2.</p></div>
         </div>
       </div>
@@ -566,7 +574,7 @@ console.log(itemsInCart); // 3</textarea>
           </ul>
         </div>
         <div class="note note--feedback" style="align-self:start;">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)"><use href="#icon-chat"/></svg>
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
           <div><h4>Feedback check-in</h4><p>On a scale of 1&ndash;5, how confident do you feel writing a short script with variables and arithmetic on your own? Share your number out loud or in chat &mdash; this shapes the pace of the next session.</p></div>
         </div>
       </div>
@@ -576,17 +584,22 @@ console.log(itemsInCart); // 3</textarea>
 
   <!-- Bottom bar -->
   <div class="deck-bottombar">
-    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24"><use href="#icon-arrow-left"/></svg>Prev</button>
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Prev</button>
     <span class="nav-center">Arrow keys or Page Up/Down also navigate</span>
-    <button class="nav-btn" id="next-btn">Next<svg viewBox="0 0 24 24"><use href="#icon-arrow-right"/></svg></button>
+    <button class="nav-btn" id="next-btn">Next<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
   </div>
 </div>
 
 <!-- Slide index drawer -->
-<div class="menu-scrim" id="menu-scrim"></div>
-<div class="menu-drawer" id="menu-drawer">
-  <h2>All slides</h2>
-  <div id="menu-list"></div>
+<div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+<div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
+  <div class="menu-drawer-head">
+    <h2 id="menu-drawer-title">All slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Close slide index">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+  <ul id="menu-list" class="menu-list"></ul>
 </div>
 
 <script src="script.js"></script>
