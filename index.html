@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>JavaScript Workshop — Slide Deck</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- Reusable inline icons -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <symbol id="icon-cup" viewBox="0 0 24 24"><path fill="currentColor" d="M4 3h13v2H4V3zm0 4h11a4 4 0 0 1 4 4v1a4 4 0 0 1-4 4h-1.2A6 6 0 0 1 8 20H7a6 6 0 0 1-6-6V7h3zm2 2H4v5a4 4 0 0 0 4 4h1a4 4 0 0 0 4-4v-5H6zm11 2v3a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
+    <symbol id="icon-pair" viewBox="0 0 24 24"><path fill="currentColor" d="M8 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM8 13.5c-2.7 0-6 1.3-6 3.8V19h9v-1.7c0-1 .4-1.9 1.1-2.7-.9-.7-2.3-1.1-4.1-1.1zm8 0c-.5 0-1 0-1.5.1 1 .8 1.5 1.9 1.5 3.1V19h6v-1.7c0-2.5-3.3-3.8-6-3.8z"/></symbol>
+    <symbol id="icon-flag" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2v20H4V2h2zm2 1h11l-2.5 4L19 11H8V3z"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H8l-4 4V4zm3 3v2h10V7H7zm0 4v2h7v-2H7z"/></symbol>
+  </defs>
+</svg>
+
+<div id="deck-app">
+
+  <!-- Top bar -->
+  <div class="deck-topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--gold-crema)"><use href="#icon-cup"/></svg>
+      <span class="brand-text">JavaScript Workshop</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="slide-counter" id="slide-counter">01 / 15</div>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Open slide index">
+      <svg viewBox="0 0 24 24"><use href="#icon-menu"/></svg>
+    </button>
+  </div>
+
+  <!-- Stage -->
+  <div class="deck-stage">
+
+    <!-- 1. Title -->
+    <section class="slide active" data-title="Welcome">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:left; max-width:900px; margin:auto;">
+        <p class="slide-label">A hands-on introduction</p>
+        <h1 style="font-size:clamp(2.4rem,6vw,4rem); margin-bottom:14px;">JavaScript, from a blank tab to your first program</h1>
+        <p class="slide-sub" style="max-width:56ch;">A one-day workshop covering what JavaScript is, how to set up your environment, first steps, core syntax, arithmetic, and a set of hands-on exercises. Every code example on these slides runs live &mdash; press "Run" and watch the output panel.</p>
+        <div class="note note--realworld" style="max-width:640px;">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--matcha)"><use href="#icon-globe"/></svg>
+          <div><h4>Before we start</h4><p>No prior programming experience is assumed. If you've written any code before, great &mdash; you'll move a little faster through the early slides.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Agenda & outcomes -->
+    <section class="slide" data-title="Agenda &amp; outcomes">
+      <p class="slide-label">Outline</p>
+      <h1>What we'll cover today</h1>
+      <p class="slide-sub">Six blocks, each building on the last. By the end you'll be able to read basic JavaScript, write small scripts, and know where to keep learning.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Agenda</h2>
+          <ol>
+            <li>What is JavaScript? &mdash; origins and where it runs</li>
+            <li>Environment setup &mdash; browser, editor, and (optionally) Node.js</li>
+            <li>First steps &mdash; Hello World, linking scripts to a page</li>
+            <li>Basic syntax &mdash; variables, data types, operators</li>
+            <li>Arithmetic operations &mdash; math in JavaScript</li>
+            <li>Exercises &mdash; three progressive challenges</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h2>Learning outcomes</h2>
+          <p>By the end of this workshop, you'll be able to:</p>
+          <ul>
+            <li>Explain what JavaScript is and where it runs</li>
+            <li>Set up a working local environment</li>
+            <li>Write and run a JavaScript file linked to an HTML page</li>
+            <li>Declare variables and use JavaScript's core data types</li>
+            <li>Perform arithmetic and understand operator precedence</li>
+            <li>Debug a small script using the browser console</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. How we'll work -->
+    <section class="slide" data-title="How we'll work">
+      <p class="slide-label">Workshop format</p>
+      <h1>Four things you'll see throughout the day</h1>
+      <p class="slide-sub">These callouts show up on slides whenever they're relevant &mdash; look out for the colored icon on the left edge of the box.</p>
+      <div class="slide-body" style="grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);">
+        <div class="note note--realworld">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--matcha)"><use href="#icon-globe"/></svg>
+          <div><h4>Real-world scenario</h4><p>A concrete example of where the concept shows up in actual production code, not just theory.</p></div>
+        </div>
+        <div class="note note--pairing">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--gold-crema)"><use href="#icon-pair"/></svg>
+          <div><h4>Pair programming</h4><p>An activity to do with the person next to you &mdash; one types, one reads the instructions, then swap.</p></div>
+        </div>
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--brick-dim)"><use href="#icon-flag"/></svg>
+          <div><h4>Progressive challenge</h4><p>An optional harder variant of the exercise, for anyone who finishes early.</p></div>
+        </div>
+        <div class="note note--feedback">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:#6e6a86"><use href="#icon-chat"/></svg>
+          <div><h4>Feedback check-in</h4><p>A moment to rate your confidence 1&ndash;5 so the pace can adjust before moving on.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. What is JavaScript -->
+    <section class="slide" data-title="What is JavaScript?">
+      <p class="slide-label">Block 1 &middot; What is JavaScript?</p>
+      <h1>A language built in ten days</h1>
+      <p class="slide-sub">JavaScript began life in 1995 at Netscape, written by Brendan Eich in about ten days. It went through a few names before the one that stuck.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>A short history</h2>
+          <ul>
+            <li>First prototype was code-named <strong>Mocha</strong>, then briefly renamed <strong>LiveScript</strong></li>
+            <li>Renamed <strong>JavaScript</strong> for marketing reasons, to ride the popularity of Java &mdash; the two languages are otherwise unrelated</li>
+            <li>Standardized in 1997 as <strong>ECMAScript</strong>, so "JavaScript" and "ECMAScript" mostly mean the same thing today</li>
+            <li>Now one of the most widely used programming languages, running in nearly every web browser</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>What is it used for?</h2>
+          <ul>
+            <li>Making web pages interactive &mdash; form validation, animations, dynamic content</li>
+            <li>Building full front-end applications (the logic behind buttons, menus, live updates)</li>
+            <li>Server-side programming, via Node.js</li>
+            <li>Mobile apps, desktop apps, and even small embedded devices</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Where does it run -->
+    <section class="slide" data-title="Where JavaScript runs">
+      <p class="slide-label">Block 1 &middot; What is JavaScript?</p>
+      <h1>Two places you'll run it today</h1>
+      <p class="slide-sub">JavaScript needs an "engine" to execute it. Today we'll use two: your browser, and (optionally) Node.js on your machine.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>In the browser</h2>
+          <p>Every browser (Chrome, Firefox, Safari, Edge) has a built-in JavaScript engine. Code can live in:</p>
+          <ul>
+            <li>A <code>&lt;script&gt;</code> tag inside an HTML page</li>
+            <li>An external <code>.js</code> file linked from HTML</li>
+            <li>The browser's developer console, for quick experiments</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>On the server, with Node.js</h2>
+          <p>Node.js takes the same JavaScript engine that powers Chrome and lets it run outside the browser &mdash; on a server, or directly from your terminal.</p>
+          <ul>
+            <li>Used for back-end APIs, build tools, and command-line scripts</li>
+            <li>Not required for this workshop, but worth installing if you want to keep going afterward</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note note--realworld">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--matcha)"><use href="#icon-globe"/></svg>
+        <div><h4>Real-world scenario</h4><p>A checkout page that greys out the "Pay" button until every field is filled in is browser JavaScript. The service that actually charges the card afterward is very likely Node.js, or another server-side language.</p></div>
+      </div>
+    </section>
+
+    <!-- 6. Environment setup -->
+    <section class="slide" data-title="Environment setup">
+      <p class="slide-label">Block 2 &middot; Environment setup</p>
+      <h1>What you need on your machine</h1>
+      <p class="slide-sub">Three things, and you already have at least one of them.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>1. A browser</h2>
+          <p>Any modern browser works. We'll use its built-in developer tools constantly, so know the shortcut:</p>
+          <ul>
+            <li>Windows/Linux: <code>F12</code> or <code>Ctrl+Shift+I</code></li>
+            <li>macOS: <code>Cmd+Option+I</code></li>
+            <li>Open the <strong>Console</strong> tab &mdash; that's where output and errors show up</li>
+          </ul>
+          <h2 style="margin-top:16px;">2. A code editor</h2>
+          <p>We recommend <strong>Visual Studio Code</strong> (free) for its built-in terminal and JavaScript support, but any text editor works.</p>
+        </div>
+        <div class="card">
+          <h2>3. Node.js (optional today)</h2>
+          <p>Only needed if you want to run JavaScript outside the browser. To check whether it's already installed, open a terminal and run:</p>
+          <div class="code-panel">
+            <div class="code-panel-head"><span class="code-panel-title">terminal</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <pre class="code-block"><span class="tok-fn">node</span> --version
+<span class="tok-fn">npm</span> --version</pre>
+          </div>
+          <p style="margin-top:12px;">If you see version numbers, you're set. If you see "command not found", download the LTS installer from <strong>nodejs.org</strong> and re-open your terminal.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Environment setup - verify -->
+    <section class="slide" data-title="Setup: verify &amp; try it">
+      <p class="slide-label">Block 2 &middot; Environment setup</p>
+      <h1>Let's prove the console works</h1>
+      <p class="slide-sub">Open your browser's developer console (see previous slide) and type the line below &mdash; or just press Run here, since this whole deck is a live JavaScript sandbox too.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">setup-check.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="4">// Type your name between the quotes, then press Run
+console.log("Hello from " + "your name here" + "!");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+            <span class="run-hint">Ctrl / Cmd + Enter also runs it</span>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+        <div class="note note--pairing">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--gold-crema)"><use href="#icon-pair"/></svg>
+          <div><h4>Pair programming</h4><p>Turn to your neighbor. One of you edits the text in the box above, the other reads out loud what they predict the output will be &mdash; then press Run to check. Swap roles and try again with your own console.log message.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. First steps -->
+    <section class="slide" data-title="First steps: Hello World">
+      <p class="slide-label">Block 3 &middot; First steps</p>
+      <h1>Your first line of JavaScript</h1>
+      <p class="slide-sub"><code>console.log()</code> prints a value to the console. It's the single most-used debugging tool in JavaScript.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">hello.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="5">// console.log prints whatever you pass it
+console.log("Hello, world!");
+
+// You can log more than one value at a time
+console.log("The answer is", 42);</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+        <div class="card">
+          <h2>Three ways to run this same code</h2>
+          <ol>
+            <li><strong>Console:</strong> paste it directly into your browser's dev tools console</li>
+            <li><strong>Inline script:</strong> place it inside a <code>&lt;script&gt;</code> tag in an HTML file</li>
+            <li><strong>External file:</strong> save it as <code>hello.js</code> and link it from HTML (next slide)</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. First steps - linking script + comments -->
+    <section class="slide" data-title="First steps: linking a script">
+      <p class="slide-label">Block 3 &middot; First steps</p>
+      <h1>Connecting a .js file to a web page</h1>
+      <p class="slide-sub">In real projects, JavaScript almost always lives in its own file, linked from HTML with a <code>&lt;script&gt;</code> tag.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel">
+          <div class="code-panel-head"><span class="code-panel-title">index.html</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <pre class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello!&lt;/h1&gt;
+
+    <span class="tok-com">&lt;!-- placed just before &lt;/body&gt; so the --&gt;
+    &lt;!-- page content loads before the script runs --&gt;</span>
+    &lt;script src="<span class="tok-str">script.js</span>"&gt;&lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+        </div>
+        <div class="card">
+          <h2>Comments &amp; a few ground rules</h2>
+          <ul>
+            <li><code>// single-line comment</code> &mdash; ignored by JavaScript</li>
+            <li><code>/* multi-line comment */</code> &mdash; spans several lines</li>
+            <li>JavaScript is <strong>case-sensitive</strong>: <code>myVar</code> and <code>myvar</code> are different</li>
+            <li>Semicolons <code>;</code> end a statement &mdash; JavaScript can often infer them, but writing them explicitly avoids surprises</li>
+            <li>Whitespace and indentation don't affect execution, but consistent style makes code far easier to read</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Basic syntax - variables & types -->
+    <section class="slide" data-title="Basic syntax: variables &amp; types">
+      <p class="slide-label">Block 4 &middot; Basic syntax</p>
+      <h1>Storing values in variables</h1>
+      <p class="slide-sub">Three keywords declare a variable. Reach for <code>const</code> by default, <code>let</code> when the value will change, and avoid <code>var</code> in new code.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">variables.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="11">// const: cannot be reassigned after declaration
+const workshopName = "JavaScript Basics";
+
+// let: can be reassigned later
+let attendeeCount = 12;
+attendeeCount = 14; // updated once more people joined
+
+// Six common data types
+let aString    = "hello";
+let aNumber    = 3.14;
+let aBoolean   = true;
+let notDefined; // undefined until assigned
+let empty      = null; // explicitly "nothing"
+let list       = ["html", "css", "js"];
+
+console.log(workshopName, attendeeCount, typeof aString, typeof aNumber);</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+        <div class="card">
+          <h2>var vs let vs const</h2>
+          <ul>
+            <li><code>const</code> &mdash; can't be reassigned; use this unless you know you need to change the value</li>
+            <li><code>let</code> &mdash; can be reassigned; scoped to the block it's declared in</li>
+            <li><code>var</code> &mdash; the original keyword; has looser scoping rules that cause bugs, generally avoided today</li>
+          </ul>
+          <h2 style="margin-top:14px;">Naming rules</h2>
+          <ul>
+            <li>Letters, digits, <code>_</code> and <code>$</code> only; can't start with a digit</li>
+            <li>Convention: <code>camelCase</code> for variables and functions</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Basic syntax - operators -->
+    <section class="slide" data-title="Basic syntax: operators">
+      <p class="slide-label">Block 4 &middot; Basic syntax</p>
+      <h1>Comparing and combining values</h1>
+      <p class="slide-sub">Beyond arithmetic (next block), these operators show up in almost every script.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Comparison &amp; logical operators</h2>
+          <ul>
+            <li><code>===</code> / <code>!==</code> &mdash; strict equal / not equal (checks type too &mdash; prefer these)</li>
+            <li><code>==</code> / <code>!=</code> &mdash; loose equal / not equal (converts types first &mdash; easy to misuse)</li>
+            <li><code>&gt; &lt; &gt;= &lt;=</code> &mdash; standard comparisons</li>
+            <li><code>&amp;&amp;</code> (and), <code>||</code> (or), <code>!</code> (not)</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">operators.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="10">let age = 17;
+let hasTicket = true;
+
+console.log(age === 17);        // true, same value & type
+console.log("17" === 17);       // false, different types
+console.log("17" == 17);        // true, loosely equal
+
+let canEnter = age >= 18 || hasTicket;
+console.log("Can enter:", canEnter);
+console.log(typeof canEnter);   // "boolean"</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Arithmetic operations -->
+    <section class="slide" data-title="Arithmetic operations">
+      <p class="slide-label">Block 5 &middot; Arithmetic operations</p>
+      <h1>Doing math in JavaScript</h1>
+      <p class="slide-sub">The standard operators, plus one gotcha that trips up almost everyone the first time.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Operators</h2>
+          <ul>
+            <li><code>+</code> add &nbsp; <code>-</code> subtract</li>
+            <li><code>*</code> multiply &nbsp; <code>/</code> divide</li>
+            <li><code>%</code> remainder (modulo)</li>
+            <li><code>**</code> exponent (power)</li>
+          </ul>
+          <p style="margin-top:10px;">Standard order of operations applies: <code>**</code> before <code>* /</code> before <code>+ -</code>, and parentheses <code>()</code> override all of it.</p>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">arithmetic.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="11">console.log(10 + 4);   // 14
+console.log(10 - 4);   // 6
+console.log(10 * 4);   // 40
+console.log(10 / 4);   // 2.5
+console.log(10 % 4);   // 2  (remainder after 10 / 4)
+console.log(2 ** 4);   // 16 (2 to the power of 4)
+
+// Order of operations, just like in math class
+console.log(2 + 3 * 4);   // 14, not 20
+console.log((2 + 3) * 4); // 20, parentheses win
+
+// The gotcha: + on strings concatenates instead of adding
+console.log("10" + 4);    // "104", a string
+console.log(10 + "4");    // "104", a string
+console.log(10 + 4 + "");  // "14", now stringified</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Arithmetic - increment / compound -->
+    <section class="slide" data-title="Arithmetic: shortcuts">
+      <p class="slide-label">Block 5 &middot; Arithmetic operations</p>
+      <h1>Shortcuts for updating a value</h1>
+      <p class="slide-sub">These don't do new math &mdash; they're shorter ways to write "take this variable and change it".</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">shortcuts.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="12">let cartTotal = 20;
+
+cartTotal += 5;   // same as: cartTotal = cartTotal + 5
+console.log(cartTotal); // 25
+
+cartTotal -= 3;   // same as: cartTotal = cartTotal - 3
+console.log(cartTotal); // 22
+
+cartTotal *= 2;   // same as: cartTotal = cartTotal * 2
+console.log(cartTotal); // 44
+
+let itemsInCart = 3;
+itemsInCart++;    // same as: itemsInCart = itemsInCart + 1
+console.log(itemsInCart); // 4
+itemsInCart--;    // same as: itemsInCart = itemsInCart - 1
+console.log(itemsInCart); // 3</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Run ▸</button>
+            <button class="reset-btn">Reset</button>
+          </div>
+          <div class="output-panel"></div>
+        </div>
+        <div class="note note--realworld">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--matcha)"><use href="#icon-globe"/></svg>
+          <div><h4>Real-world scenario</h4><p>A shopping cart total, a game score, or a page-view counter are almost always updated with <code>+=</code> or <code>++</code> rather than being fully recalculated each time.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Exercises -->
+    <section class="slide" data-title="Exercises">
+      <p class="slide-label">Block 6 &middot; Exercises</p>
+      <h1>Three progressive exercises</h1>
+      <p class="slide-sub">Work through these in order. Each one builds on the last, using only what we've covered so far. Edit the code directly in the box and press Run.</p>
+      <div class="slide-body cols-1" style="gap:16px;">
+
+        <div class="exercise">
+          <div class="exercise-head"><h3>Exercise 1 &mdash; Variables warm-up</h3><span class="pill">5 min</span></div>
+          <p style="margin:0 0 10px;">Declare three variables: your first name (string), your age (number), and whether you've used JavaScript before (boolean). Log all three with one <code>console.log</code> call.</p>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">exercise-1.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="4">// TODO: declare firstName, age, and hasUsedJS below
+// then log all three in one console.log call</textarea>
+            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
+            <div class="output-panel"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Hint</summary>
+            <div class="disclosure-body">Use <code>const</code> for values that won't change. Remember strings need quotes, and <code>console.log</code> can take multiple comma-separated arguments.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solution</summary>
+            <div class="disclosure-body"><code>const firstName = "Alex"; const age = 29; const hasUsedJS = false; console.log(firstName, age, hasUsedJS);</code></div>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-head"><h3>Exercise 2 &mdash; Restaurant bill</h3><span class="pill">10 min</span></div>
+          <p style="margin:0 0 10px;">A meal costs 45.00. Add a 10% service charge, then split the total evenly between 3 people. Log the amount each person owes.</p>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">exercise-2.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="6">const mealCost = 45.00;
+
+// TODO: add a 10% service charge to mealCost
+// TODO: divide the new total by 3 people
+// TODO: console.log the amount owed per person</textarea>
+            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
+            <div class="output-panel"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Hint</summary>
+            <div class="disclosure-body">10% of a value is that value multiplied by <code>0.10</code>. "Adding a service charge" means the new total is the old total plus that 10%.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solution</summary>
+            <div class="disclosure-body"><code>const serviceCharge = mealCost * 0.10; const totalWithService = mealCost + serviceCharge; const perPerson = totalWithService / 3; console.log(perPerson);</code></div>
+          </details>
+        </div>
+
+        <div class="exercise">
+          <div class="exercise-head"><h3>Exercise 3 &mdash; Even or odd</h3><span class="pill">10 min</span></div>
+          <p style="margin:0 0 10px;">Given a number, use the remainder operator <code>%</code> to log <code>true</code> if it's even and <code>false</code> if it's odd &mdash; without an <code>if</code> statement (we haven't covered those yet). Try it with a few different numbers.</p>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">exercise-3.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">const number = 17;
+
+// TODO: log whether "number" is even, using % and ===
+</textarea>
+            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
+            <div class="output-panel"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Hint</summary>
+            <div class="disclosure-body">Any even number has a remainder of 0 when divided by 2. Comparing that remainder to 0 with <code>===</code> gives you a boolean directly.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solution</summary>
+            <div class="disclosure-body"><code>const isEven = number % 2 === 0; console.log(isEven);</code></div>
+          </details>
+        </div>
+
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--brick-dim)"><use href="#icon-flag"/></svg>
+          <div><h4>Progressive challenge</h4><p>Finished early? In Exercise 2, add a variable for a discount percentage and apply it before the service charge. In Exercise 3, do the same check for divisibility by 3 instead of 2.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. Wrap-up -->
+    <section class="slide" data-title="Wrap-up &amp; next steps">
+      <p class="slide-label">Wrap-up</p>
+      <h1>What you've built today</h1>
+      <p class="slide-sub">A working environment, a first script, and a handful of exercises solved with variables, operators, and arithmetic. That's the real foundation of the language.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recap</h2>
+          <ul>
+            <li>What JavaScript is, and where it runs (browser + Node.js)</li>
+            <li>A working editor, browser console, and optional Node.js setup</li>
+            <li>Hello World, both inline and as a linked <code>.js</code> file</li>
+            <li>Variables (<code>const</code>/<code>let</code>) and the core data types</li>
+            <li>Comparison, logical, and arithmetic operators</li>
+            <li>Three solved exercises, plus their progressive challenges</li>
+          </ul>
+          <h2 style="margin-top:14px;">Where to go next</h2>
+          <ul>
+            <li><code>if</code> statements and conditionals</li>
+            <li>Functions and reusable blocks of code</li>
+            <li>Loops, arrays, and objects in depth</li>
+          </ul>
+        </div>
+        <div class="note note--feedback" style="align-self:start;">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:#6e6a86"><use href="#icon-chat"/></svg>
+          <div><h4>Feedback check-in</h4><p>On a scale of 1&ndash;5, how confident do you feel writing a short script with variables and arithmetic on your own? Share your number out loud or in chat &mdash; this shapes the pace of the next session.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="deck-bottombar">
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24"><use href="#icon-arrow-left"/></svg>Prev</button>
+    <span class="nav-center">Arrow keys or Page Up/Down also navigate</span>
+    <button class="nav-btn" id="next-btn">Next<svg viewBox="0 0 24 24"><use href="#icon-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<!-- Slide index drawer -->
+<div class="menu-scrim" id="menu-scrim"></div>
+<div class="menu-drawer" id="menu-drawer">
+  <h2>All slides</h2>
+  <div id="menu-list"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
