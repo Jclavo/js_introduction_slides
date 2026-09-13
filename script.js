@@ -35,7 +35,7 @@
     const title = slide.dataset.title || `Slide ${i + 1}`;
     slide.setAttribute("role", "group");
     slide.setAttribute("aria-roledescription", "slide");
-    slide.setAttribute("aria-label", `Slide ${i + 1} of ${total}: ${title}`);
+    slide.setAttribute("aria-label", `Slide ${i + 1} de ${total}: ${title}`);
   });
 
   function buildMenu() {
@@ -87,7 +87,7 @@
 
     const title = slides[current].dataset.title || `Slide ${current + 1}`;
     progressTrack.setAttribute("aria-valuenow", String(current + 1));
-    progressTrack.setAttribute("aria-valuetext", `Slide ${current + 1} of ${total}: ${title}`);
+    progressTrack.setAttribute("aria-valuetext", `Slide ${current + 1} de ${total}: ${title}`);
 
     prevBtn.disabled = current === 0;
     nextBtn.disabled = current === total - 1;
@@ -95,7 +95,7 @@
 
     // Tell screen-reader / AT users the slide changed without stealing
     // keyboard focus away from the Prev/Next controls.
-    announcer.textContent = `Slide ${current + 1} of ${total}: ${title}`;
+    announcer.textContent = `Slide ${current + 1} de ${total}: ${title}`;
   }
 
   prevBtn.addEventListener("click", () => goTo(current - 1));
@@ -213,11 +213,11 @@
         titleIdCounter += 1;
         titleEl.id = `code-panel-title-${titleIdCounter}`;
       }
-      const label = `Editable JavaScript code example: ${titleEl.textContent.trim()}`;
+      const label = `Exemplo de código JavaScript editável: ${titleEl.textContent.trim()}`;
       textarea.setAttribute("aria-label", label);
       runBtn.setAttribute("aria-describedby", titleEl.id);
       if (resetBtn) resetBtn.setAttribute("aria-describedby", titleEl.id);
-      output.setAttribute("aria-label", `Output for ${titleEl.textContent.trim()}`);
+      output.setAttribute("aria-label", `Saída de ${titleEl.textContent.trim()}`);
     }
 
     const starter = textarea.value;
@@ -226,8 +226,8 @@
       const lines = [];
       const fakeConsole = {
         log: (...args) => lines.push(args.map(stringify).join(" ")),
-        error: (...args) => lines.push("Error: " + args.map(stringify).join(" ")),
-        warn: (...args) => lines.push("Warning: " + args.map(stringify).join(" ")),
+        error: (...args) => lines.push("Erro: " + args.map(stringify).join(" ")),
+        warn: (...args) => lines.push("Aviso: " + args.map(stringify).join(" ")),
       };
 
       output.classList.remove("has-error");
@@ -236,7 +236,7 @@
         fn(fakeConsole);
         output.textContent = lines.length ? lines.join("\n") : "";
         if (!lines.length) {
-          output.textContent = "(Ran with no console.log output.)";
+          output.textContent = "(Executado sem saída de console.log.)";
         }
       } catch (err) {
         output.classList.add("has-error");

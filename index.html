@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>JavaScript Workshop — Slide Deck</title>
+<title>Workshop de JavaScript — Dia 1 — Slides</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<a class="skip-link" href="#deck-stage">Skip to slide content</a>
+<a class="skip-link" href="#deck-stage">Pular para o conteúdo do slide</a>
 
-<!-- Reusable inline icons -->
+<!-- Ícones reutilizáveis -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
     <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
@@ -27,575 +27,528 @@
   </defs>
 </svg>
 
-<!-- Announces slide changes to screen reader / AT users without moving keyboard focus -->
+<!-- Anuncia trocas de slide para leitores de tela, sem roubar o foco do teclado -->
 <div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
 
 <div id="deck-app">
 
-  <!-- Top bar -->
+  <!-- Barra superior -->
   <div class="deck-topbar">
     <div class="brand">
       <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
-      <span class="brand-text">JavaScript Workshop</span>
+      <span class="brand-text">Workshop de JavaScript — Dia 1</span>
     </div>
-    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Slide progress" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1" aria-valuetext="Slide 1 of 16">
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progresso dos slides" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1" aria-valuetext="Slide 1 de 16">
       <div class="progress-fill" id="progress-fill"></div>
     </div>
     <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 16</div>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Open slide index" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
     </button>
   </div>
 
-  <!-- Stage -->
+  <!-- Palco -->
   <div class="deck-stage" id="deck-stage" tabindex="-1">
 
-    <!-- 1. Cover -->
-    <section class="slide active" data-title="Introduction to JavaScript">
+    <!-- 1. Capa -->
+    <section class="slide active" data-title="Introdução ao JavaScript">
       <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:760px; margin:auto;">
-        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;"><use href="#icon-braces"/></svg>
-        <p class="slide-label" style="text-align:center;">Introduction to</p>
+        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+        <p class="slide-label" style="text-align:center;">Introdução ao</p>
         <h1 style="font-size:clamp(2.6rem,7vw,4.4rem); margin-bottom:10px;">JavaScript</h1>
-        <p class="slide-sub" style="margin:0 auto 30px; max-width:44ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">A Beginner's Workshop</p>
-        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap;">
-          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Workshop date]</span>
-          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Presented by [presenter name(s)]</span>
+        <p class="slide-sub" style="margin:0 auto 8px; max-width:44ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">Workshop para iniciantes — Dia 1 de 5</p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px;">
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Data do workshop]</span>
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Apresentado por [nome do(s) instrutor(es)]</span>
         </div>
       </div>
     </section>
 
-    <!-- 2. Welcome -->
-    <section class="slide" data-title="Welcome">
+    <!-- 2. Boas-vindas -->
+    <section class="slide" data-title="Boas-vindas">
       <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:left; max-width:900px; margin:auto;">
-        <p class="slide-label">A hands-on introduction</p>
-        <h1 style="font-size:clamp(2.4rem,6vw,4rem); margin-bottom:14px;">JavaScript, from a blank tab to your first program</h1>
-        <p class="slide-sub" style="max-width:56ch;">A one-day workshop covering what JavaScript is, how to set up your environment, first steps, core syntax, arithmetic, and a set of hands-on exercises. Every code example on these slides runs live &mdash; press "Run" and watch the output panel.</p>
+        <p class="slide-label">Uma introdução prática</p>
+        <h1 style="font-size:clamp(2.2rem,5.5vw,3.6rem); margin-bottom:14px;">De uma aba em branco ao seu primeiro programa</h1>
+        <p class="slide-sub" style="max-width:56ch;">Este é o primeiro de cinco encontros. Hoje vamos cobrir o que é JavaScript, configurar o ambiente, dar os primeiros passos, aprender a sintaxe básica e trabalhar com operadores aritméticos. Todo exemplo de código nestes slides roda ao vivo &mdash; clique em "Executar" e veja o resultado no painel de saída.</p>
         <div class="note note--realworld" style="max-width:640px;">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
-          <div><h4>Before we start</h4><p>No prior programming experience is assumed. If you've written any code before, great &mdash; you'll move a little faster through the early slides.</p></div>
+          <div><h4>Antes de começar</h4><p>Não é necessário nenhuma experiência anterior com programação. Se você já programou antes, ótimo &mdash; os primeiros slides vão passar um pouco mais rápido para você.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- 2. Agenda & outcomes -->
-    <section class="slide" data-title="Agenda &amp; outcomes">
-      <p class="slide-label">Outline</p>
-      <h1>What we'll cover today</h1>
-      <p class="slide-sub">Six blocks, each building on the last. By the end you'll be able to read basic JavaScript, write small scripts, and know where to keep learning.</p>
+    <!-- 3. Agenda do dia 1 -->
+    <section class="slide" data-title="Agenda do Dia 1">
+      <p class="slide-label">Roteiro</p>
+      <h1>O que vamos ver hoje</h1>
+      <p class="slide-sub">Cinco blocos, cada um construindo sobre o anterior. Ao final do dia, você vai conseguir ler um JavaScript simples e escrever seus próprios scripts pequenos.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>Agenda</h2>
+          <h2>Agenda do Dia 1</h2>
           <ol>
-            <li>What is JavaScript? &mdash; origins and where it runs</li>
-            <li>Environment setup &mdash; browser, editor, and (optionally) Node.js</li>
-            <li>First steps &mdash; Hello World, linking scripts to a page</li>
-            <li>Basic syntax &mdash; variables, data types, operators</li>
-            <li>Arithmetic operations &mdash; math in JavaScript</li>
-            <li>Exercises &mdash; three progressive challenges</li>
+            <li>O que é JavaScript? &mdash; origem e exemplos práticos</li>
+            <li>Configuração do ambiente &mdash; navegador, editor e (opcionalmente) Node.js</li>
+            <li>Primeiros passos &mdash; Hello World, conectando o script à página</li>
+            <li>Sintaxe básica &mdash; variáveis, tipos de dados, operadores</li>
+            <li>Operadores aritméticos &mdash; fazendo contas em JavaScript</li>
           </ol>
         </div>
         <div class="card">
-          <h2>Learning outcomes</h2>
-          <p>By the end of this workshop, you'll be able to:</p>
+          <h2>Objetivos de aprendizagem</h2>
+          <p>Ao final deste dia, você será capaz de:</p>
           <ul>
-            <li>Explain what JavaScript is and where it runs</li>
-            <li>Set up a working local environment</li>
-            <li>Write and run a JavaScript file linked to an HTML page</li>
-            <li>Declare variables and use JavaScript's core data types</li>
-            <li>Perform arithmetic and understand operator precedence</li>
-            <li>Debug a small script using the browser console</li>
+            <li>Explicar o que é JavaScript e onde ele é executado</li>
+            <li>Configurar um ambiente de trabalho funcional</li>
+            <li>Escrever e executar um arquivo JavaScript conectado a uma página HTML</li>
+            <li>Declarar variáveis e usar os tipos de dados principais do JavaScript</li>
+            <li>Realizar operações aritméticas e entender a ordem de precedência</li>
+            <li>Usar o console do navegador para depurar um script simples</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 3. How we'll work -->
-    <section class="slide" data-title="How we'll work">
-      <p class="slide-label">Workshop format</p>
-      <h1>Four things you'll see throughout the day</h1>
-      <p class="slide-sub">These callouts show up on slides whenever they're relevant &mdash; look out for the colored icon on the left edge of the box.</p>
+    <!-- 4. Como vamos trabalhar -->
+    <section class="slide" data-title="Como vamos trabalhar">
+      <p class="slide-label">Formato do workshop</p>
+      <h1>Quatro coisas que você vai ver ao longo do dia</h1>
+      <p class="slide-sub">Esses destaques aparecem nos slides sempre que forem relevantes &mdash; preste atenção no ícone colorido na borda esquerda da caixa.</p>
       <div class="slide-body" style="grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr);">
         <div class="note note--realworld">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
-          <div><h4>Real-world scenario</h4><p>A concrete example of where the concept shows up in actual production code, not just theory.</p></div>
+          <div><h4>Cenário do mundo real</h4><p>Um exemplo concreto de onde o conceito aparece em código de produção de verdade, não só na teoria.</p></div>
         </div>
         <div class="note note--pairing">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
-          <div><h4>Pair programming</h4><p>An activity to do with the person next to you &mdash; one types, one reads the instructions, then swap.</p></div>
+          <div><h4>Programação em dupla</h4><p>Uma atividade para fazer com a pessoa ao lado &mdash; um digita, o outro lê as instruções em voz alta, depois trocam.</p></div>
         </div>
         <div class="note note--challenge">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
-          <div><h4>Progressive challenge</h4><p>An optional harder variant of the exercise, for anyone who finishes early.</p></div>
+          <div><h4>Desafio opcional</h4><p>Uma variação um pouco mais difícil do exemplo, para quem terminar antes dos outros.</p></div>
         </div>
         <div class="note note--feedback">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
-          <div><h4>Feedback check-in</h4><p>A moment to rate your confidence 1&ndash;5 so the pace can adjust before moving on.</p></div>
+          <div><h4>Momento de feedback</h4><p>Uma pausa para avaliar sua confiança de 1 a 5, para ajustar o ritmo antes de seguir em frente.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- 4. What is JavaScript -->
-    <section class="slide" data-title="What is JavaScript?">
-      <p class="slide-label">Block 1 &middot; What is JavaScript?</p>
-      <h1>A language built in ten days</h1>
-      <p class="slide-sub">JavaScript began life in 1995 at Netscape, written by Brendan Eich in about ten days. It went through a few names before the one that stuck.</p>
+    <!-- 5. O que é JavaScript - história -->
+    <section class="slide" data-title="O que é JavaScript?">
+      <p class="slide-label">Bloco 1 &middot; O que é JavaScript?</p>
+      <h1>Uma linguagem criada em dez dias</h1>
+      <p class="slide-sub">O JavaScript nasceu em 1995, na Netscape, escrito por Brendan Eich em cerca de dez dias. Ele passou por alguns nomes até chegar ao que conhecemos hoje.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>A short history</h2>
+          <h2>Um pouco de história</h2>
           <ul>
-            <li>First prototype was code-named <strong>Mocha</strong>, then briefly renamed <strong>LiveScript</strong></li>
-            <li>Renamed <strong>JavaScript</strong> for marketing reasons, to ride the popularity of Java &mdash; the two languages are otherwise unrelated</li>
-            <li>Standardized in 1997 as <strong>ECMAScript</strong>, so "JavaScript" and "ECMAScript" mostly mean the same thing today</li>
-            <li>Now one of the most widely used programming languages, running in nearly every web browser</li>
+            <li>O primeiro protótipo tinha o nome-código <strong>Mocha</strong>, depois foi renomeado brevemente para <strong>LiveScript</strong></li>
+            <li>Foi renomeado para <strong>JavaScript</strong> por motivos de marketing, para aproveitar a popularidade do Java &mdash; as duas linguagens não têm relação técnica entre si</li>
+            <li>Padronizado em 1997 como <strong>ECMAScript</strong>, então "JavaScript" e "ECMAScript" hoje significam quase a mesma coisa</li>
+            <li>Hoje é uma das linguagens de programação mais usadas do mundo, rodando em praticamente todo navegador</li>
           </ul>
         </div>
         <div class="card">
-          <h2>What is it used for?</h2>
+          <h2>Para que ele é usado?</h2>
           <ul>
-            <li>Making web pages interactive &mdash; form validation, animations, dynamic content</li>
-            <li>Building full front-end applications (the logic behind buttons, menus, live updates)</li>
-            <li>Server-side programming, via Node.js</li>
-            <li>Mobile apps, desktop apps, and even small embedded devices</li>
+            <li>Tornar páginas web interativas &mdash; validação de formulários, animações, conteúdo dinâmico</li>
+            <li>Construir aplicações front-end completas (a lógica por trás de botões, menus, atualizações em tempo real)</li>
+            <li>Programação do lado do servidor, com Node.js</li>
+            <li>Aplicativos mobile, aplicativos desktop e até pequenos dispositivos embarcados</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 5. Where does it run -->
-    <section class="slide" data-title="Where JavaScript runs">
-      <p class="slide-label">Block 1 &middot; What is JavaScript?</p>
-      <h1>Two places you'll run it today</h1>
-      <p class="slide-sub">JavaScript needs an "engine" to execute it. Today we'll use two: your browser, and (optionally) Node.js on your machine.</p>
+    <!-- 6. O que é JavaScript - exemplo prático -->
+    <section class="slide" data-title="O que é JavaScript? (Exemplo)">
+      <p class="slide-label">Bloco 1 &middot; O que é JavaScript?</p>
+      <h1>Um exemplo rápido do que ele faz</h1>
+      <p class="slide-sub">Sem se preocupar com a sintaxe ainda &mdash; só para ver o JavaScript tomando uma decisão sozinho. Clique em "Executar" e depois tente mudar o valor de <code>idade</code>.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">exemplo.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="8">// Um exemplo simples de decisão em JavaScript
+let idade = 20;
+
+if (idade >= 18) {
+  console.log("Maior de idade");
+} else {
+  console.log("Menor de idade");
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>O que aconteceu ali?</h2>
+          <p>Esse pequeno trecho verifica um número e decide o que imprimir com base nele &mdash; é exatamente esse tipo de decisão automática que torna páginas web interativas.</p>
+          <p>Vamos construir o vocabulário necessário para escrever isso (e muito mais) ao longo do dia: variáveis, tipos de dados e operadores.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Onde o JavaScript roda -->
+    <section class="slide" data-title="Onde o JavaScript é executado">
+      <p class="slide-label">Bloco 1 &middot; O que é JavaScript?</p>
+      <h1>Dois lugares onde vamos executá-lo hoje</h1>
+      <p class="slide-sub">O JavaScript precisa de um "motor" para ser executado. Hoje vamos usar dois: o seu navegador e, opcionalmente, o Node.js na sua máquina.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>In the browser</h2>
-          <p>Every browser (Chrome, Firefox, Safari, Edge) has a built-in JavaScript engine. Code can live in:</p>
+          <h2>No navegador</h2>
+          <p>Todo navegador (Chrome, Firefox, Safari, Edge) tem um motor de JavaScript embutido. O código pode ficar em:</p>
           <ul>
-            <li>A <code>&lt;script&gt;</code> tag inside an HTML page</li>
-            <li>An external <code>.js</code> file linked from HTML</li>
-            <li>The browser's developer console, for quick experiments</li>
+            <li>Uma tag <code>&lt;script&gt;</code> dentro de uma página HTML</li>
+            <li>Um arquivo <code>.js</code> externo, vinculado a partir do HTML</li>
+            <li>O console de desenvolvedor do navegador, para experimentos rápidos</li>
           </ul>
         </div>
         <div class="card">
-          <h2>On the server, with Node.js</h2>
-          <p>Node.js takes the same JavaScript engine that powers Chrome and lets it run outside the browser &mdash; on a server, or directly from your terminal.</p>
+          <h2>No servidor, com Node.js</h2>
+          <p>O Node.js pega o mesmo motor de JavaScript que roda no Chrome e permite executá-lo fora do navegador &mdash; em um servidor, ou direto pelo terminal.</p>
           <ul>
-            <li>Used for back-end APIs, build tools, and command-line scripts</li>
-            <li>Not required for this workshop, but worth installing if you want to keep going afterward</li>
+            <li>Usado para APIs de back-end, ferramentas de build e scripts de linha de comando</li>
+            <li>Não é obrigatório para este workshop, mas vale instalar se você quiser continuar depois</li>
           </ul>
         </div>
       </div>
       <div class="note note--realworld">
         <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
-        <div><h4>Real-world scenario</h4><p>A checkout page that greys out the "Pay" button until every field is filled in is browser JavaScript. The service that actually charges the card afterward is very likely Node.js, or another server-side language.</p></div>
+        <div><h4>Cenário do mundo real</h4><p>Uma página de checkout que deixa o botão "Pagar" desabilitado até todos os campos serem preenchidos é JavaScript de navegador. O serviço que de fato cobra o cartão depois é, muito provavelmente, Node.js ou outra linguagem do lado do servidor.</p></div>
       </div>
     </section>
 
-    <!-- 6. Environment setup -->
-    <section class="slide" data-title="Environment setup">
-      <p class="slide-label">Block 2 &middot; Environment setup</p>
-      <h1>What you need on your machine</h1>
-      <p class="slide-sub">Three things, and you already have at least one of them.</p>
+    <!-- 8. Configuração do ambiente -->
+    <section class="slide" data-title="Configuração do ambiente">
+      <p class="slide-label">Bloco 2 &middot; Configuração do ambiente</p>
+      <h1>O que você precisa na sua máquina</h1>
+      <p class="slide-sub">Três coisas, e você já tem pelo menos uma delas.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>1. A browser</h2>
-          <p>Any modern browser works. We'll use its built-in developer tools constantly, so know the shortcut:</p>
+          <h2>1. Um navegador</h2>
+          <p>Qualquer navegador moderno funciona. Vamos usar as ferramentas de desenvolvedor dele o tempo todo, então guarde o atalho:</p>
           <ul>
-            <li>Windows/Linux: <code>F12</code> or <code>Ctrl+Shift+I</code></li>
+            <li>Windows/Linux: <code>F12</code> ou <code>Ctrl+Shift+I</code></li>
             <li>macOS: <code>Cmd+Option+I</code></li>
-            <li>Open the <strong>Console</strong> tab &mdash; that's where output and errors show up</li>
+            <li>Abra a aba <strong>Console</strong> &mdash; é lá que aparecem as saídas e os erros</li>
           </ul>
-          <h2 style="margin-top:16px;">2. A code editor</h2>
-          <p>We recommend <strong>Visual Studio Code</strong> (free) for its built-in terminal and JavaScript support, but any text editor works.</p>
+          <h2 style="margin-top:16px;">2. Um editor de código</h2>
+          <p>Recomendamos o <strong>Visual Studio Code</strong> (gratuito) pelo terminal integrado e suporte a JavaScript, mas qualquer editor de texto funciona.</p>
         </div>
         <div class="card">
-          <h2>3. Node.js (optional today)</h2>
-          <p>Only needed if you want to run JavaScript outside the browser. To check whether it's already installed, open a terminal and run:</p>
+          <h2>3. Node.js (opcional hoje)</h2>
+          <p>Só é necessário se você quiser executar JavaScript fora do navegador. Para verificar se já está instalado, abra um terminal e rode:</p>
           <div class="code-panel">
             <div class="code-panel-head"><span class="code-panel-title">terminal</span><div class="dots"><span></span><span></span><span></span></div></div>
             <pre class="code-block"><span class="tok-fn">node</span> --version
 <span class="tok-fn">npm</span> --version</pre>
           </div>
-          <p style="margin-top:12px;">If you see version numbers, you're set. If you see "command not found", download the LTS installer from <strong>nodejs.org</strong> and re-open your terminal.</p>
+          <p style="margin-top:12px;">Se aparecerem números de versão, está tudo certo. Se aparecer "command not found", baixe o instalador LTS em <strong>nodejs.org</strong> e reabra o terminal.</p>
         </div>
       </div>
     </section>
 
-    <!-- 7. Environment setup - verify -->
-    <section class="slide" data-title="Setup: verify &amp; try it">
-      <p class="slide-label">Block 2 &middot; Environment setup</p>
-      <h1>Let's prove the console works</h1>
-      <p class="slide-sub">Open your browser's developer console (see previous slide) and type the line below &mdash; or just press Run here, since this whole deck is a live JavaScript sandbox too.</p>
+    <!-- 9. Configuração do ambiente - verificar -->
+    <section class="slide" data-title="Configuração: verifique e teste">
+      <p class="slide-label">Bloco 2 &middot; Configuração do ambiente</p>
+      <h1>Vamos provar que o console funciona</h1>
+      <p class="slide-sub">Abra o console de desenvolvedor do seu navegador (veja o slide anterior) e digite a linha abaixo &mdash; ou simplesmente clique em Executar aqui, já que todo este material é também um sandbox de JavaScript ao vivo.</p>
       <div class="slide-body cols-2">
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">setup-check.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-          <textarea class="code-input" spellcheck="false" rows="4">// Type your name between the quotes, then press Run
-console.log("Hello from " + "your name here" + "!");</textarea>
+          <div class="code-panel-head"><span class="code-panel-title">teste-config.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="4">// Digite seu nome entre as aspas e clique em Executar
+console.log("Olá, aqui é " + "seu nome aqui" + "!");</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
-            <span class="run-hint">Ctrl / Cmd + Enter also runs it</span>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+            <span class="run-hint">Ctrl / Cmd + Enter também executa</span>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="note note--pairing">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
-          <div><h4>Pair programming</h4><p>Turn to your neighbor. One of you edits the text in the box above, the other reads out loud what they predict the output will be &mdash; then press Run to check. Swap roles and try again with your own console.log message.</p></div>
+          <div><h4>Programação em dupla</h4><p>Vire-se para a pessoa ao lado. Um de vocês edita o texto na caixa acima, o outro fala em voz alta o que imagina que vai aparecer &mdash; depois clique em Executar para conferir. Troquem os papéis e tentem de novo com sua própria mensagem no console.log.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- 8. First steps -->
-    <section class="slide" data-title="First steps: Hello World">
-      <p class="slide-label">Block 3 &middot; First steps</p>
-      <h1>Your first line of JavaScript</h1>
-      <p class="slide-sub"><code>console.log()</code> prints a value to the console. It's the single most-used debugging tool in JavaScript.</p>
+    <!-- 10. Primeiros passos - Hello World -->
+    <section class="slide" data-title="Primeiros passos: Hello World">
+      <p class="slide-label">Bloco 3 &middot; Primeiros passos</p>
+      <h1>Sua primeira linha de JavaScript</h1>
+      <p class="slide-sub"><code>console.log()</code> imprime um valor no console. É a ferramenta de depuração mais usada em JavaScript.</p>
       <div class="slide-body cols-2">
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">hello.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-          <textarea class="code-input" spellcheck="false" rows="5">// console.log prints whatever you pass it
-console.log("Hello, world!");
+          <div class="code-panel-head"><span class="code-panel-title">ola.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="5">// console.log imprime o que você passar para ele
+console.log("Olá, mundo!");
 
-// You can log more than one value at a time
-console.log("The answer is", 42);</textarea>
+// Você pode logar mais de um valor de uma vez
+console.log("A resposta é", 42);</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="card">
-          <h2>Three ways to run this same code</h2>
+          <h2>Três formas de rodar o mesmo código</h2>
           <ol>
-            <li><strong>Console:</strong> paste it directly into your browser's dev tools console</li>
-            <li><strong>Inline script:</strong> place it inside a <code>&lt;script&gt;</code> tag in an HTML file</li>
-            <li><strong>External file:</strong> save it as <code>hello.js</code> and link it from HTML (next slide)</li>
+            <li><strong>Console:</strong> cole diretamente nas ferramentas de desenvolvedor do navegador</li>
+            <li><strong>Script embutido:</strong> coloque dentro de uma tag <code>&lt;script&gt;</code> em um arquivo HTML</li>
+            <li><strong>Arquivo externo:</strong> salve como <code>ola.js</code> e vincule a partir do HTML (próximo slide)</li>
           </ol>
         </div>
       </div>
     </section>
 
-    <!-- 9. First steps - linking script + comments -->
-    <section class="slide" data-title="First steps: linking a script">
-      <p class="slide-label">Block 3 &middot; First steps</p>
-      <h1>Connecting a .js file to a web page</h1>
-      <p class="slide-sub">In real projects, JavaScript almost always lives in its own file, linked from HTML with a <code>&lt;script&gt;</code> tag.</p>
+    <!-- 11. Primeiros passos - vinculando script -->
+    <section class="slide" data-title="Primeiros passos: vinculando um script">
+      <p class="slide-label">Bloco 3 &middot; Primeiros passos</p>
+      <h1>Conectando um arquivo .js a uma página web</h1>
+      <p class="slide-sub">Em projetos reais, o JavaScript quase sempre fica em seu próprio arquivo, vinculado ao HTML com uma tag <code>&lt;script&gt;</code>.</p>
       <div class="slide-body cols-2">
         <div class="code-panel">
           <div class="code-panel-head"><span class="code-panel-title">index.html</span><div class="dots"><span></span><span></span><span></span></div></div>
           <pre class="code-block">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
   &lt;head&gt;
-    &lt;title&gt;My Page&lt;/title&gt;
+    &lt;title&gt;Minha Página&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;h1&gt;Hello!&lt;/h1&gt;
+    &lt;h1&gt;Olá!&lt;/h1&gt;
 
-    <span class="tok-com">&lt;!-- placed just before &lt;/body&gt; so the --&gt;
-    &lt;!-- page content loads before the script runs --&gt;</span>
+    <span class="tok-com">&lt;!-- colocado logo antes de &lt;/body&gt; para que --&gt;
+    &lt;!-- o conteúdo da página carregue antes do script --&gt;</span>
     &lt;script src="<span class="tok-str">script.js</span>"&gt;&lt;/script&gt;
   &lt;/body&gt;
 &lt;/html&gt;</pre>
         </div>
         <div class="card">
-          <h2>Comments &amp; a few ground rules</h2>
+          <h2>Comentários e algumas regras básicas</h2>
           <ul>
-            <li><code>// single-line comment</code> &mdash; ignored by JavaScript</li>
-            <li><code>/* multi-line comment */</code> &mdash; spans several lines</li>
-            <li>JavaScript is <strong>case-sensitive</strong>: <code>myVar</code> and <code>myvar</code> are different</li>
-            <li>Semicolons <code>;</code> end a statement &mdash; JavaScript can often infer them, but writing them explicitly avoids surprises</li>
-            <li>Whitespace and indentation don't affect execution, but consistent style makes code far easier to read</li>
+            <li><code>// comentário de uma linha</code> &mdash; ignorado pelo JavaScript</li>
+            <li><code>/* comentário de várias linhas */</code> &mdash; abrange várias linhas</li>
+            <li>O JavaScript <strong>diferencia maiúsculas de minúsculas</strong>: <code>minhaVar</code> e <code>minhavar</code> são diferentes</li>
+            <li>O ponto e vírgula <code>;</code> encerra uma instrução &mdash; o JavaScript muitas vezes consegue inferir isso, mas escrevê-lo explicitamente evita surpresas</li>
+            <li>Espaços e indentação não afetam a execução, mas um estilo consistente torna o código muito mais fácil de ler</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 10. Basic syntax - variables & types -->
-    <section class="slide" data-title="Basic syntax: variables &amp; types">
-      <p class="slide-label">Block 4 &middot; Basic syntax</p>
-      <h1>Storing values in variables</h1>
-      <p class="slide-sub">Three keywords declare a variable. Reach for <code>const</code> by default, <code>let</code> when the value will change, and avoid <code>var</code> in new code.</p>
+    <!-- 12. Sintaxe básica - variáveis e tipos -->
+    <section class="slide" data-title="Sintaxe básica: variáveis e tipos">
+      <p class="slide-label">Bloco 4 &middot; Sintaxe básica</p>
+      <h1>Guardando valores em variáveis</h1>
+      <p class="slide-sub">Três palavras-chave declaram uma variável. Use <code>const</code> por padrão, <code>let</code> quando o valor vai mudar, e evite <code>var</code> em código novo.</p>
       <div class="slide-body cols-2">
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">variables.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-          <textarea class="code-input" spellcheck="false" rows="11">// const: cannot be reassigned after declaration
-const workshopName = "JavaScript Basics";
+          <div class="code-panel-head"><span class="code-panel-title">variaveis.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="11">// const: não pode ser reatribuída depois de declarada
+const nomeDoWorkshop = "Fundamentos de JavaScript";
 
-// let: can be reassigned later
-let attendeeCount = 12;
-attendeeCount = 14; // updated once more people joined
+// let: pode ser reatribuída depois
+let numeroDeParticipantes = 12;
+numeroDeParticipantes = 14; // atualizado após mais pessoas entrarem
 
-// Six common data types
-let aString    = "hello";
-let aNumber    = 3.14;
-let aBoolean   = true;
-let notDefined; // undefined until assigned
-let empty      = null; // explicitly "nothing"
-let list       = ["html", "css", "js"];
+// Seis tipos de dados comuns
+let umTexto      = "olá";
+let umNumero     = 3.14;
+let umBooleano   = true;
+let naoDefinida; // undefined até ser atribuída
+let vazio        = null; // "nada", explicitamente
+let lista        = ["html", "css", "js"];
 
-console.log(workshopName, attendeeCount, typeof aString, typeof aNumber);</textarea>
+console.log(nomeDoWorkshop, numeroDeParticipantes, typeof umTexto, typeof umNumero);</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="card">
           <h2>var vs let vs const</h2>
           <ul>
-            <li><code>const</code> &mdash; can't be reassigned; use this unless you know you need to change the value</li>
-            <li><code>let</code> &mdash; can be reassigned; scoped to the block it's declared in</li>
-            <li><code>var</code> &mdash; the original keyword; has looser scoping rules that cause bugs, generally avoided today</li>
+            <li><code>const</code> &mdash; não pode ser reatribuída; use sempre que não precisar mudar o valor</li>
+            <li><code>let</code> &mdash; pode ser reatribuída; tem escopo limitado ao bloco onde foi declarada</li>
+            <li><code>var</code> &mdash; a palavra-chave original; tem regras de escopo mais soltas que causam bugs, hoje geralmente evitada</li>
           </ul>
-          <h2 style="margin-top:14px;">Naming rules</h2>
+          <h2 style="margin-top:14px;">Regras de nomenclatura</h2>
           <ul>
-            <li>Letters, digits, <code>_</code> and <code>$</code> only; can't start with a digit</li>
-            <li>Convention: <code>camelCase</code> for variables and functions</li>
+            <li>Apenas letras, dígitos, <code>_</code> e <code>$</code>; não pode começar com um dígito</li>
+            <li>Convenção: <code>camelCase</code> para variáveis e funções</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- 11. Basic syntax - operators -->
-    <section class="slide" data-title="Basic syntax: operators">
-      <p class="slide-label">Block 4 &middot; Basic syntax</p>
-      <h1>Comparing and combining values</h1>
-      <p class="slide-sub">Beyond arithmetic (next block), these operators show up in almost every script.</p>
+    <!-- 13. Sintaxe básica - operadores -->
+    <section class="slide" data-title="Sintaxe básica: operadores">
+      <p class="slide-label">Bloco 4 &middot; Sintaxe básica</p>
+      <h1>Comparando e combinando valores</h1>
+      <p class="slide-sub">Além da aritmética (próximo bloco), esses operadores aparecem em quase todo script.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>Comparison &amp; logical operators</h2>
+          <h2>Operadores de comparação e lógicos</h2>
           <ul>
-            <li><code>===</code> / <code>!==</code> &mdash; strict equal / not equal (checks type too &mdash; prefer these)</li>
-            <li><code>==</code> / <code>!=</code> &mdash; loose equal / not equal (converts types first &mdash; easy to misuse)</li>
-            <li><code>&gt; &lt; &gt;= &lt;=</code> &mdash; standard comparisons</li>
-            <li><code>&amp;&amp;</code> (and), <code>||</code> (or), <code>!</code> (not)</li>
+            <li><code>===</code> / <code>!==</code> &mdash; igual / diferente estrito (também verifica o tipo &mdash; prefira estes)</li>
+            <li><code>==</code> / <code>!=</code> &mdash; igual / diferente flexível (converte os tipos antes &mdash; fácil de usar errado)</li>
+            <li><code>&gt; &lt; &gt;= &lt;=</code> &mdash; comparações padrão</li>
+            <li><code>&amp;&amp;</code> (e), <code>||</code> (ou), <code>!</code> (não)</li>
           </ul>
         </div>
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">operators.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-          <textarea class="code-input" spellcheck="false" rows="10">let age = 17;
-let hasTicket = true;
+          <div class="code-panel-head"><span class="code-panel-title">operadores.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="10">let idade = 17;
+let temIngresso = true;
 
-console.log(age === 17);        // true, same value & type
-console.log("17" === 17);       // false, different types
-console.log("17" == 17);        // true, loosely equal
+console.log(idade === 17);        // true, mesmo valor e tipo
+console.log("17" === 17);         // false, tipos diferentes
+console.log("17" == 17);          // true, igualdade flexível
 
-let canEnter = age >= 18 || hasTicket;
-console.log("Can enter:", canEnter);
-console.log(typeof canEnter);   // "boolean"</textarea>
+let podeEntrar = idade >= 18 || temIngresso;
+console.log("Pode entrar:", podeEntrar);
+console.log(typeof podeEntrar);   // "boolean"</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
     </section>
 
-    <!-- 12. Arithmetic operations -->
-    <section class="slide" data-title="Arithmetic operations">
-      <p class="slide-label">Block 5 &middot; Arithmetic operations</p>
-      <h1>Doing math in JavaScript</h1>
-      <p class="slide-sub">The standard operators, plus one gotcha that trips up almost everyone the first time.</p>
+    <!-- 14. Operadores aritméticos -->
+    <section class="slide" data-title="Operadores aritméticos">
+      <p class="slide-label">Bloco 5 &middot; Operadores aritméticos</p>
+      <h1>Fazendo contas em JavaScript</h1>
+      <p class="slide-sub">Os operadores padrão, além de uma pegadinha que confunde quase todo mundo na primeira vez.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>Operators</h2>
+          <h2>Operadores</h2>
           <ul>
-            <li><code>+</code> add &nbsp; <code>-</code> subtract</li>
-            <li><code>*</code> multiply &nbsp; <code>/</code> divide</li>
-            <li><code>%</code> remainder (modulo)</li>
-            <li><code>**</code> exponent (power)</li>
+            <li><code>+</code> soma &nbsp; <code>-</code> subtração</li>
+            <li><code>*</code> multiplicação &nbsp; <code>/</code> divisão</li>
+            <li><code>%</code> resto da divisão (módulo)</li>
+            <li><code>**</code> potência (exponenciação)</li>
           </ul>
-          <p style="margin-top:10px;">Standard order of operations applies: <code>**</code> before <code>* /</code> before <code>+ -</code>, and parentheses <code>()</code> override all of it.</p>
+          <p style="margin-top:10px;">A ordem de operações padrão se aplica: <code>**</code> antes de <code>* /</code>, antes de <code>+ -</code>, e parênteses <code>()</code> têm prioridade sobre tudo.</p>
         </div>
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">arithmetic.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <div class="code-panel-head"><span class="code-panel-title">aritmetica.js</span><div class="dots"><span></span><span></span><span></span></div></div>
           <textarea class="code-input" spellcheck="false" rows="11">console.log(10 + 4);   // 14
 console.log(10 - 4);   // 6
 console.log(10 * 4);   // 40
 console.log(10 / 4);   // 2.5
-console.log(10 % 4);   // 2  (remainder after 10 / 4)
-console.log(2 ** 4);   // 16 (2 to the power of 4)
+console.log(10 % 4);   // 2  (resto de 10 / 4)
+console.log(2 ** 4);   // 16 (2 elevado a 4)
 
-// Order of operations, just like in math class
-console.log(2 + 3 * 4);   // 14, not 20
-console.log((2 + 3) * 4); // 20, parentheses win
+// Ordem de operações, igual na matemática da escola
+console.log(2 + 3 * 4);   // 14, não 20
+console.log((2 + 3) * 4); // 20, os parênteses vencem
 
-// The gotcha: + on strings concatenates instead of adding
-console.log("10" + 4);    // "104", a string
-console.log(10 + "4");    // "104", a string
-console.log(10 + 4 + "");  // "14", now stringified</textarea>
+// A pegadinha: + em strings concatena em vez de somar
+console.log("10" + 4);    // "104", uma string
+console.log(10 + "4");    // "104", uma string
+console.log(10 + 4 + "");  // "14", agora convertido para string</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
       </div>
+      <div class="note note--challenge">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+        <div><h4>Desafio opcional</h4><p>Edite o código ao lado para calcular quantos grupos de 4 pessoas cabem em uma turma de 30 (dica: use <code>%</code> e <code>/</code> juntos) e mostre também quantas pessoas sobram no grupo incompleto.</p></div>
+      </div>
     </section>
 
-    <!-- 13. Arithmetic - increment / compound -->
-    <section class="slide" data-title="Arithmetic: shortcuts">
-      <p class="slide-label">Block 5 &middot; Arithmetic operations</p>
-      <h1>Shortcuts for updating a value</h1>
-      <p class="slide-sub">These don't do new math &mdash; they're shorter ways to write "take this variable and change it".</p>
+    <!-- 15. Operadores aritméticos - atalhos -->
+    <section class="slide" data-title="Operadores aritméticos: atalhos">
+      <p class="slide-label">Bloco 5 &middot; Operadores aritméticos</p>
+      <h1>Atalhos para atualizar um valor</h1>
+      <p class="slide-sub">Eles não fazem nenhuma conta nova &mdash; são formas mais curtas de escrever "pegue esta variável e altere-a".</p>
       <div class="slide-body cols-2">
         <div class="code-panel" data-runner>
-          <div class="code-panel-head"><span class="code-panel-title">shortcuts.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-          <textarea class="code-input" spellcheck="false" rows="12">let cartTotal = 20;
+          <div class="code-panel-head"><span class="code-panel-title">atalhos.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="12">let totalCarrinho = 20;
 
-cartTotal += 5;   // same as: cartTotal = cartTotal + 5
-console.log(cartTotal); // 25
+totalCarrinho += 5;   // igual a: totalCarrinho = totalCarrinho + 5
+console.log(totalCarrinho); // 25
 
-cartTotal -= 3;   // same as: cartTotal = cartTotal - 3
-console.log(cartTotal); // 22
+totalCarrinho -= 3;   // igual a: totalCarrinho = totalCarrinho - 3
+console.log(totalCarrinho); // 22
 
-cartTotal *= 2;   // same as: cartTotal = cartTotal * 2
-console.log(cartTotal); // 44
+totalCarrinho *= 2;   // igual a: totalCarrinho = totalCarrinho * 2
+console.log(totalCarrinho); // 44
 
-let itemsInCart = 3;
-itemsInCart++;    // same as: itemsInCart = itemsInCart + 1
-console.log(itemsInCart); // 4
-itemsInCart--;    // same as: itemsInCart = itemsInCart - 1
-console.log(itemsInCart); // 3</textarea>
+let itensNoCarrinho = 3;
+itensNoCarrinho++;    // igual a: itensNoCarrinho = itensNoCarrinho + 1
+console.log(itensNoCarrinho); // 4
+itensNoCarrinho--;    // igual a: itensNoCarrinho = itensNoCarrinho - 1
+console.log(itensNoCarrinho); // 3</textarea>
           <div class="code-actions">
-            <button class="run-btn">Run ▸</button>
-            <button class="reset-btn">Reset</button>
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
           </div>
           <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
         </div>
         <div class="note note--realworld">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
-          <div><h4>Real-world scenario</h4><p>A shopping cart total, a game score, or a page-view counter are almost always updated with <code>+=</code> or <code>++</code> rather than being fully recalculated each time.</p></div>
+          <div><h4>Cenário do mundo real</h4><p>O total de um carrinho de compras, a pontuação de um jogo ou o contador de visualizações de uma página quase sempre são atualizados com <code>+=</code> ou <code>++</code>, em vez de recalculados do zero a cada vez.</p></div>
         </div>
       </div>
     </section>
 
-    <!-- 14. Exercises -->
-    <section class="slide" data-title="Exercises">
-      <p class="slide-label">Block 6 &middot; Exercises</p>
-      <h1>Three progressive exercises</h1>
-      <p class="slide-sub">Work through these in order. Each one builds on the last, using only what we've covered so far. Edit the code directly in the box and press Run.</p>
-      <div class="slide-body cols-1" style="gap:16px;">
-
-        <div class="exercise">
-          <div class="exercise-head"><h3>Exercise 1 &mdash; Variables warm-up</h3><span class="pill">5 min</span></div>
-          <p style="margin:0 0 10px;">Declare three variables: your first name (string), your age (number), and whether you've used JavaScript before (boolean). Log all three with one <code>console.log</code> call.</p>
-          <div class="code-panel" data-runner>
-            <div class="code-panel-head"><span class="code-panel-title">exercise-1.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-            <textarea class="code-input" spellcheck="false" rows="4">// TODO: declare firstName, age, and hasUsedJS below
-// then log all three in one console.log call</textarea>
-            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
-          </div>
-          <details class="disclosure">
-            <summary>Hint</summary>
-            <div class="disclosure-body">Use <code>const</code> for values that won't change. Remember strings need quotes, and <code>console.log</code> can take multiple comma-separated arguments.</div>
-          </details>
-          <details class="disclosure">
-            <summary>Solution</summary>
-            <div class="disclosure-body"><code>const firstName = "Alex"; const age = 29; const hasUsedJS = false; console.log(firstName, age, hasUsedJS);</code></div>
-          </details>
-        </div>
-
-        <div class="exercise">
-          <div class="exercise-head"><h3>Exercise 2 &mdash; Restaurant bill</h3><span class="pill">10 min</span></div>
-          <p style="margin:0 0 10px;">A meal costs 45.00. Add a 10% service charge, then split the total evenly between 3 people. Log the amount each person owes.</p>
-          <div class="code-panel" data-runner>
-            <div class="code-panel-head"><span class="code-panel-title">exercise-2.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-            <textarea class="code-input" spellcheck="false" rows="6">const mealCost = 45.00;
-
-// TODO: add a 10% service charge to mealCost
-// TODO: divide the new total by 3 people
-// TODO: console.log the amount owed per person</textarea>
-            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
-          </div>
-          <details class="disclosure">
-            <summary>Hint</summary>
-            <div class="disclosure-body">10% of a value is that value multiplied by <code>0.10</code>. "Adding a service charge" means the new total is the old total plus that 10%.</div>
-          </details>
-          <details class="disclosure">
-            <summary>Solution</summary>
-            <div class="disclosure-body"><code>const serviceCharge = mealCost * 0.10; const totalWithService = mealCost + serviceCharge; const perPerson = totalWithService / 3; console.log(perPerson);</code></div>
-          </details>
-        </div>
-
-        <div class="exercise">
-          <div class="exercise-head"><h3>Exercise 3 &mdash; Even or odd</h3><span class="pill">10 min</span></div>
-          <p style="margin:0 0 10px;">Given a number, use the remainder operator <code>%</code> to log <code>true</code> if it's even and <code>false</code> if it's odd &mdash; without an <code>if</code> statement (we haven't covered those yet). Try it with a few different numbers.</p>
-          <div class="code-panel" data-runner>
-            <div class="code-panel-head"><span class="code-panel-title">exercise-3.js</span><div class="dots"><span></span><span></span><span></span></div></div>
-            <textarea class="code-input" spellcheck="false" rows="5">const number = 17;
-
-// TODO: log whether "number" is even, using % and ===
-</textarea>
-            <div class="code-actions"><button class="run-btn">Run ▸</button><button class="reset-btn">Reset</button></div>
-            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
-          </div>
-          <details class="disclosure">
-            <summary>Hint</summary>
-            <div class="disclosure-body">Any even number has a remainder of 0 when divided by 2. Comparing that remainder to 0 with <code>===</code> gives you a boolean directly.</div>
-          </details>
-          <details class="disclosure">
-            <summary>Solution</summary>
-            <div class="disclosure-body"><code>const isEven = number % 2 === 0; console.log(isEven);</code></div>
-          </details>
-        </div>
-
-        <div class="note note--challenge">
-          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
-          <div><h4>Progressive challenge</h4><p>Finished early? In Exercise 2, add a variable for a discount percentage and apply it before the service charge. In Exercise 3, do the same check for divisibility by 3 instead of 2.</p></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 15. Wrap-up -->
-    <section class="slide" data-title="Wrap-up &amp; next steps">
-      <p class="slide-label">Wrap-up</p>
-      <h1>What you've built today</h1>
-      <p class="slide-sub">A working environment, a first script, and a handful of exercises solved with variables, operators, and arithmetic. That's the real foundation of the language.</p>
+    <!-- 16. Encerramento do Dia 1 -->
+    <section class="slide" data-title="Encerramento do Dia 1">
+      <p class="slide-label">Encerramento do Dia 1</p>
+      <h1>O que construímos hoje</h1>
+      <p class="slide-sub">Um ambiente funcionando, um primeiro script e uma boa base de variáveis, operadores e aritmética. Essa é a fundação real da linguagem.</p>
       <div class="slide-body cols-2">
         <div class="card">
-          <h2>Recap</h2>
+          <h2>Recapitulando</h2>
           <ul>
-            <li>What JavaScript is, and where it runs (browser + Node.js)</li>
-            <li>A working editor, browser console, and optional Node.js setup</li>
-            <li>Hello World, both inline and as a linked <code>.js</code> file</li>
-            <li>Variables (<code>const</code>/<code>let</code>) and the core data types</li>
-            <li>Comparison, logical, and arithmetic operators</li>
-            <li>Three solved exercises, plus their progressive challenges</li>
+            <li>O que é JavaScript e onde ele roda (navegador + Node.js)</li>
+            <li>Um editor funcionando, console do navegador e Node.js opcional configurado</li>
+            <li>Hello World, tanto embutido quanto em um arquivo <code>.js</code> vinculado</li>
+            <li>Variáveis (<code>const</code>/<code>let</code>) e os tipos de dados principais</li>
+            <li>Operadores de comparação, lógicos e aritméticos</li>
           </ul>
-          <h2 style="margin-top:14px;">Where to go next</h2>
+          <h2 style="margin-top:14px;">O que vem no Dia 2</h2>
           <ul>
-            <li><code>if</code> statements and conditionals</li>
-            <li>Functions and reusable blocks of code</li>
-            <li>Loops, arrays, and objects in depth</li>
+            <li>Estruturas condicionais (<code>if</code> / <code>else</code>)</li>
+            <li>Funções e blocos de código reutilizáveis</li>
+            <li>Exercícios práticos combinando tudo o que vimos hoje</li>
           </ul>
         </div>
         <div class="note note--feedback" style="align-self:start;">
           <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
-          <div><h4>Feedback check-in</h4><p>On a scale of 1&ndash;5, how confident do you feel writing a short script with variables and arithmetic on your own? Share your number out loud or in chat &mdash; this shapes the pace of the next session.</p></div>
+          <div><h4>Momento de feedback</h4><p>Em uma escala de 1 a 5, o quão confiante você se sente para declarar variáveis e fazer contas simples em JavaScript sozinho? Compartilhe seu número em voz alta ou no chat &mdash; isso ajusta o ritmo do Dia 2.</p></div>
         </div>
       </div>
     </section>
 
   </div>
 
-  <!-- Bottom bar -->
+  <!-- Barra inferior -->
   <div class="deck-bottombar">
-    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Prev</button>
-    <span class="nav-center">Arrow keys or Page Up/Down also navigate</span>
-    <button class="nav-btn" id="next-btn">Next<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Anterior</button>
+    <span class="nav-center">As setas do teclado ou Page Up/Down também navegam</span>
+    <button class="nav-btn" id="next-btn">Próximo<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
   </div>
 </div>
 
-<!-- Slide index drawer -->
+<!-- Painel de índice de slides -->
 <div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
 <div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
   <div class="menu-drawer-head">
-    <h2 id="menu-drawer-title">All slides</h2>
-    <button class="menu-close" id="menu-close" aria-label="Close slide index">
+    <h2 id="menu-drawer-title">Todos os slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Fechar índice de slides">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
     </button>
   </div>
