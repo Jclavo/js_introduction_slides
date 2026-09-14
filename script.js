@@ -26,6 +26,10 @@
   const menuClose = document.getElementById("menu-close");
   const menuList = document.getElementById("menu-list");
 
+  const a11yToggle = document.getElementById("a11y-toggle");
+  const a11yDrawer = document.getElementById("a11y-drawer");
+  const a11yClose = document.getElementById("a11y-close");
+
   /* -------------------------------------------------------------------
      Slide semantics: give every slide an ARIA identity up front so
      screen readers announce "slide, N of TOTAL: <title>" consistently,
@@ -102,8 +106,9 @@
   nextBtn.addEventListener("click", () => goTo(current + 1));
 
   document.addEventListener("keydown", (e) => {
-    if (isMenuOpen()) {
-      handleMenuKeydown(e);
+    const openDialog = getOpenDialog();
+    if (openDialog) {
+      openDialog.handleKeydown(e);
       return;
     }
     if (e.target.tagName === "TEXTAREA") return; // don't hijack typing in code editors
@@ -112,70 +117,171 @@
   });
 
   /* -------------------------------------------------------------------
-     Menu drawer: a real accessible dialog.
-     - inert while closed, so its (off-screen) contents can never grab
+     Reusable accessible-dialog factory, used for both the slide-index
+     drawer and the accessibility panel.
+     - inert while closed, so off-screen contents can never grab
        keyboard focus or be reached by screen-reader virtual cursors.
      - focus moves into the dialog on open and returns to the trigger
        button on close.
      - Tab / Shift+Tab are trapped inside the dialog while it's open.
+     - only one of these dialogs is ever open at a time; opening one
+       closes the other so they never fight over the shared scrim.
      ------------------------------------------------------------------- */
 
-  function isMenuOpen() {
-    return document.body.classList.contains("menu-open");
+  const openDialogs = new Set();
+  function getOpenDialog() {
+    for (const d of openDialogs) if (d.isOpen()) return d;
+    return null;
   }
 
-  function focusableInDrawer() {
-    return Array.from(
-      menuDrawer.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])')
-    ).filter((el) => el.offsetParent !== null);
-  }
-
-  function openMenu() {
-    document.body.classList.add("menu-open");
-    menuDrawer.removeAttribute("inert");
-    menuToggle.setAttribute("aria-expanded", "true");
-    menuScrim.setAttribute("aria-hidden", "false");
-    const focusables = focusableInDrawer();
-    if (focusables.length) focusables[0].focus();
-  }
-
-  function closeMenu() {
-    if (!isMenuOpen()) return;
-    document.body.classList.remove("menu-open");
-    menuDrawer.setAttribute("inert", "");
-    menuToggle.setAttribute("aria-expanded", "false");
-    menuScrim.setAttribute("aria-hidden", "true");
-    menuToggle.focus();
-  }
-
-  function handleMenuKeydown(e) {
-    if (e.key === "Escape") {
-      e.preventDefault();
-      closeMenu();
-      return;
+  function createDialog({ toggleBtn, drawerEl, closeBtn, bodyClass }) {
+    function isOpen() {
+      return document.body.classList.contains(bodyClass);
     }
-    if (e.key !== "Tab") return;
 
-    const focusables = focusableInDrawer();
-    if (!focusables.length) return;
-    const first = focusables[0];
-    const last = focusables[focusables.length - 1];
-
-    if (e.shiftKey && document.activeElement === first) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && document.activeElement === last) {
-      e.preventDefault();
-      first.focus();
+    function focusable() {
+      return Array.from(
+        drawerEl.querySelectorAll('button, input, [href], [tabindex]:not([tabindex="-1"])')
+      ).filter((el) => el.offsetParent !== null);
     }
+
+    function open() {
+      // Only one dialog open at a time.
+      openDialogs.forEach((d) => { if (d !== api && d.isOpen()) d.close(); });
+      document.body.classList.add(bodyClass);
+      drawerEl.removeAttribute("inert");
+      toggleBtn.setAttribute("aria-expanded", "true");
+      menuScrim.setAttribute("aria-hidden", "false");
+      const items = focusable();
+      if (items.length) items[0].focus();
+    }
+
+    function close() {
+      if (!isOpen()) return;
+      document.body.classList.remove(bodyClass);
+      drawerEl.setAttribute("inert", "");
+      toggleBtn.setAttribute("aria-expanded", "false");
+      if (!getOpenDialog()) menuScrim.setAttribute("aria-hidden", "true");
+      toggleBtn.focus();
+    }
+
+    function handleKeydown(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        close();
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusable();
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+
+    const api = { open, close, isOpen, handleKeydown };
+    toggleBtn.addEventListener("click", () => (isOpen() ? close() : open()));
+    closeBtn.addEventListener("click", close);
+    openDialogs.add(api);
+    return api;
   }
 
-  menuToggle.addEventListener("click", openMenu);
-  menuClose.addEventListener("click", closeMenu);
-  menuScrim.addEventListener("click", closeMenu);
+  const menuDialog = createDialog({
+    toggleBtn: menuToggle,
+    drawerEl: menuDrawer,
+    closeBtn: menuClose,
+    bodyClass: "menu-open",
+  });
+
+  const a11yDialog = createDialog({
+    toggleBtn: a11yToggle,
+    drawerEl: a11yDrawer,
+    closeBtn: a11yClose,
+    bodyClass: "a11y-open",
+  });
+
+  menuScrim.addEventListener("click", () => {
+    const open = getOpenDialog();
+    if (open) open.close();
+  });
+
+  function closeMenu() { menuDialog.close(); }
 
   buildMenu();
   goTo(0);
+
+  /* -------------------------------------------------------------------
+     Accessibility panel: text-resize control (WCAG 1.4.4) and a
+     color-scheme switcher with themes tuned for low vision and common
+     color-vision deficiencies. Both preferences persist across visits.
+     ------------------------------------------------------------------- */
+
+  const FONT_MIN = 0.85;
+  const FONT_MAX = 2.0;
+  const FONT_STEP = 0.15;
+  const FONT_STORAGE_KEY = "jsWorkshopFontScale";
+  const THEME_STORAGE_KEY = "jsWorkshopTheme";
+
+  const fontDecreaseBtn = document.getElementById("font-decrease");
+  const fontIncreaseBtn = document.getElementById("font-increase");
+  const fontResetBtn = document.getElementById("font-reset");
+  const fontSizeValue = document.getElementById("font-size-value");
+  const themeRadios = document.querySelectorAll('input[name="a11y-theme"]');
+
+  function applyFontScale(scale) {
+    const clamped = Math.min(FONT_MAX, Math.max(FONT_MIN, scale));
+    document.documentElement.style.setProperty("--font-scale", clamped.toFixed(2));
+    fontSizeValue.textContent = `${Math.round(clamped * 100)}%`;
+    fontDecreaseBtn.disabled = clamped <= FONT_MIN;
+    fontIncreaseBtn.disabled = clamped >= FONT_MAX;
+    try { localStorage.setItem(FONT_STORAGE_KEY, String(clamped)); } catch (e) { /* ignore */ }
+    return clamped;
+  }
+
+  let currentFontScale = 1;
+  try {
+    const saved = parseFloat(localStorage.getItem(FONT_STORAGE_KEY));
+    if (!isNaN(saved)) currentFontScale = saved;
+  } catch (e) { /* ignore */ }
+  currentFontScale = applyFontScale(currentFontScale);
+
+  fontDecreaseBtn.addEventListener("click", () => {
+    currentFontScale = applyFontScale(currentFontScale - FONT_STEP);
+  });
+  fontIncreaseBtn.addEventListener("click", () => {
+    currentFontScale = applyFontScale(currentFontScale + FONT_STEP);
+  });
+  fontResetBtn.addEventListener("click", () => {
+    currentFontScale = applyFontScale(1);
+  });
+
+  function applyTheme(theme) {
+    if (theme && theme !== "default") {
+      document.documentElement.setAttribute("data-theme", theme);
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+    }
+    try { localStorage.setItem(THEME_STORAGE_KEY, theme || "default"); } catch (e) { /* ignore */ }
+    themeRadios.forEach((r) => { r.checked = r.value === (theme || "default"); });
+  }
+
+  let savedTheme = "default";
+  try {
+    savedTheme = localStorage.getItem(THEME_STORAGE_KEY) || "default";
+  } catch (e) { /* ignore */ }
+  applyTheme(savedTheme);
+
+  themeRadios.forEach((radio) => {
+    radio.addEventListener("change", () => {
+      if (radio.checked) applyTheme(radio.value);
+    });
+  });
 
   /* -------------------------------------------------------------------
      Live code runner

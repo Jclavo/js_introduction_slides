@@ -29,6 +29,12 @@
   --red-dim: #C23B30;
   --blue: #5FA8E0;         /* feedback note */
 
+  --dot-red: #FF5F56;      /* traffic-light window dots */
+  --dot-yellow: #FFBD2E;
+  --dot-green: #27C93F;
+
+  --font-scale: 1;         /* adjustable via the accessibility panel */
+
   /* Type */
   --font-display: "Fraunces", Georgia, "Times New Roman", serif;
   --font-ui: "Space Grotesk", "Segoe UI", Arial, sans-serif;
@@ -38,7 +44,71 @@
   --radius-pill: 999px;
 }
 
+/* ---------------------------------------------------------------------
+   Color-scheme themes, switched via html[data-theme="..."] and the
+   accessibility panel. Every color in the deck is a custom property
+   referenced with var(), so overriding these here is enough to
+   repaint the whole deck — no other selectors need to change.
+   --------------------------------------------------------------------- */
+
+/* Alto contraste: maximizes every contrast ratio further for low vision. */
+html[data-theme="high-contrast"] {
+  --bg-page: #000000;
+  --bg-panel: #0A0A0A;
+  --bg-card: #000000;
+  --border: #4D4D4D;
+  --border-soft: #4D4D4D;
+  --border-control: #B3B3B3;
+
+  --text-white: #FFFFFF;
+  --text-light: #EDEDED;
+  --text-lighter: #FFFFFF;
+  --text-faint: #C7C7C7;
+
+  --yellow: #FFEE58;
+  --yellow-dim: #FFEE58;
+  --yellow-deep: #FFF59D;
+
+  --green: #5CE488;
+  --red: #FF7A70;
+  --red-dim: #FF7A70;
+  --blue: #7FC2FF;
+
+  --dot-red: #FF7A70;
+  --dot-yellow: #FFEE58;
+  --dot-green: #5CE488;
+}
+
+/* Daltonismo (vermelho-verde): protanopia/deuteranopia is a red↔green
+   confusion, so the two colors that previously carried that contrast
+   (the pairing note and the challenge note, plus the matching traffic
+   dots) move to teal and orange — hues that stay distinct from each
+   other and from the existing yellow/blue under that condition. */
+html[data-theme="colorblind"] {
+  --green: #26C6DA;
+  --red: #FF8A3D;
+  --red-dim: #C9631F;
+
+  --dot-red: #FF8A3D;
+  --dot-green: #26C6DA;
+}
+
+/* Escala de cinza: removes color entirely, so nothing in the deck can
+   depend on color perception at all — meaning is carried purely by
+   icon shape, text, and layout. Useful for total color blindness
+   (achromatopsia) or as a check that the color-only assumption never
+   crept back in. */
+html[data-theme="grayscale"] body {
+  filter: grayscale(1);
+}
+
 * { box-sizing: border-box; }
+
+/* Text-resize control (WCAG 1.4.4): scales every rem-based size in the
+   deck. Toggled via the accessibility panel; persisted in localStorage. */
+html {
+  font-size: calc(100% * var(--font-scale));
+}
 
 html, body {
   margin: 0;
@@ -50,7 +120,7 @@ html, body {
   overflow: hidden;
 }
 
-body.menu-open { overflow: hidden; }
+body.menu-open, body.a11y-open { overflow: hidden; }
 
 ::selection {
   background: var(--yellow);
@@ -188,6 +258,25 @@ body.menu-open { overflow: hidden; }
 .menu-toggle:hover { background: var(--bg-panel); border-color: var(--yellow-deep); }
 .menu-toggle svg { width: 18px; height: 18px; }
 
+.a11y-toggle {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: -0.02em;
+}
+.a11y-toggle:hover { background: var(--bg-panel); border-color: var(--yellow-deep); }
+
 /* ---------------------------------------------------------------------
    Slide stage
    --------------------------------------------------------------------- */
@@ -320,9 +409,9 @@ body.menu-open { overflow: hidden; }
   width: 8px; height: 8px; border-radius: 50%;
   background: var(--border);
 }
-.dots span:nth-child(1) { background: #FF5F56; }
-.dots span:nth-child(2) { background: #FFBD2E; }
-.dots span:nth-child(3) { background: #27C93F; }
+.dots span:nth-child(1) { background: var(--dot-red); }
+.dots span:nth-child(2) { background: var(--dot-yellow); }
+.dots span:nth-child(3) { background: var(--dot-green); }
 
 pre.code-block, textarea.code-input {
   margin: 0;
@@ -565,7 +654,7 @@ textarea.code-input:focus { background: rgba(247,223,30,.03); }
   transition: opacity .2s ease;
   z-index: 20;
 }
-body.menu-open .menu-scrim { opacity: 1; pointer-events: auto; }
+body.menu-open .menu-scrim, body.a11y-open .menu-scrim { opacity: 1; pointer-events: auto; }
 
 .menu-drawer {
   position: fixed;
@@ -653,6 +742,173 @@ body.menu-open .menu-drawer { transform: translateX(0); }
   min-width: 20px;
 }
 
+/* ---------------------------------------------------------------------
+   Accessibility panel (left-docked, so it never overlaps the slide
+   index drawer if both were somehow triggered back to back)
+   --------------------------------------------------------------------- */
+
+.a11y-drawer {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%;
+  width: min(340px, 88vw);
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-control);
+  transform: translateX(-100%);
+  transition: transform .25s ease;
+  z-index: 21;
+  padding: 18px;
+  overflow-y: auto;
+}
+body.a11y-open .a11y-drawer { transform: translateX(0); }
+
+.a11y-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.a11y-drawer h2 {
+  font-family: var(--font-display);
+  color: var(--text-white);
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0 6px;
+}
+
+.a11y-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a11y-close:hover { background: var(--bg-card); border-color: var(--yellow-deep); }
+.a11y-close svg { width: 16px; height: 16px; }
+
+.a11y-section {
+  border: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.a11y-section legend {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: .82rem;
+  color: var(--yellow);
+  padding: 0 6px 10px;
+}
+.a11y-section-hint {
+  font-size: .82rem;
+  color: var(--text-light);
+  margin: 0 6px 12px;
+  line-height: 1.5;
+}
+
+/* Font-size stepper: A- / percentage / A+ */
+.font-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px;
+}
+.font-size-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.font-size-btn:hover { background: var(--bg-card); border-color: var(--yellow-deep); }
+.font-size-btn:disabled { opacity: .35; cursor: default; }
+.font-size-btn.small { font-size: .85rem; }
+.font-size-btn.large { font-size: 1.2rem; }
+
+.font-size-value {
+  flex: 1 1 auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: .95rem;
+  color: var(--text-lighter);
+  min-width: 52px;
+}
+
+.font-size-reset {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: .8rem;
+  color: var(--text-light);
+  background: transparent;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  min-height: 44px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.font-size-reset:hover { border-color: var(--yellow-deep); color: var(--text-white); }
+
+/* Color-theme radio group */
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 6px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.theme-option:hover { background: var(--bg-card); }
+.theme-option input[type="radio"] {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--yellow);
+  cursor: pointer;
+}
+.theme-option-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.theme-option-title {
+  font-family: var(--font-ui);
+  font-size: .9rem;
+  color: var(--text-lighter);
+}
+.theme-option-desc {
+  font-size: .78rem;
+  color: var(--text-faint);
+}
+.theme-swatch {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: auto;
+  flex: none;
+}
+.theme-swatch span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.25);
+}
+
 /* Scrollbar (webkit) — keep it quiet */
 .slide::-webkit-scrollbar, .menu-drawer::-webkit-scrollbar { width: 8px; }
 .slide::-webkit-scrollbar-thumb, .menu-drawer::-webkit-scrollbar-thumb {
@@ -663,7 +919,7 @@ body.menu-open .menu-drawer { transform: translateX(0); }
    users, and yellow-on-near-black clears WCAG's 3:1 non-text contrast rule
    against every background used in this deck. */
 button:focus-visible, textarea:focus-visible, summary:focus-visible,
-a:focus-visible, [tabindex]:focus-visible {
+a:focus-visible, [tabindex]:focus-visible, input:focus-visible {
   outline: 3px solid var(--yellow);
   outline-offset: 2px;
 }

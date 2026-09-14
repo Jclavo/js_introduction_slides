@@ -42,6 +42,7 @@
       <div class="progress-fill" id="progress-fill"></div>
     </div>
     <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 16</div>
+    <button class="a11y-toggle" id="a11y-toggle" aria-label="Configurações de acessibilidade" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-drawer">Aa</button>
     <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
       <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
     </button>
@@ -543,8 +544,70 @@ console.log(itensNoCarrinho); // 3</textarea>
   </div>
 </div>
 
-<!-- Painel de índice de slides -->
+<!-- Painel de índice de slides e painel de acessibilidade -->
 <div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+
+<div class="a11y-drawer" id="a11y-drawer" role="dialog" aria-modal="true" aria-labelledby="a11y-drawer-title" inert>
+  <div class="a11y-drawer-head">
+    <h2 id="a11y-drawer-title">Acessibilidade</h2>
+    <button class="a11y-close" id="a11y-close" aria-label="Fechar configurações de acessibilidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <fieldset class="a11y-section">
+    <legend>Tamanho do texto</legend>
+    <p class="a11y-section-hint">Ajusta o tamanho de todo o texto dos slides, de 85% até 200%.</p>
+    <div class="font-size-control">
+      <button type="button" class="font-size-btn small" id="font-decrease" aria-label="Diminuir tamanho do texto">A−</button>
+      <span class="font-size-value" id="font-size-value" aria-live="polite">100%</span>
+      <button type="button" class="font-size-btn large" id="font-increase" aria-label="Aumentar tamanho do texto">A+</button>
+    </div>
+    <button type="button" class="font-size-reset" id="font-reset">Redefinir tamanho</button>
+  </fieldset>
+
+  <fieldset class="a11y-section">
+    <legend>Esquema de cores</legend>
+    <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="default" checked>
+      <span class="theme-option-label">
+        <span class="theme-option-title">Padrão</span>
+        <span class="theme-option-desc">Preto e amarelo, o tema original</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#131313"></span><span style="background:#F7DF1E"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="high-contrast">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Alto contraste</span>
+        <span class="theme-option-desc">Preto puro e branco, para baixa visão</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#000000"></span><span style="background:#FFEE58"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="colorblind">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Daltonismo (vermelho-verde)</span>
+        <span class="theme-option-desc">Troca verde/vermelho por azul-turquesa/laranja</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#26C6DA"></span><span style="background:#FF8A3D"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="grayscale">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Escala de cinza</span>
+        <span class="theme-option-desc">Remove toda cor; usa só contraste, ícone e texto</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#4d4d4d"></span><span style="background:#bdbdbd"></span></span>
+    </label>
+  </fieldset>
+</div>
+
 <div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
   <div class="menu-drawer-head">
     <h2 id="menu-drawer-title">Todos os slides</h2>

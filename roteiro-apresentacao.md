@@ -231,3 +231,9 @@ facilitador(a):
   tecnologia assistiva, vale um comentário de 30 segundos no início:
   "este material funciona só com o teclado — as setas movem entre os
   slides, Tab move entre os controles do slide atual."
+- **Um painel de acessibilidade** (botão "Aa" na barra superior, ao lado
+  do índice de slides) deixa cada participante ajustar o tamanho do
+  texto (85% a 200%) e trocar o esquema de cores &mdash; incluindo uma
+  opção de alto contraste e uma opção pensada para daltonismo
+  vermelho-verde. Vale mencionar esse botão no início do encontro, já
+  que a preferência de cada pessoa fica salva no navegador dela.
