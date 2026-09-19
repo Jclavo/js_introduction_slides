@@ -570,6 +570,15 @@ console.log(itensNoCarrinho); // 3</textarea>
     <legend>Esquema de cores</legend>
     <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
 
+    <div class="theme-preview" aria-hidden="true">
+      <span class="theme-preview-swatch" style="background:var(--yellow)"></span>
+      <span class="theme-preview-swatch" style="background:var(--green)"></span>
+      <span class="theme-preview-swatch" style="background:var(--red)"></span>
+      <span class="theme-preview-swatch" style="background:var(--blue)"></span>
+      <span class="theme-preview-label">Pré-visualização em tempo real</span>
+    </div>
+    <p class="visually-hidden" id="theme-status" role="status" aria-live="polite"></p>
+
     <label class="theme-option">
       <input type="radio" name="a11y-theme" value="default" checked>
       <span class="theme-option-label">

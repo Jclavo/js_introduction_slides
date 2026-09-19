@@ -865,6 +865,30 @@ body.a11y-open .a11y-drawer { transform: translateX(0); }
 .font-size-reset:hover { border-color: var(--yellow-deep); color: var(--text-white); }
 
 /* Color-theme radio group */
+.theme-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 0 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+}
+.theme-preview-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  flex: none;
+  transition: background-color .15s ease;
+}
+.theme-preview-label {
+  font-size: .78rem;
+  color: var(--text-faint);
+  margin-left: 4px;
+}
+
 .theme-option {
   display: flex;
   align-items: center;

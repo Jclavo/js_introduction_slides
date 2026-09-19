@@ -233,6 +233,13 @@
   const fontResetBtn = document.getElementById("font-reset");
   const fontSizeValue = document.getElementById("font-size-value");
   const themeRadios = document.querySelectorAll('input[name="a11y-theme"]');
+  const themeStatus = document.getElementById("theme-status");
+  const THEME_NAMES = {
+    default: "Padrão",
+    "high-contrast": "Alto contraste",
+    colorblind: "Daltonismo (vermelho-verde)",
+    grayscale: "Escala de cinza",
+  };
 
   function applyFontScale(scale) {
     const clamped = Math.min(FONT_MAX, Math.max(FONT_MIN, scale));
@@ -262,13 +269,17 @@
   });
 
   function applyTheme(theme) {
-    if (theme && theme !== "default") {
-      document.documentElement.setAttribute("data-theme", theme);
+    const key = theme || "default";
+    if (key !== "default") {
+      document.documentElement.setAttribute("data-theme", key);
     } else {
       document.documentElement.removeAttribute("data-theme");
     }
-    try { localStorage.setItem(THEME_STORAGE_KEY, theme || "default"); } catch (e) { /* ignore */ }
-    themeRadios.forEach((r) => { r.checked = r.value === (theme || "default"); });
+    try { localStorage.setItem(THEME_STORAGE_KEY, key); } catch (e) { /* ignore */ }
+    themeRadios.forEach((r) => { r.checked = r.value === key; });
+    if (themeStatus) {
+      themeStatus.textContent = `Tema aplicado: ${THEME_NAMES[key] || key}`;
+    }
   }
 
   let savedTheme = "default";
