@@ -91,6 +91,90 @@
       </div>
     </section>
 
+    <!-- 11. Capturando valores com prompt() -->
+<section class="slide" data-title="Capturando valores com prompt()">
+  <p class="slide-label">17h &middot; Antes dos exercícios</p>
+  <h1>Pedindo um valor para quem usa o programa</h1>
+  <p class="slide-sub">Até agora todo valor vinha fixo no código (<code>const idade = 15;</code>). A função <code>prompt()</code> deixa a pessoa que está usando o programa digitar o valor na hora.</p>
+  <div class="slide-body cols-2">
+    <div class="card">
+      <h2>Como funciona</h2>
+      <ul>
+        <li><code>prompt("mensagem")</code> abre uma caixa de diálogo no navegador pedindo um valor</li>
+        <li>A pessoa digita e clica em OK (ou Cancelar)</li>
+        <li>O valor devolvido é <strong>sempre um texto</strong> (string), mesmo que pareça um número</li>
+        <li>Para fazer contas com o resultado, converta com <code>Number()</code></li>
+        <li>O painel de código ao lado também é um navegador de verdade &mdash; o <code>prompt()</code> vai funcionar normalmente aqui</li>
+      </ul>
+    </div>
+    <div class="code-panel" data-runner>
+      <div class="code-panel-head"><span class="code-panel-title">prompt-basico.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+      <textarea class="code-input" spellcheck="false" rows="9">// prompt() pausa o programa até a pessoa responder
+let nome = prompt("Qual é o seu nome?");
+
+// Number() converte o texto do prompt em número
+let idade = Number(prompt("Qual é a sua idade?"));
+
+console.log("Olá, " + nome + "! Ano que vem você terá " + (idade + 1) + " anos.");</textarea>
+      <div class="code-actions">
+        <button class="run-btn">Executar ▸</button>
+        <button class="reset-btn">Reiniciar</button>
+        <span class="run-hint">Uma caixa de diálogo do navegador vai aparecer</span>
+      </div>
+      <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. Exercícios rápidos com prompt() -->
+<section class="slide" data-title="Exercícios rápidos com prompt()">
+  <p class="slide-label">17h &middot; Antes dos exercícios</p>
+  <h1>Praticando prompt() antes do roteiro principal</h1>
+  <p class="slide-sub">Dois exercícios rápidos combinando <code>prompt()</code> com o que já vimos hoje, antes de entrarmos nos quatro exercícios principais.</p>
+  <div class="slide-body cols-1" style="gap:16px;">
+
+    <div class="exercise">
+      <div class="exercise-head"><h3>Saudação personalizada</h3><span class="pill">5 min</span></div>
+      <p style="margin:0 0 10px;">Peça o nome da pessoa com <code>prompt()</code> e mostre "Bem-vindo(a), &lt;nome&gt;!" com <code>console.log</code>.</p>
+      <div class="code-panel" data-runner>
+        <div class="code-panel-head"><span class="code-panel-title">saudacao.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+        <textarea class="code-input" spellcheck="false" rows="4">// TODO: peça o nome com prompt() e logue
+// "Bem-vindo(a), <nome>!"</textarea>
+        <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+        <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <details class="disclosure">
+        <summary>Dica</summary>
+        <div class="disclosure-body">Guarde o resultado de <code>prompt()</code> em uma variável antes de usar &mdash; assim como no exemplo do slide anterior.</div>
+      </details>
+      <details class="disclosure">
+        <summary>Solução</summary>
+        <div class="disclosure-body"><code>let nome = prompt("Qual é o seu nome?"); console.log("Bem-vindo(a), " + nome + "!");</code></div>
+      </details>
+    </div>
+
+    <div class="exercise">
+      <div class="exercise-head"><h3>Maior de idade, com prompt()</h3><span class="pill">5 min</span></div>
+      <p style="margin:0 0 10px;">Peça a idade com <code>prompt()</code> (convertida com <code>Number()</code>) e use <code>if</code>/<code>else</code> para dizer se a pessoa é maior ou menor de idade.</p>
+      <div class="code-panel" data-runner>
+        <div class="code-panel-head"><span class="code-panel-title">maioridade-prompt.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+        <textarea class="code-input" spellcheck="false" rows="4">// TODO: peça a idade com prompt() + Number()
+// e use if / else para logar o resultado</textarea>
+        <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+        <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+      </div>
+      <details class="disclosure">
+        <summary>Dica</summary>
+        <div class="disclosure-body">É o mesmo <code>if</code>/<code>else</code> do slide de estruturas condicionais &mdash; a única novidade é que o valor agora vem de <code>prompt()</code> em vez de estar fixo no código.</div>
+      </details>
+      <details class="disclosure">
+        <summary>Solução</summary>
+        <div class="disclosure-body"><code>let idade = Number(prompt("Qual é a sua idade?")); if (idade &gt;= 18) { console.log("Maior de idade"); } else { console.log("Menor de idade"); }</code></div>
+      </details>
+        </div>
+      </div>
+    </section>
+
     <!-- 3. Agenda do Dia 2 -->
     <section class="slide" data-title="Agenda do Dia 2">
       <p class="slide-label">Roteiro</p>
