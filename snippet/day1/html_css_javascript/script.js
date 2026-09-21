@@ -2,10 +2,12 @@ document.getElementById('registrationForm').addEventListener('input', function()
     const name = document.getElementById('name').value;
     const cpf = document.getElementById('cpf').value;
     const email = document.getElementById('email').value;
+    const career = document.getElementById('career').value;
+    const comment = document.getElementById('comment').value;
     
-    // Enable the button only if all required fields are filled
+    // Enable the button only if all required fields are filled and meet length requirements
     const registerButton = document.getElementById('registerButton');
-    registerButton.disabled = !name || !cpf || !email;
+    registerButton.disabled = !name || !cpf || !email || (career.length > 50) || (comment.length > 200);
 });
 
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
