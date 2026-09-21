@@ -1,3 +1,5 @@
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
 document.getElementById('registrationForm').addEventListener('input', function() {
     const name = document.getElementById('name').value;
     const cpf = document.getElementById('cpf').value;
@@ -10,7 +12,11 @@ document.getElementById('registrationForm').addEventListener('input', function()
     charCountSpan.innerText = comment.length + '/200';
     
     // Change textarea color if over 200 characters
-    comment.length > 200 ? document.getElementById('comment').style.borderColor = 'red' : document.getElementById('comment').style.borderColor = '';
+    if (comment.length > 200) {
+        document.getElementById('comment').style.borderColor = 'red';
+    } else {
+        document.getElementById('comment').style.borderColor = '';
+    }
     
     // Enable the button only if all required fields are filled
     const registerButton = document.getElementById('registerButton');
@@ -25,6 +31,13 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     const email = document.getElementById('email').value;
     const career = document.getElementById('career').value;
     const comment = document.getElementById('comment').value;
+    
+    // Email validation
+    if (!emailRegex.test(email)) {
+        document.getElementById('message').innerText = 'Invalid email format.';
+        document.getElementById('message').style.color = 'red';
+        return;
+    }
     
     // Simple validation
     if (!name || !cpf || !email) {
