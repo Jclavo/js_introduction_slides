@@ -1,0 +1,985 @@
+/* =====================================================================
+   JavaScript Workshop — Slide Deck Styles
+   Design concept: black-and-JS-yellow, styled after the classic
+   "developer poster" look — near-black backgrounds, JS-logo yellow
+   (#F7DF1E) as the single accent, white headlines, and a macOS-style
+   red/yellow/green traffic-light on every code window's title bar.
+   ===================================================================== */
+
+:root {
+  /* Color tokens */
+  --bg-page: #131313;      /* page / stage background */
+  --bg-panel: #1E1E1E;     /* code panels, nav buttons, menu drawer */
+  --bg-card: #1A1A1A;      /* content cards, notes, exercises */
+  --border: #333333;       /* dividers, hairlines (decorative only) */
+  --border-soft: #2A2A2A;
+  --border-control: #6B6B6B; /* interactive control outlines — meets 3:1 (WCAG 1.4.11) */
+
+  --text-white: #FFFFFF;   /* headings */
+  --text-light: #C7C7C7;   /* secondary / supporting text */
+  --text-lighter: #E4E4E4; /* menu items, pill text */
+  --text-faint: #909090;   /* hints, placeholders — meets 4.5:1 (WCAG 1.4.3) against dark panels */
+
+  --yellow: #F7DF1E;       /* JS-logo yellow — the single brand accent */
+  --yellow-dim: #C7B21A;
+  --yellow-deep: #A88F16;
+
+  --green: #52C97A;        /* pairing note, success output */
+  --red: #FF5F56;          /* challenge note, error output */
+  --red-dim: #C23B30;
+  --blue: #5FA8E0;         /* feedback note */
+
+  --dot-red: #FF5F56;      /* traffic-light window dots */
+  --dot-yellow: #FFBD2E;
+  --dot-green: #27C93F;
+
+  --font-scale: 1;         /* adjustable via the accessibility panel */
+
+  /* Type */
+  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-ui: "Space Grotesk", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
+
+  --radius-card: 10px;
+  --radius-pill: 999px;
+}
+
+/* ---------------------------------------------------------------------
+   Color-scheme themes, switched via html[data-theme="..."] and the
+   accessibility panel. Every color in the deck is a custom property
+   referenced with var(), so overriding these here is enough to
+   repaint the whole deck — no other selectors need to change.
+   --------------------------------------------------------------------- */
+
+/* Alto contraste: maximizes every contrast ratio further for low vision. */
+html[data-theme="high-contrast"] {
+  --bg-page: #000000;
+  --bg-panel: #0A0A0A;
+  --bg-card: #000000;
+  --border: #4D4D4D;
+  --border-soft: #4D4D4D;
+  --border-control: #B3B3B3;
+
+  --text-white: #FFFFFF;
+  --text-light: #EDEDED;
+  --text-lighter: #FFFFFF;
+  --text-faint: #C7C7C7;
+
+  --yellow: #FFEE58;
+  --yellow-dim: #FFEE58;
+  --yellow-deep: #FFF59D;
+
+  --green: #5CE488;
+  --red: #FF7A70;
+  --red-dim: #FF7A70;
+  --blue: #7FC2FF;
+
+  --dot-red: #FF7A70;
+  --dot-yellow: #FFEE58;
+  --dot-green: #5CE488;
+}
+
+/* Daltonismo (vermelho-verde): protanopia/deuteranopia is a red↔green
+   confusion, so the two colors that previously carried that contrast
+   (the pairing note and the challenge note, plus the matching traffic
+   dots) move to teal and orange — hues that stay distinct from each
+   other and from the existing yellow/blue under that condition. */
+html[data-theme="colorblind"] {
+  --green: #26C6DA;
+  --red: #FF8A3D;
+  --red-dim: #C9631F;
+
+  --dot-red: #FF8A3D;
+  --dot-green: #26C6DA;
+}
+
+/* Escala de cinza: removes color entirely, so nothing in the deck can
+   depend on color perception at all — meaning is carried purely by
+   icon shape, text, and layout. Useful for total color blindness
+   (achromatopsia) or as a check that the color-only assumption never
+   crept back in. */
+html[data-theme="grayscale"] body {
+  filter: grayscale(1);
+}
+
+* { box-sizing: border-box; }
+
+/* Text-resize control (WCAG 1.4.4): scales every rem-based size in the
+   deck. Toggled via the accessibility panel; persisted in localStorage. */
+html {
+  font-size: calc(100% * var(--font-scale));
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-page);
+  color: var(--text-white);
+  font-family: var(--font-ui);
+  overflow: hidden;
+}
+
+body.menu-open, body.a11y-open { overflow: hidden; }
+
+::selection {
+  background: var(--yellow);
+  color: var(--bg-page);
+}
+
+/* ---------------------------------------------------------------------
+   Accessibility utilities
+   --------------------------------------------------------------------- */
+
+/* Visually hides content but keeps it available to assistive tech */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Skip link: hidden until it receives keyboard focus */
+.skip-link {
+  position: absolute;
+  top: -60px;
+  left: 12px;
+  z-index: 100;
+  background: var(--yellow);
+  color: var(--bg-page);
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 10px 18px;
+  border-radius: 0 0 8px 8px;
+  transition: top .15s ease;
+}
+.skip-link:focus {
+  top: 0;
+  outline: 3px solid var(--text-white);
+  outline-offset: 2px;
+}
+
+/* elements marked inert (closed dialog) must never be visible/paintable
+   even mid-transition, regardless of browser inert support level */
+[inert] {
+  pointer-events: none;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ---------------------------------------------------------------------
+   App shell
+   --------------------------------------------------------------------- */
+
+#deck-app {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Top chrome: brand + progress + menu toggle */
+.deck-topbar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 22px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text-white);
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  flex: none;
+}
+
+.progress-track {
+  flex: 1 1 auto;
+  height: 6px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-panel);
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  background: linear-gradient(90deg, var(--yellow-deep), var(--yellow));
+  width: 6.6%;
+  transition: width .35s ease;
+}
+
+.slide-counter {
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  color: var(--text-light);
+  white-space: nowrap;
+  min-width: 52px;
+  text-align: right;
+}
+
+.menu-toggle {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-toggle:hover { background: var(--bg-panel); border-color: var(--yellow-deep); }
+.menu-toggle svg { width: 18px; height: 18px; }
+
+.a11y-toggle {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: .78rem;
+  letter-spacing: -0.02em;
+}
+.a11y-toggle:hover { background: var(--bg-panel); border-color: var(--yellow-deep); }
+
+/* ---------------------------------------------------------------------
+   Slide stage
+   --------------------------------------------------------------------- */
+
+.deck-stage {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, rgba(247,223,30,.07), transparent 60%),
+    var(--bg-page);
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  display: none;
+  padding: clamp(18px, 3.4vh, 40px) clamp(24px, 6vw, 96px);
+  overflow-y: auto;
+}
+
+.slide.active {
+  display: flex;
+  flex-direction: column;
+  animation: slide-in .32s ease both;
+}
+
+@keyframes slide-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.slide-label {
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  color: var(--yellow);
+  margin: 0 0 6px 0;
+  letter-spacing: .01em;
+}
+
+.slide h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3.6vw, 2.7rem);
+  color: var(--text-white);
+  margin: 0 0 8px 0;
+  line-height: 1.15;
+}
+
+.slide .slide-sub {
+  font-size: clamp(.95rem, 1.4vw, 1.15rem);
+  color: var(--text-light);
+  margin: 0 0 22px 0;
+  max-width: 62ch;
+}
+
+.slide-body {
+  flex: 1 1 auto;
+  display: grid;
+  gap: 22px;
+}
+
+.cols-2 { grid-template-columns: 1.05fr 1fr; }
+.cols-1 { grid-template-columns: 1fr; }
+
+@media (max-width: 880px) {
+  .cols-2 { grid-template-columns: 1fr; }
+}
+
+/* Content cards */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  padding: 20px 22px;
+  color: var(--text-lighter);
+  box-shadow: 0 1px 0 rgba(0,0,0,.25) inset;
+}
+
+.card h2, .card h3 {
+  font-family: var(--font-display);
+  color: var(--text-white);
+  margin-top: 0;
+}
+.card h2 { font-size: 1.2rem; }
+.card h3 { font-size: 1.05rem; }
+
+.card ul, .card ol {
+  margin: 8px 0 0 0;
+  padding-left: 1.15em;
+}
+.card li { margin-bottom: 7px; line-height: 1.5; }
+.card li:last-child { margin-bottom: 0; }
+
+.card p { line-height: 1.55; margin: 0 0 10px 0; }
+.card p:last-child { margin-bottom: 0; }
+.card code { color: var(--yellow); background: rgba(247,223,30,.08); padding: 1px 5px; border-radius: 4px; }
+
+/* ---------------------------------------------------------------------
+   Code blocks + live runner
+   --------------------------------------------------------------------- */
+
+.code-panel {
+  background: var(--bg-panel);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border-control);
+}
+
+.code-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  background: var(--bg-page);
+  border-bottom: 1px solid var(--border);
+}
+
+.code-panel-title {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--text-light);
+}
+
+/* macOS-style traffic-light window dots, echoing the laptop screenshot look */
+.dots { display: flex; gap: 6px; }
+.dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border);
+}
+.dots span:nth-child(1) { background: var(--dot-red); }
+.dots span:nth-child(2) { background: var(--dot-yellow); }
+.dots span:nth-child(3) { background: var(--dot-green); }
+
+pre.code-block, textarea.code-input {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: .88rem;
+  line-height: 1.6;
+  color: var(--text-lighter);
+  padding: 16px;
+  background: transparent;
+  border: none;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+textarea.code-input {
+  width: 100%;
+  resize: vertical;
+  min-height: 110px;
+  outline: none;
+}
+textarea.code-input:focus { background: rgba(247,223,30,.03); }
+
+/* minimal syntax accents for static <pre> snippets, via span classes */
+.tok-kw   { color: var(--yellow); }
+.tok-str  { color: var(--green); }
+.tok-num  { color: #E3A6D0; }
+.tok-com  { color: var(--text-faint); font-style: italic; }
+.tok-fn   { color: var(--blue); }
+
+.code-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.run-btn {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: .85rem;
+  color: var(--bg-page);
+  background: var(--yellow);
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 8px 18px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.run-btn:hover { background: #FCEB6B; }
+.run-btn:active { transform: translateY(1px); }
+
+.reset-btn {
+  font-family: var(--font-ui);
+  font-size: .82rem;
+  color: var(--text-light);
+  background: transparent;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.reset-btn:hover { border-color: var(--yellow-deep); color: var(--text-white); }
+
+.run-hint {
+  font-size: .78rem;
+  color: var(--text-faint);
+  margin-left: auto;
+}
+
+.output-panel {
+  font-family: var(--font-mono);
+  font-size: .85rem;
+  padding: 12px 16px;
+  min-height: 30px;
+  background: var(--bg-page);
+  color: var(--green);
+  border-top: 1px dashed var(--border);
+  white-space: pre-wrap;
+}
+.output-panel:empty::before {
+  content: "Output will appear here.";
+  color: var(--text-faint);
+}
+.output-panel.has-error { color: var(--red); }
+
+/* ---------------------------------------------------------------------
+   Note callouts (real-world, pairing, challenge, feedback)
+   --------------------------------------------------------------------- */
+
+.note {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  border-radius: var(--radius-card);
+  padding: 14px 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-left: 4px solid var(--yellow-deep);
+}
+
+.note .note-icon {
+  flex: none;
+  width: 26px; height: 26px;
+  margin-top: 2px;
+}
+
+.note h4 {
+  font-family: var(--font-ui);
+  color: var(--text-white);
+  margin: 0 0 4px 0;
+  font-size: .92rem;
+}
+
+.note p { margin: 0; font-size: .9rem; line-height: 1.5; color: var(--text-lighter); }
+
+.note--realworld { border-left-color: var(--yellow); }
+.note--pairing    { border-left-color: var(--green); }
+.note--challenge  { border-left-color: var(--red); }
+.note--feedback   { border-left-color: var(--blue); }
+
+/* ---------------------------------------------------------------------
+   Exercise cards
+   --------------------------------------------------------------------- */
+
+.exercise {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+  padding: 18px 20px;
+  color: var(--text-lighter);
+}
+.exercise code { color: var(--yellow); background: rgba(247,223,30,.08); padding: 1px 5px; border-radius: 4px; }
+
+.exercise-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.exercise-head h3 { margin: 0; font-family: var(--font-display); color: var(--text-white); font-size: 1.08rem; }
+
+.pill {
+  font-family: var(--font-ui);
+  font-size: .74rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--yellow);
+  color: var(--bg-page);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* Contact rows (e.g. speaker's Gmail/LinkedIn/Instagram) */
+.contact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 6px;
+}
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-page);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+}
+.contact-icon {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  color: var(--yellow);
+}
+.contact-text {
+  font-family: var(--font-ui);
+  font-size: .87rem;
+  color: var(--text-lighter);
+}
+
+.disclosure {
+  margin-top: 10px;
+  border-top: 1px dashed var(--border);
+  padding-top: 10px;
+}
+
+.disclosure summary {
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: .85rem;
+  color: var(--yellow);
+  list-style: none;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 4px 2px;
+  border-radius: 6px;
+}
+.disclosure summary:hover { background: var(--bg-panel); }
+.disclosure summary::-webkit-details-marker { display: none; }
+.disclosure summary::before {
+  content: "▸ ";
+}
+.disclosure[open] summary::before {
+  content: "▾ ";
+}
+.disclosure .disclosure-body {
+  margin-top: 8px;
+  font-size: .88rem;
+  line-height: 1.55;
+  color: var(--text-lighter);
+}
+
+/* ---------------------------------------------------------------------
+   Bottom bar: nav controls
+   --------------------------------------------------------------------- */
+
+.deck-bottombar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 22px;
+  background: var(--bg-page);
+  border-top: 1px solid var(--border);
+}
+
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-ui);
+  font-size: .88rem;
+  color: var(--text-white);
+  background: var(--bg-panel);
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-pill);
+  padding: 9px 16px;
+  min-height: 44px;
+  cursor: pointer;
+}
+.nav-btn:hover:not(:disabled) { border-color: var(--yellow-deep); }
+.nav-btn:disabled { opacity: .35; cursor: default; }
+.nav-btn svg { width: 15px; height: 15px; }
+
+.nav-center {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--text-faint);
+}
+
+/* ---------------------------------------------------------------------
+   Slide index / menu drawer
+   --------------------------------------------------------------------- */
+
+.menu-scrim {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .2s ease;
+  z-index: 20;
+}
+body.menu-open .menu-scrim, body.a11y-open .menu-scrim { opacity: 1; pointer-events: auto; }
+
+.menu-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  height: 100%;
+  width: min(320px, 84vw);
+  background: var(--bg-panel);
+  border-left: 1px solid var(--border-control);
+  transform: translateX(100%);
+  transition: transform .25s ease;
+  z-index: 21;
+  padding: 18px;
+  overflow-y: auto;
+}
+body.menu-open .menu-drawer { transform: translateX(0); }
+
+.menu-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 12px;
+}
+
+.menu-drawer h2 {
+  font-family: var(--font-display);
+  color: var(--text-white);
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0 6px;
+}
+
+.menu-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-close:hover { background: var(--bg-card); border-color: var(--yellow-deep); }
+.menu-close svg { width: 16px; height: 16px; }
+
+.menu-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.menu-list li + li { margin-top: 2px; }
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  text-align: left;
+  padding: 9px 10px;
+  min-height: 44px;
+  border-radius: 8px;
+  border: none;
+  border-left: 3px solid transparent;
+  background: transparent;
+  color: var(--text-lighter);
+  font-family: var(--font-ui);
+  font-size: .87rem;
+  cursor: pointer;
+}
+.menu-item:hover { background: var(--bg-card); }
+/* Current slide is marked with more than color alone: bold weight plus a
+   left bar, so the state doesn't depend on color perception (WCAG 1.4.1). */
+.menu-item.current {
+  color: var(--yellow);
+  font-weight: 700;
+  border-left-color: var(--yellow);
+  background: var(--bg-card);
+}
+.menu-item .menu-item-num {
+  font-family: var(--font-mono);
+  color: var(--text-faint);
+  min-width: 20px;
+}
+
+/* ---------------------------------------------------------------------
+   Accessibility panel (left-docked, so it never overlaps the slide
+   index drawer if both were somehow triggered back to back)
+   --------------------------------------------------------------------- */
+
+.a11y-drawer {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100%;
+  width: min(340px, 88vw);
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-control);
+  transform: translateX(-100%);
+  transition: transform .25s ease;
+  z-index: 21;
+  padding: 18px;
+  overflow-y: auto;
+}
+body.a11y-open .a11y-drawer { transform: translateX(0); }
+
+.a11y-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+.a11y-drawer h2 {
+  font-family: var(--font-display);
+  color: var(--text-white);
+  font-size: 1.1rem;
+  margin: 0;
+  padding: 0 6px;
+}
+
+.a11y-close {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.a11y-close:hover { background: var(--bg-card); border-color: var(--yellow-deep); }
+.a11y-close svg { width: 16px; height: 16px; }
+
+.a11y-section {
+  border: none;
+  padding: 0;
+  margin: 0 0 24px;
+}
+.a11y-section legend {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: .82rem;
+  color: var(--yellow);
+  padding: 0 6px 10px;
+}
+.a11y-section-hint {
+  font-size: .82rem;
+  color: var(--text-light);
+  margin: 0 6px 12px;
+  line-height: 1.5;
+}
+
+/* Font-size stepper: A- / percentage / A+ */
+.font-size-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 6px;
+}
+.font-size-btn {
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border-control);
+  background: transparent;
+  color: var(--text-white);
+  font-family: var(--font-ui);
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.font-size-btn:hover { background: var(--bg-card); border-color: var(--yellow-deep); }
+.font-size-btn:disabled { opacity: .35; cursor: default; }
+.font-size-btn.small { font-size: .85rem; }
+.font-size-btn.large { font-size: 1.2rem; }
+
+.font-size-value {
+  flex: 1 1 auto;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: .95rem;
+  color: var(--text-lighter);
+  min-width: 52px;
+}
+
+.font-size-reset {
+  flex: none;
+  font-family: var(--font-ui);
+  font-size: .8rem;
+  color: var(--text-light);
+  background: transparent;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-pill);
+  padding: 8px 14px;
+  min-height: 44px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.font-size-reset:hover { border-color: var(--yellow-deep); color: var(--text-white); }
+
+/* Color-theme radio group */
+.theme-preview {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  margin: 0 6px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-card);
+}
+.theme-preview-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.2);
+  flex: none;
+  transition: background-color .15s ease;
+}
+.theme-preview-label {
+  font-size: .78rem;
+  color: var(--text-faint);
+  margin-left: 4px;
+}
+
+.theme-option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 44px;
+  padding: 6px 6px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.theme-option:hover { background: var(--bg-card); }
+.theme-option input[type="radio"] {
+  flex: none;
+  width: 20px;
+  height: 20px;
+  accent-color: var(--yellow);
+  cursor: pointer;
+}
+.theme-option-label {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.theme-option-title {
+  font-family: var(--font-ui);
+  font-size: .9rem;
+  color: var(--text-lighter);
+}
+.theme-option-desc {
+  font-size: .78rem;
+  color: var(--text-faint);
+}
+.theme-swatch {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: auto;
+  flex: none;
+}
+.theme-swatch span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,.25);
+}
+
+/* Scrollbar (webkit) — keep it quiet */
+.slide::-webkit-scrollbar, .menu-drawer::-webkit-scrollbar { width: 8px; }
+.slide::-webkit-scrollbar-thumb, .menu-drawer::-webkit-scrollbar-thumb {
+  background: var(--border); border-radius: 4px;
+}
+
+/* Focus visibility — 3px + offset keeps the indicator legible for low-vision
+   users, and yellow-on-near-black clears WCAG's 3:1 non-text contrast rule
+   against every background used in this deck. */
+button:focus-visible, textarea:focus-visible, summary:focus-visible,
+a:focus-visible, [tabindex]:focus-visible, input:focus-visible {
+  outline: 3px solid var(--yellow);
+  outline-offset: 2px;
+}
+
+/* Responsive nudges */
+@media (max-width: 620px) {
+  .deck-topbar { gap: 10px; padding: 10px 14px; }
+  .brand span.brand-text { display: none; }
+  .deck-bottombar { padding: 10px 14px; }
+  .nav-center { display: none; }
+}

@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workshop de JavaScript — Dia 2 — Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#deck-stage">Pular para o conteúdo do slide</a>
+
+<!-- Ícones reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 4.9 4.9 6.4 10.6 12l-5.7 5.6 1.5 1.5L12 13.4l5.6 5.7 1.5-1.5-5.7-5.6 5.7-5.6-1.5-1.5L12 10.6z"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
+    <symbol id="icon-pair" viewBox="0 0 24 24"><path fill="currentColor" d="M8 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM8 13.5c-2.7 0-6 1.3-6 3.8V19h9v-1.7c0-1 .4-1.9 1.1-2.7-.9-.7-2.3-1.1-4.1-1.1zm8 0c-.5 0-1 0-1.5.1 1 .8 1.5 1.9 1.5 3.1V19h6v-1.7c0-2.5-3.3-3.8-6-3.8z"/></symbol>
+    <symbol id="icon-flag" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2v20H4V2h2zm2 1h11l-2.5 4L19 11H8V3z"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H8l-4 4V4zm3 3v2h10V7H7zm0 4v2h7v-2H7z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M2 4h20v16H2V4zm2 2v.51l8 5.33 8-5.33V6H4zm16 2.87-7.44 4.96a1 1 0 0 1-1.12 0L4 8.87V18h16V8.87z"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.55.55.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76 4.9 4.9 0 0 1-1.76 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76A4.9 4.9 0 0 1 5.44 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.21 9.01 4.2 9.33 4.2 12s.01 2.99.06 4.04c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65a2.77 2.77 0 0 0-.67-1.03 2.77 2.77 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Anuncia trocas de slide para leitores de tela, sem roubar o foco do teclado -->
+<div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="deck-app">
+
+  <!-- Barra superior -->
+  <div class="deck-topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+      <span class="brand-text">Workshop de JavaScript — Dia 2</span>
+    </div>
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progresso dos slides" aria-valuemin="1" aria-valuemax="15" aria-valuenow="1" aria-valuetext="Slide 1 de 15">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 15</div>
+    <button class="a11y-toggle" id="a11y-toggle" aria-label="Configurações de acessibilidade" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-drawer">Aa</button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
+    </button>
+  </div>
+
+  <!-- Palco -->
+  <div class="deck-stage" id="deck-stage" tabindex="-1">
+
+    <!-- 1. Capa -->
+    <section class="slide active" data-title="Controle de Fluxo (I)">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:760px; margin:auto;">
+        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+        <p class="slide-label" style="text-align:center;">Dia 2 de 5</p>
+        <h1 style="font-size:clamp(2.3rem,6.5vw,4rem); margin-bottom:10px;">Controle de Fluxo (I)</h1>
+        <p class="slide-sub" style="margin:0 auto 8px; max-width:48ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">Lógica de programação e estruturas condicionais</p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px;">
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Data do workshop]</span>
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Apresentado por [nome do(s) instrutor(es)]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Recapitulando o Dia 1 -->
+    <section class="slide" data-title="Recapitulando o Dia 1">
+      <p class="slide-label">Antes de começar</p>
+      <h1>O que vimos no Dia 1</h1>
+      <p class="slide-sub">Uma passada rápida pelo que já construímos, já que hoje vamos usar tudo isso o tempo inteiro.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>O que é JavaScript e onde ele roda (navegador + Node.js)</li>
+            <li>Ambiente configurado: navegador, editor e console</li>
+            <li>Variáveis (<code>const</code>/<code>let</code>) e os tipos de dados principais</li>
+            <li>Operadores de comparação, lógicos e aritméticos</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>O que muda hoje</h2>
+          <p>No Dia 1, todo código rodava "em linha reta", de cima para baixo. Hoje o programa vai aprender a <strong>tomar decisões</strong> &mdash; a mesma linha de código vai se comportar diferente dependendo dos dados.</p>
+          <p>É exatamente esse comportamento condicional que torna um programa capaz de resolver problemas reais, e não só calcular valores fixos.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Agenda do Dia 2 -->
+    <section class="slide" data-title="Agenda do Dia 2">
+      <p class="slide-label">Roteiro</p>
+      <h1>O que vamos ver hoje</h1>
+      <p class="slide-sub">Quatro blocos com horários fixos, com um intervalo no meio.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Agenda do Dia 2</h2>
+          <ul>
+            <li><strong>14h</strong> &mdash; Introdução aos algoritmos</li>
+            <li><strong>~15h</strong> &mdash; Intervalo</li>
+            <li><strong>16h</strong> &mdash; Estruturas condicionais (<code>if</code> / <code>else</code>)</li>
+            <li><strong>17h</strong> &mdash; Breve introdução ao debug</li>
+            <li><strong>17h15</strong> &mdash; Exercícios práticos</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Objetivos de aprendizagem</h2>
+          <p>Ao final deste dia, você será capaz de:</p>
+          <ul>
+            <li>Explicar o que é um algoritmo e reconhecer um no dia a dia</li>
+            <li>Escrever estruturas condicionais com <code>if</code> e <code>else</code></li>
+            <li>Ler uma mensagem de erro e usar <code>console.log</code> para investigar um bug</li>
+            <li>Resolver problemas simples combinando condicionais com o que aprendeu no Dia 1</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Introdução aos algoritmos - o que é -->
+    <section class="slide" data-title="O que é um algoritmo?">
+      <p class="slide-label">14h &middot; Introdução aos algoritmos</p>
+      <h1>O que é um algoritmo?</h1>
+      <p class="slide-sub">Antes de falar de código, vamos falar da ideia por trás dele.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Uma definição simples</h2>
+          <p>Um <strong>algoritmo</strong> é uma sequência finita e ordenada de passos para resolver um problema ou realizar uma tarefa.</p>
+          <p>Isso não tem nada de exclusivo da programação &mdash; você segue algoritmos várias vezes por dia sem perceber.</p>
+          <ul>
+            <li>Uma receita de bolo é um algoritmo</li>
+            <li>O manual de montagem de um móvel é um algoritmo</li>
+            <li>As instruções do Google Maps até aqui são um algoritmo</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Por que isso importa para programar?</h2>
+          <p>Escrever código é, na prática, traduzir um algoritmo (em português, ou em um fluxograma, ou só na sua cabeça) para uma linguagem que o computador entende.</p>
+          <p>Quanto mais claro o algoritmo antes de programar, mais fácil é escrever o código &mdash; e mais fácil é encontrar o erro quando algo não funciona.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Introdução aos algoritmos - exemplos -->
+    <section class="slide" data-title="Algoritmos: exemplos">
+      <p class="slide-label">14h &middot; Introdução aos algoritmos</p>
+      <h1>Da instrução do dia a dia ao código</h1>
+      <p class="slide-sub">O mesmo algoritmo, escrito de duas formas: em português e em JavaScript.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Algoritmo: "posso atravessar a rua?"</h2>
+          <ol>
+            <li>Olhe para o sinal de pedestres</li>
+            <li>Se o sinal estiver verde, atravesse</li>
+            <li>Se não, espere até o sinal ficar verde</li>
+          </ol>
+          <p style="margin-top:10px;">Repare na palavra <strong>"se"</strong> &mdash; é exatamente isso que uma estrutura condicional representa em código, e é o assunto do próximo bloco de hoje.</p>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">algoritmo.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="8">// O mesmo algoritmo, agora em código
+let sinal = "verde";
+
+if (sinal === "verde") {
+  console.log("Pode atravessar");
+} else {
+  console.log("Espere");
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Lógica de programação usando jogos -->
+    <section class="slide" data-title="Lógica de programação usando jogos">
+      <p class="slide-label">14h &middot; Introdução aos algoritmos</p>
+      <h1>Praticando lógica sem escrever código</h1>
+      <p class="slide-sub">Antes de voltar para a tela, vamos treinar a lógica "desconectados" &mdash; a mesma habilidade que o computador vai exigir depois.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Atividade: "Robô Humano"</h2>
+          <p>Em duplas: uma pessoa é o "programador", a outra é o "robô". O programador só pode dar instruções bem específicas (andar, virar, parar) para o robô chegar a um objetivo pela sala &mdash; sem gestos, só com a instrução falada.</p>
+          <p>Se o robô "quebrar" (esbarrar em algo, não entender), é porque o algoritmo tinha um passo ambíguo ou faltando &mdash; exatamente como um bug de verdade.</p>
+        </div>
+        <div class="card">
+          <h2>Por que jogos funcionam aqui</h2>
+          <ul>
+            <li>Forçam a pensar passo a passo, sem pular etapas "óbvias"</li>
+            <li>Tornam o erro visível e engraçado, sem a pressão do código</li>
+            <li>Treinam exatamente a habilidade que <code>if</code>/<code>else</code> vai formalizar em seguida</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note note--pairing">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
+        <div><h4>Programação em dupla</h4><p>Reservem uns 10 minutos para essa atividade e troquem de papel no meio &mdash; quem foi robô também precisa sentir como é escrever as instruções.</p></div>
+      </div>
+    </section>
+
+    <!-- 7. Intervalo -->
+    <section class="slide" data-title="Intervalo">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:600px; margin:auto;">
+        <p class="slide-label" style="text-align:center;">Pausa</p>
+        <h1 style="font-size:clamp(2.4rem,6vw,3.6rem);">Intervalo</h1>
+        <p class="slide-sub" style="margin:0 auto; max-width:44ch; color:var(--yellow);">Voltamos às 16h para estruturas condicionais.</p>
+      </div>
+    </section>
+
+    <!-- 8. Estruturas condicionais - if -->
+    <section class="slide" data-title="Estruturas condicionais: if">
+      <p class="slide-label">16h &middot; Estruturas condicionais</p>
+      <h1>A palavra-chave <code>if</code></h1>
+      <p class="slide-sub"><code>if</code> executa um bloco de código somente quando uma condição é verdadeira (<code>true</code>).</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Anatomia de um if</h2>
+          <ul>
+            <li>A condição fica entre parênteses <code>( )</code> e deve resultar em <code>true</code> ou <code>false</code></li>
+            <li>O bloco de código fica entre chaves <code>{ }</code></li>
+            <li>Se a condição for <code>false</code>, o bloco simplesmente é ignorado</li>
+            <li>Os operadores de comparação do Dia 1 (<code>===</code>, <code>&gt;</code>, <code>&gt;=</code>...) são exatamente o que entra na condição</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">if-basico.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">let temperatura = 32;
+
+if (temperatura > 30) {
+  console.log("Está calor hoje");
+}
+
+// Sem "senão", nada acontece se a condição for falsa
+if (temperatura > 40) {
+  console.log("Isso não deveria aparecer");
+}
+console.log("Fim do script");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Estruturas condicionais - else -->
+    <section class="slide" data-title="Estruturas condicionais: else">
+      <p class="slide-label">16h &middot; Estruturas condicionais</p>
+      <h1><code>else</code> e <code>else if</code></h1>
+      <p class="slide-sub"><code>else</code> executa quando a condição do <code>if</code> é falsa. <code>else if</code> permite encadear mais de uma condição.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">else-basico.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="12">let nota = 6.5;
+
+if (nota >= 7) {
+  console.log("Aprovado");
+} else {
+  console.log("Reprovado");
+}
+
+// Encadeando mais de uma condição com else if
+if (nota >= 9) {
+  console.log("Menção: SS");
+} else if (nota >= 7) {
+  console.log("Menção: MS");
+} else {
+  console.log("Menção: MM ou abaixo");
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>Regras rápidas</h2>
+          <ul>
+            <li><code>else</code> nunca tem sua própria condição &mdash; ele é "todo o resto"</li>
+            <li><code>else if</code> é avaliado em ordem, de cima para baixo; o primeiro que for verdadeiro "vence" e os demais são ignorados</li>
+            <li>Uma cadeia de <code>if</code>/<code>else if</code>/<code>else</code> sempre executa exatamente um dos blocos</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Introdução ao debug -->
+    <section class="slide" data-title="Introdução ao debug">
+      <p class="slide-label">17h &middot; Introdução ao debug</p>
+      <h1>O que fazer quando o código não funciona</h1>
+      <p class="slide-sub">Debugar é o processo de descobrir por que o código não está se comportando como o esperado. Edite o código ao lado para consertar o bug antes de executar.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Um roteiro simples</h2>
+          <ol>
+            <li>Leia a mensagem de erro no console com calma &mdash; ela quase sempre diz a linha e o tipo de problema</li>
+            <li>Use <code>console.log()</code> para "espiar" o valor de uma variável em pontos-chave do código</li>
+            <li>Compare o que você esperava ver com o que realmente apareceu</li>
+            <li>Mude uma coisa de cada vez, e rode de novo &mdash; mudar tudo ao mesmo tempo dificulta saber o que resolveu</li>
+          </ol>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">com-bug.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">// Este código deveria avisar quando idade for
+// menor que 18, mas tem um bug — tente consertar
+let idade = 15;
+
+if (idade = 18) {
+  console.log("É maior de idade");
+} else {
+  console.log("É menor de idade");
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Exercícios - intro -->
+    <section class="slide" data-title="Exercícios: como vamos trabalhar">
+      <p class="slide-label">17h15 &middot; Exercícios</p>
+      <h1>Quatro exercícios, do mais simples ao mais completo</h1>
+      <p class="slide-sub">Trabalhe na ordem. Cada exercício tem uma dica e uma solução escondidas &mdash; tente sozinho antes de abrir.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Nesta sequência</h2>
+          <ol>
+            <li>Faixa etária</li>
+            <li>Média UnB (SS, MS, MM...)</li>
+            <li>Calculadora simples</li>
+            <li>Maior entre três números</li>
+          </ol>
+        </div>
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+          <div><h4>Desafio opcional</h4><p>Terminou os quatro? Combine dois deles &mdash; por exemplo, faça a calculadora simples recusar a divisão por zero com um <code>if</code> antes de calcular.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Exercício - Faixa etária -->
+    <section class="slide" data-title="Exercício: Faixa etária">
+      <p class="slide-label">17h15 &middot; Exercícios</p>
+      <h1>Exercício 1 &mdash; Faixa etária</h1>
+      <p class="slide-sub">Dada uma idade, classifique em "Criança" (até 12 anos), "Adolescente" (13 a 17) ou "Adulto" (18 ou mais).</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Faixa etária</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">faixa-etaria.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">const idade = 15;
+
+// TODO: use if / else if / else para logar
+// "Criança", "Adolescente" ou "Adulto"</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Comece pela condição mais restritiva ou pela mais simples de descrever &mdash; por exemplo, primeiro verifique <code>idade &lt;= 12</code>, depois <code>idade &lt;= 17</code> em um <code>else if</code>, e deixe o <code>else</code> final cobrir os adultos.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>if (idade &lt;= 12) { console.log("Criança"); } else if (idade &lt;= 17) { console.log("Adolescente"); } else { console.log("Adulto"); }</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Exercício - Média UnB -->
+    <section class="slide" data-title="Exercício: Média UnB">
+      <p class="slide-label">17h15 &middot; Exercícios</p>
+      <h1>Exercício 2 &mdash; Média UnB</h1>
+      <p class="slide-sub">Dada uma média final, calcule a menção usando a escala da UnB: SS (9,0 a 10), MS (7,0 a 8,9) ou MM (5,0 a 6,9). Abaixo de 5,0, considere reprovado.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Média UnB</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">media-unb.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">const media = 7.5;
+
+// TODO: use if / else if / else para logar
+// "SS", "MS", "MM" ou "Reprovado"</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">É a mesma estrutura do exercício de faixa etária, só que com números diferentes. Comece pela nota mais alta (<code>media &gt;= 9</code>) e vá descendo com <code>else if</code>.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>if (media &gt;= 9) { console.log("SS"); } else if (media &gt;= 7) { console.log("MS"); } else if (media &gt;= 5) { console.log("MM"); } else { console.log("Reprovado"); }</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Exercício - Calculadora simples -->
+    <section class="slide" data-title="Exercício: Calculadora simples">
+      <p class="slide-label">17h15 &middot; Exercícios</p>
+      <h1>Exercício 3 &mdash; Calculadora simples</h1>
+      <p class="slide-sub">Dados dois números e uma operação ("+", "-", "*" ou "/"), calcule e mostre o resultado.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Calculadora simples</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">calculadora.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="6">const numeroA = 10;
+const numeroB = 3;
+const operacao = "*";
+
+// TODO: use if / else if / else para aplicar a
+// operação certa e logar o resultado</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Compare <code>operacao</code> com cada símbolo usando <code>===</code>, um <code>if</code>/<code>else if</code> por operação, e use os operadores aritméticos do Dia 1 dentro de cada bloco.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>if (operacao === "+") { console.log(numeroA + numeroB); } else if (operacao === "-") { console.log(numeroA - numeroB); } else if (operacao === "*") { console.log(numeroA * numeroB); } else if (operacao === "/") { console.log(numeroA / numeroB); } else { console.log("Operação inválida"); }</code></div>
+          </details>
+        </div>
+      </div>
+      <div class="note note--realworld">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
+        <div><h4>Cenário do mundo real</h4><p>Esse mesmo padrão &mdash; comparar um texto para decidir qual cálculo aplicar &mdash; é como apps de delivery calculam frete, descontos e taxas diferentes dependendo da forma de pagamento escolhida.</p></div>
+      </div>
+    </section>
+
+    <!-- 15. Encerramento do Dia 2 -->
+    <section class="slide" data-title="Encerramento do Dia 2">
+      <p class="slide-label">Encerramento do Dia 2</p>
+      <h1>O que construímos hoje</h1>
+      <p class="slide-sub">Do conceito de algoritmo até programas que tomam decisões sozinhos &mdash; e as primeiras ferramentas para consertá-los quando dão errado.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>O que é um algoritmo, com exemplos do dia a dia</li>
+            <li>Estruturas condicionais: <code>if</code>, <code>else</code> e <code>else if</code></li>
+            <li>Um primeiro roteiro para depurar um bug</li>
+            <li>Quatro exercícios combinando condicionais com o que vimos no Dia 1</li>
+          </ul>
+          <h2 style="margin-top:14px;">O que vem no Dia 3</h2>
+          <ul>
+            <li>Laços de repetição (<code>for</code>, <code>while</code>)</li>
+            <li>Mais controle de fluxo combinando condicionais e repetição</li>
+            <li>Exercícios práticos combinando tudo o que já vimos</li>
+          </ul>
+        </div>
+        <div class="note note--feedback" style="align-self:start;">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
+          <div><h4>Momento de feedback</h4><p>Em uma escala de 1 a 5, o quão confiante você se sente para escrever um <code>if</code>/<code>else</code> sozinho? Compartilhe seu número em voz alta ou no chat &mdash; isso ajusta o ritmo do Dia 3.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="deck-bottombar">
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Anterior</button>
+    <span class="nav-center">As setas do teclado ou Page Up/Down também navegam</span>
+    <button class="nav-btn" id="next-btn">Próximo<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<!-- Painel de índice de slides e painel de acessibilidade -->
+<div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+
+<div class="a11y-drawer" id="a11y-drawer" role="dialog" aria-modal="true" aria-labelledby="a11y-drawer-title" inert>
+  <div class="a11y-drawer-head">
+    <h2 id="a11y-drawer-title">Acessibilidade</h2>
+    <button class="a11y-close" id="a11y-close" aria-label="Fechar configurações de acessibilidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <fieldset class="a11y-section">
+    <legend>Tamanho do texto</legend>
+    <p class="a11y-section-hint">Ajusta o tamanho de todo o texto dos slides, de 85% até 200%.</p>
+    <div class="font-size-control">
+      <button type="button" class="font-size-btn small" id="font-decrease" aria-label="Diminuir tamanho do texto">A−</button>
+      <span class="font-size-value" id="font-size-value" aria-live="polite">100%</span>
+      <button type="button" class="font-size-btn large" id="font-increase" aria-label="Aumentar tamanho do texto">A+</button>
+    </div>
+    <button type="button" class="font-size-reset" id="font-reset">Redefinir tamanho</button>
+  </fieldset>
+
+  <fieldset class="a11y-section">
+    <legend>Esquema de cores</legend>
+    <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
+
+    <div class="theme-preview" aria-hidden="true">
+      <span class="theme-preview-swatch" style="background:var(--yellow)"></span>
+      <span class="theme-preview-swatch" style="background:var(--green)"></span>
+      <span class="theme-preview-swatch" style="background:var(--red)"></span>
+      <span class="theme-preview-swatch" style="background:var(--blue)"></span>
+      <span class="theme-preview-label">Pré-visualização em tempo real</span>
+    </div>
+    <p class="visually-hidden" id="theme-status" role="status" aria-live="polite"></p>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="default" checked>
+      <span class="theme-option-label">
+        <span class="theme-option-title">Padrão</span>
+        <span class="theme-option-desc">Preto e amarelo, o tema original</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#131313"></span><span style="background:#F7DF1E"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="high-contrast">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Alto contraste</span>
+        <span class="theme-option-desc">Preto puro e branco, para baixa visão</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#000000"></span><span style="background:#FFEE58"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="colorblind">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Daltonismo (vermelho-verde)</span>
+        <span class="theme-option-desc">Troca verde/vermelho por azul-turquesa/laranja</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#26C6DA"></span><span style="background:#FF8A3D"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="grayscale">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Escala de cinza</span>
+        <span class="theme-option-desc">Remove toda cor; usa só contraste, ícone e texto</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#4d4d4d"></span><span style="background:#bdbdbd"></span></span>
+    </label>
+  </fieldset>
+</div>
+
+<div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
+  <div class="menu-drawer-head">
+    <h2 id="menu-drawer-title">Todos os slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Fechar índice de slides">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+  <ul id="menu-list" class="menu-list"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
