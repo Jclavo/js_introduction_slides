@@ -1,14 +1,24 @@
+document.getElementById('registrationForm').addEventListener('input', function() {
+    const name = document.getElementById('name').value;
+    const cpf = document.getElementById('cpf').value;
+    const email = document.getElementById('email').value;
+    
+    // Enable the button only if all required fields are filled
+    const registerButton = document.getElementById('registerButton');
+    registerButton.disabled = !name || !cpf || !email;
+});
+
 document.getElementById('registrationForm').addEventListener('submit', function(event) {
     event.preventDefault();
     
     const name = document.getElementById('name').value;
-    const idNumber = document.getElementById('idNumber').value;
+    const cpf = document.getElementById('cpf').value;
     const email = document.getElementById('email').value;
     const career = document.getElementById('career').value;
     const comment = document.getElementById('comment').value;
     
     // Simple validation
-    if (!name || !idNumber || !email) {
+    if (!name || !cpf || !email) {
         document.getElementById('message').innerText = 'Name, ID Number, and Email are required.';
         document.getElementById('message').style.color = 'red';
         return;
