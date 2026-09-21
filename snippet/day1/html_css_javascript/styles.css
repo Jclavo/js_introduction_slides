@@ -63,3 +63,13 @@ button[disabled] {
     background-color: #ccc;
     cursor: not-allowed;
 }
+
+textarea[disabled] {
+    background-color: #f4f4f9;
+    border-color: #ccc;
+    color: #888;
+}
+
+span {
+    color: #555;
+}
