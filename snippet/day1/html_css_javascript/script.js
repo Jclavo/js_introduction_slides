@@ -19,7 +19,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     
     // Simple validation
     if (!name || !cpf || !email) {
-        document.getElementById('message').innerText = 'Name, ID Number, and Email are required.';
+        document.getElementById('message').innerText = 'Name, CPF, and Email are required.';
         document.getElementById('message').style.color = 'red';
         return;
     }
