@@ -15,12 +15,8 @@ if (letra == "a" || letra == "e"
 {
     alert("é vogal");
 }
-
-if (letra != "a" && letra != "e" 
-    && letra != "i" && letra != "o" 
-    && letra != "u") 
-{
-    alert("não é uma vogal");
+else {
+  alert("não é uma vogal");
 }
 
 
