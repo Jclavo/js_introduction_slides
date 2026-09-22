@@ -35,7 +35,7 @@ TASK[X]
 
 TASK[X] 
 /**
- * Calcular se o letra ingressada é um vocal: 
+ * Calcular se a letra ingressada é uma vocal: 
  * ENTRADA: 
  * LOGICA: 
  *  * LOGICA: 
