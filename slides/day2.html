@@ -122,7 +122,7 @@ console.log("Olá, " + nome + "! Ano que vem você terá " + (idade + 1) + " ano
   </div>
 </section>
 
-<!-- 12. Exercícios rápidos com prompt() -->
+<!-- Exercícios rápidos com prompt() -->
 <section class="slide" data-title="Exercícios rápidos com prompt()">
   <p class="slide-label">Antes de começar o Dia 2</p>
   <h1>Praticando prompt() antes do roteiro principal</h1>
@@ -131,7 +131,7 @@ console.log("Olá, " + nome + "! Ano que vem você terá " + (idade + 1) + " ano
 
     <div class="exercise">
       <div class="exercise-head"><h3>Saudação personalizada</h3><span class="pill">5 min</span></div>
-      <p style="margin:0 0 10px;">Peça o nome da pessoa com <code>prompt()</code> e mostre "Bem-vindo(a), &lt;nome&gt;!" com <code>console.log</code>.</p>
+      <p style="margin:0 0 10px;">Peça o nome da pessoa com <code>prompt()</code> e mostre "Bem-vindo(a), &lt;nome&gt;!" com <code>console.log</code> e <code>alert</code>.</p>
       <div class="code-panel" data-runner>
         <div class="code-panel-head"><span class="code-panel-title">saudacao.js</span><div class="dots"><span></span><span></span><span></span></div></div>
         <textarea class="code-input" spellcheck="false" rows="4">// TODO: peça o nome com prompt() e logue
@@ -145,7 +145,13 @@ console.log("Olá, " + nome + "! Ano que vem você terá " + (idade + 1) + " ano
       </details>
       <details class="disclosure">
         <summary>Solução</summary>
-        <div class="disclosure-body"><code>let nome = prompt("Qual é o seu nome?"); console.log("Bem-vindo(a), " + nome + "!");</code></div>
+        <div class="disclosure-body">
+          <code>
+            let nome = prompt("Qual é o seu nome?");
+            console.log("Bem-vindo(a), " + nome + "!"); 
+            alert("Bem-vindo(a), " + nome + "!");
+          </code>
+        </div>
       </details>
     </div>
 
