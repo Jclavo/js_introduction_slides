@@ -6,207 +6,72 @@
 <title>Sandbox JavaScript</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-  :root {
-    --bg-page: #131313;
-    --bg-panel: #1E1E1E;
-    --bg-card: #1A1A1A;
-    --border: #333333;
-    --border-control: #6B6B6B;
-
-    --text-white: #FFFFFF;
-    --text-light: #C7C7C7;
-    --text-lighter: #E4E4E4;
-    --text-faint: #909090;
-
-    --yellow: #F7DF1E;
-    --green: #52C97A;
-    --red: #FF5F56;
-    --blue: #5FA8E0;
-
-    --font-display: "Fraunces", Georgia, serif;
-    --font-ui: "Space Grotesk", "Segoe UI", Arial, sans-serif;
-    --font-mono: "JetBrains Mono", "Fira Code", Consolas, monospace;
-
-    --radius-card: 10px;
-    --radius-pill: 999px;
-  }
-
-  * { box-sizing: border-box; }
-
+  /* Page-specific layout only — every color, font, and component
+     style (code-panel, buttons, output panel, themes, font-scale)
+     comes from the shared styles.css, so this page always matches
+     whatever the slide decks look like. */
   html, body {
-    margin: 0;
-    padding: 0;
+    height: auto;
     min-height: 100%;
-    background: var(--bg-page);
-    color: var(--text-white);
-    font-family: var(--font-ui);
+    overflow: auto;
   }
-
   body {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: clamp(24px, 5vw, 64px) 20px;
   }
-
-  .visually-hidden {
-    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-    overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-  }
-
-  header {
+  .sandbox-header {
     width: 100%;
     max-width: 760px;
     margin-bottom: 28px;
   }
-
-  header .eyebrow {
+  .sandbox-header p.eyebrow {
+    font-family: var(--font-ui);
     font-size: .82rem;
     color: var(--yellow);
     margin: 0 0 6px 0;
   }
-
-  header h1 {
+  .sandbox-header h1 {
     font-family: var(--font-display);
     font-weight: 600;
     font-size: clamp(1.7rem, 4vw, 2.4rem);
+    color: var(--text-white);
     margin: 0 0 8px 0;
   }
-
-  header p {
+  .sandbox-header p.sandbox-sub {
+    font-family: var(--font-ui);
     color: var(--text-light);
     max-width: 60ch;
     line-height: 1.55;
     margin: 0;
   }
-
-  main {
+  .sandbox-header code {
+    color: var(--yellow);
+    background: rgba(247,223,30,.08);
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+  .sandbox-main {
     width: 100%;
     max-width: 760px;
   }
-
-  /* Code panel — same component used in the workshop deck's code-runner slides */
-  .code-panel {
-    background: var(--bg-panel);
-    border-radius: var(--radius-card);
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-    border: 1px solid var(--border-control);
-  }
-
-  .code-panel-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 8px 14px;
-    background: var(--bg-page);
-    border-bottom: 1px solid var(--border);
-  }
-
-  .code-panel-title {
-    font-family: var(--font-mono);
-    font-size: .78rem;
-    color: var(--text-light);
-  }
-
-  .dots { display: flex; gap: 6px; }
-  .dots span { width: 8px; height: 8px; border-radius: 50%; }
-  .dots span:nth-child(1) { background: #FF5F56; }
-  .dots span:nth-child(2) { background: #FFBD2E; }
-  .dots span:nth-child(3) { background: #27C93F; }
-
-  textarea.code-input {
-    width: 100%;
-    resize: vertical;
-    min-height: 200px;
-    margin: 0;
-    font-family: var(--font-mono);
-    font-size: .92rem;
-    line-height: 1.6;
-    color: var(--text-lighter);
-    padding: 16px;
-    background: transparent;
-    border: none;
-    outline: none;
-  }
-  textarea.code-input:focus { background: rgba(247,223,30,.03); }
-
-  .code-actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 10px 14px;
-    border-top: 1px solid var(--border);
-    flex-wrap: wrap;
-  }
-
-  .run-btn {
-    font-family: var(--font-ui);
-    font-weight: 600;
-    font-size: .85rem;
-    color: var(--bg-page);
-    background: var(--yellow);
-    border: none;
-    border-radius: var(--radius-pill);
-    padding: 8px 18px;
-    min-height: 44px;
-    cursor: pointer;
-  }
-  .run-btn:hover { background: #FCEB6B; }
-  .run-btn:active { transform: translateY(1px); }
-
-  .reset-btn {
-    font-family: var(--font-ui);
-    font-size: .82rem;
-    color: var(--text-light);
-    background: transparent;
-    border: 1px solid var(--border-control);
-    border-radius: var(--radius-pill);
-    padding: 7px 14px;
-    min-height: 44px;
-    cursor: pointer;
-  }
-  .reset-btn:hover { border-color: var(--yellow); color: var(--text-white); }
-
-  .run-hint {
-    font-size: .78rem;
-    color: var(--text-faint);
-    margin-left: auto;
-  }
-
-  .output-panel {
-    font-family: var(--font-mono);
-    font-size: .88rem;
-    padding: 14px 16px;
-    min-height: 40px;
-    background: var(--bg-page);
-    color: var(--green);
-    border-top: 1px dashed var(--border);
-    white-space: pre-wrap;
-  }
-  .output-panel:empty::before {
-    content: "A saída do seu código vai aparecer aqui.";
-    color: var(--text-faint);
-  }
-  .output-panel.has-error { color: var(--red); }
-
-  button:focus-visible, textarea:focus-visible {
-    outline: 3px solid var(--yellow);
-    outline-offset: 2px;
+  .sandbox-main textarea.code-input {
+    min-height: 220px;
   }
 </style>
 </head>
 <body>
 
-<header>
+<header class="sandbox-header">
   <p class="eyebrow">Sandbox</p>
   <h1>Sandbox de JavaScript</h1>
-  <p>Escreva JavaScript no editor abaixo e clique em "Executar" para rodar. <code>console.log()</code>, <code>console.error()</code>, <code>console.warn()</code> e <code>prompt()</code> funcionam normalmente, já que isto roda direto no seu navegador.</p>
+  <p class="sandbox-sub">Escreva JavaScript no editor abaixo e clique em "Executar" para rodar. <code>console.log()</code>, <code>console.error()</code>, <code>console.warn()</code> e <code>prompt()</code> funcionam normalmente, já que isto roda direto no seu navegador.</p>
 </header>
 
-<main>
+<main class="sandbox-main">
   <div class="code-panel" data-runner>
     <div class="code-panel-head">
       <span class="code-panel-title">sandbox.js</span>
@@ -222,75 +87,6 @@
   </div>
 </main>
 
-<script>
-(function () {
-  "use strict";
-
-  const runners = document.querySelectorAll("[data-runner]");
-
-  runners.forEach((panel) => {
-    const textarea = panel.querySelector("textarea.code-input");
-    const output = panel.querySelector(".output-panel");
-    const runBtn = panel.querySelector(".run-btn");
-    const resetBtn = panel.querySelector(".reset-btn");
-    const titleEl = panel.querySelector(".code-panel-title");
-    if (!textarea || !output || !runBtn) return;
-
-    if (titleEl) {
-      if (!titleEl.id) titleEl.id = "code-panel-title-" + Math.random().toString(36).slice(2, 8);
-      const label = "Editor de código JavaScript: " + titleEl.textContent.trim();
-      textarea.setAttribute("aria-label", label);
-      runBtn.setAttribute("aria-describedby", titleEl.id);
-      if (resetBtn) resetBtn.setAttribute("aria-describedby", titleEl.id);
-      output.setAttribute("aria-label", "Saída de " + titleEl.textContent.trim());
-    }
-
-    const starter = textarea.value;
-
-    function stringify(v) {
-      if (typeof v === "object" && v !== null) {
-        try { return JSON.stringify(v); } catch (e) { return String(v); }
-      }
-      return String(v);
-    }
-
-    function run() {
-      const lines = [];
-      const fakeConsole = {
-        log: (...args) => lines.push(args.map(stringify).join(" ")),
-        error: (...args) => lines.push("Erro: " + args.map(stringify).join(" ")),
-        warn: (...args) => lines.push("Aviso: " + args.map(stringify).join(" ")),
-      };
-
-      output.classList.remove("has-error");
-      try {
-        const fn = new Function("console", textarea.value);
-        fn(fakeConsole);
-        output.textContent = lines.length ? lines.join("\n") : "(Executado sem saída de console.log.)";
-      } catch (err) {
-        output.classList.add("has-error");
-        output.textContent = "⚠ " + err.message;
-      }
-    }
-
-    runBtn.addEventListener("click", run);
-    if (resetBtn) {
-      resetBtn.addEventListener("click", () => {
-        textarea.value = starter;
-        output.textContent = "";
-        output.classList.remove("has-error");
-      });
-    }
-
-    textarea.addEventListener("keydown", (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
-        e.preventDefault();
-        run();
-      }
-    });
-  });
-})();
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>

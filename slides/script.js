@@ -1,13 +1,30 @@
 /* =====================================================================
-   JavaScript Workshop — Deck Controller
-   Handles: slide navigation, progress bar, menu drawer, the live
-   in-browser code runner, and the accessibility wiring for all of it
-   (ARIA roles/states, focus management, a focus-trapped dialog, and
-   a screen-reader announcer for slide changes).
+   JavaScript Workshop — Shared Controller
+   Shared by every page that links styles.css + script.js: the slide
+   decks (index.html, day2.html) AND lean utility pages like
+   sandbox.html that only embed a [data-runner] code panel.
+
+   Each feature block below checks for the DOM elements it needs and
+   simply does nothing if they're absent, so this one file works
+   correctly whether the page has the full slide-deck chrome or just
+   a single code editor:
+   - Slide navigation + progress bar + screen-reader announcer
+     → needs .slide elements and the topbar/bottombar controls.
+   - Slide-index drawer / accessibility panel (dialogs)
+     → needs their own toggle + drawer + close button + the shared scrim.
+   - Font-size and color-theme preferences
+     → always restored from localStorage (so they apply via the shared
+       CSS variables even on a page with no settings UI); the +/-
+       buttons and theme radios are wired up only if present.
+   - The live code runner → always active; used by every page.
    ===================================================================== */
 
 (function () {
   "use strict";
+
+  /* -------------------------------------------------------------------
+     Slide navigation (only on pages with a slide deck)
+     ------------------------------------------------------------------- */
 
   const slides = Array.from(document.querySelectorAll(".slide"));
   const total = slides.length;
@@ -20,6 +37,81 @@
   const nextBtn = document.getElementById("next-btn");
   const announcer = document.getElementById("sr-announcer");
 
+  const hasDeck = total > 0 && progressTrack && progressFill && counter && prevBtn && nextBtn && announcer;
+
+  // Reassigned below when hasDeck is true; harmless no-ops otherwise
+  // (e.g. called from the menu-drawer's click handler on a deck-less page).
+  let goTo = function () {};
+  let closeMenu = function () {};
+
+  if (hasDeck) {
+    // Give every slide an ARIA identity up front so screen readers
+    // announce "slide, N of TOTAL: <title>" consistently.
+    slides.forEach((slide, i) => {
+      const title = slide.dataset.title || `Slide ${i + 1}`;
+      slide.setAttribute("role", "group");
+      slide.setAttribute("aria-roledescription", "slide");
+      slide.setAttribute("aria-label", `Slide ${i + 1} de ${total}: ${title}`);
+    });
+
+    goTo = function (index) {
+      if (index < 0 || index >= total) return;
+
+      slides[current].classList.remove("active");
+      slides[current].setAttribute("aria-hidden", "true");
+
+      current = index;
+
+      slides[current].classList.add("active");
+      slides[current].removeAttribute("aria-hidden");
+      slides[current].scrollTop = 0;
+
+      const pct = ((current + 1) / total) * 100;
+      progressFill.style.width = pct + "%";
+      counter.textContent = `${String(current + 1).padStart(2, "0")} / ${total}`;
+
+      const title = slides[current].dataset.title || `Slide ${current + 1}`;
+      progressTrack.setAttribute("aria-valuenow", String(current + 1));
+      progressTrack.setAttribute("aria-valuetext", `Slide ${current + 1} de ${total}: ${title}`);
+
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+      refreshMenuHighlight();
+
+      // Tell screen-reader / AT users the slide changed without stealing
+      // keyboard focus away from the Prev/Next controls.
+      announcer.textContent = `Slide ${current + 1} de ${total}: ${title}`;
+    };
+
+    prevBtn.addEventListener("click", () => goTo(current - 1));
+    nextBtn.addEventListener("click", () => goTo(current + 1));
+  }
+
+  document.addEventListener("keydown", (e) => {
+    const openDialog = getOpenDialog();
+    if (openDialog) {
+      openDialog.handleKeydown(e);
+      return;
+    }
+    if (!hasDeck) return;
+    if (e.target.tagName === "TEXTAREA") return; // don't hijack typing in code editors
+    if (e.key === "ArrowRight" || e.key === "PageDown") { goTo(current + 1); }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") { goTo(current - 1); }
+  });
+
+  /* -------------------------------------------------------------------
+     Slide-index drawer and accessibility panel (only on pages that
+     have their own toggle + drawer + close button, plus the shared
+     scrim). Built on a reusable accessible-dialog factory:
+     - inert while closed, so off-screen contents can never grab
+       keyboard focus or be reached by screen-reader virtual cursors.
+     - focus moves into the dialog on open and returns to the trigger
+       button on close.
+     - Tab / Shift+Tab are trapped inside the dialog while it's open.
+     - only one of these dialogs is ever open at a time; opening one
+       closes the other so they never fight over the shared scrim.
+     ------------------------------------------------------------------- */
+
   const menuToggle = document.getElementById("menu-toggle");
   const menuScrim = document.getElementById("menu-scrim");
   const menuDrawer = document.getElementById("menu-drawer");
@@ -30,103 +122,8 @@
   const a11yDrawer = document.getElementById("a11y-drawer");
   const a11yClose = document.getElementById("a11y-close");
 
-  /* -------------------------------------------------------------------
-     Slide semantics: give every slide an ARIA identity up front so
-     screen readers announce "slide, N of TOTAL: <title>" consistently,
-     independent of the visual title text.
-     ------------------------------------------------------------------- */
-  slides.forEach((slide, i) => {
-    const title = slide.dataset.title || `Slide ${i + 1}`;
-    slide.setAttribute("role", "group");
-    slide.setAttribute("aria-roledescription", "slide");
-    slide.setAttribute("aria-label", `Slide ${i + 1} de ${total}: ${title}`);
-  });
-
-  function buildMenu() {
-    slides.forEach((slide, i) => {
-      const label = slide.dataset.title || `Slide ${i + 1}`;
-      const li = document.createElement("li");
-      const btn = document.createElement("button");
-      btn.className = "menu-item";
-      btn.type = "button";
-      btn.innerHTML =
-        `<span class="menu-item-num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span><span>${label}</span>`;
-      btn.addEventListener("click", () => {
-        goTo(i);
-        closeMenu();
-      });
-      li.appendChild(btn);
-      menuList.appendChild(li);
-    });
-  }
-
-  function refreshMenuHighlight() {
-    const items = menuList.querySelectorAll(".menu-item");
-    items.forEach((el, i) => {
-      const isCurrent = i === current;
-      el.classList.toggle("current", isCurrent);
-      if (isCurrent) {
-        el.setAttribute("aria-current", "true");
-      } else {
-        el.removeAttribute("aria-current");
-      }
-    });
-  }
-
-  function goTo(index) {
-    if (index < 0 || index >= total) return;
-
-    slides[current].classList.remove("active");
-    slides[current].setAttribute("aria-hidden", "true");
-
-    current = index;
-
-    slides[current].classList.add("active");
-    slides[current].removeAttribute("aria-hidden");
-    slides[current].scrollTop = 0;
-
-    const pct = ((current + 1) / total) * 100;
-    progressFill.style.width = pct + "%";
-    counter.textContent = `${String(current + 1).padStart(2, "0")} / ${total}`;
-
-    const title = slides[current].dataset.title || `Slide ${current + 1}`;
-    progressTrack.setAttribute("aria-valuenow", String(current + 1));
-    progressTrack.setAttribute("aria-valuetext", `Slide ${current + 1} de ${total}: ${title}`);
-
-    prevBtn.disabled = current === 0;
-    nextBtn.disabled = current === total - 1;
-    refreshMenuHighlight();
-
-    // Tell screen-reader / AT users the slide changed without stealing
-    // keyboard focus away from the Prev/Next controls.
-    announcer.textContent = `Slide ${current + 1} de ${total}: ${title}`;
-  }
-
-  prevBtn.addEventListener("click", () => goTo(current - 1));
-  nextBtn.addEventListener("click", () => goTo(current + 1));
-
-  document.addEventListener("keydown", (e) => {
-    const openDialog = getOpenDialog();
-    if (openDialog) {
-      openDialog.handleKeydown(e);
-      return;
-    }
-    if (e.target.tagName === "TEXTAREA") return; // don't hijack typing in code editors
-    if (e.key === "ArrowRight" || e.key === "PageDown") { goTo(current + 1); }
-    if (e.key === "ArrowLeft" || e.key === "PageUp") { goTo(current - 1); }
-  });
-
-  /* -------------------------------------------------------------------
-     Reusable accessible-dialog factory, used for both the slide-index
-     drawer and the accessibility panel.
-     - inert while closed, so off-screen contents can never grab
-       keyboard focus or be reached by screen-reader virtual cursors.
-     - focus moves into the dialog on open and returns to the trigger
-       button on close.
-     - Tab / Shift+Tab are trapped inside the dialog while it's open.
-     - only one of these dialogs is ever open at a time; opening one
-       closes the other so they never fight over the shared scrim.
-     ------------------------------------------------------------------- */
+  const hasMenuDialog = hasDeck && menuToggle && menuScrim && menuDrawer && menuClose && menuList;
+  const hasA11yDialog = a11yToggle && menuScrim && a11yDrawer && a11yClose;
 
   const openDialogs = new Set();
   function getOpenDialog() {
@@ -151,7 +148,7 @@
       document.body.classList.add(bodyClass);
       drawerEl.removeAttribute("inert");
       toggleBtn.setAttribute("aria-expanded", "true");
-      menuScrim.setAttribute("aria-hidden", "false");
+      if (menuScrim) menuScrim.setAttribute("aria-hidden", "false");
       const items = focusable();
       if (items.length) items[0].focus();
     }
@@ -161,7 +158,7 @@
       document.body.classList.remove(bodyClass);
       drawerEl.setAttribute("inert", "");
       toggleBtn.setAttribute("aria-expanded", "false");
-      if (!getOpenDialog()) menuScrim.setAttribute("aria-hidden", "true");
+      if (menuScrim && !getOpenDialog()) menuScrim.setAttribute("aria-hidden", "true");
       toggleBtn.focus();
     }
 
@@ -192,34 +189,75 @@
     return api;
   }
 
-  const menuDialog = createDialog({
-    toggleBtn: menuToggle,
-    drawerEl: menuDrawer,
-    closeBtn: menuClose,
-    bodyClass: "menu-open",
-  });
+  function buildMenu() {
+    slides.forEach((slide, i) => {
+      const label = slide.dataset.title || `Slide ${i + 1}`;
+      const li = document.createElement("li");
+      const btn = document.createElement("button");
+      btn.className = "menu-item";
+      btn.type = "button";
+      btn.innerHTML =
+        `<span class="menu-item-num" aria-hidden="true">${String(i + 1).padStart(2, "0")}</span><span>${label}</span>`;
+      btn.addEventListener("click", () => {
+        goTo(i);
+        closeMenu();
+      });
+      li.appendChild(btn);
+      menuList.appendChild(li);
+    });
+  }
 
-  const a11yDialog = createDialog({
-    toggleBtn: a11yToggle,
-    drawerEl: a11yDrawer,
-    closeBtn: a11yClose,
-    bodyClass: "a11y-open",
-  });
+  function refreshMenuHighlight() {
+    if (!menuList) return;
+    const items = menuList.querySelectorAll(".menu-item");
+    items.forEach((el, i) => {
+      const isCurrent = i === current;
+      el.classList.toggle("current", isCurrent);
+      if (isCurrent) {
+        el.setAttribute("aria-current", "true");
+      } else {
+        el.removeAttribute("aria-current");
+      }
+    });
+  }
 
-  menuScrim.addEventListener("click", () => {
-    const open = getOpenDialog();
-    if (open) open.close();
-  });
+  if (hasMenuDialog) {
+    const menuDialog = createDialog({
+      toggleBtn: menuToggle,
+      drawerEl: menuDrawer,
+      closeBtn: menuClose,
+      bodyClass: "menu-open",
+    });
+    closeMenu = () => menuDialog.close();
+    buildMenu();
+  }
 
-  function closeMenu() { menuDialog.close(); }
+  if (hasA11yDialog) {
+    createDialog({
+      toggleBtn: a11yToggle,
+      drawerEl: a11yDrawer,
+      closeBtn: a11yClose,
+      bodyClass: "a11y-open",
+    });
+  }
 
-  buildMenu();
-  goTo(0);
+  if (menuScrim && (hasMenuDialog || hasA11yDialog)) {
+    menuScrim.addEventListener("click", () => {
+      const open = getOpenDialog();
+      if (open) open.close();
+    });
+  }
+
+  if (hasDeck) goTo(0);
 
   /* -------------------------------------------------------------------
-     Accessibility panel: text-resize control (WCAG 1.4.4) and a
-     color-scheme switcher with themes tuned for low vision and common
-     color-vision deficiencies. Both preferences persist across visits.
+     Accessibility preferences: text-resize (WCAG 1.4.4) and a
+     color-scheme switcher tuned for low vision and common color-vision
+     deficiencies. Both are restored from localStorage on EVERY page
+     that shares this stylesheet — even one with no settings UI — so a
+     preference set on one page (e.g. the slide deck) carries over to
+     another (e.g. the sandbox). The +/- buttons and theme radios are
+     wired up only when this page actually has them.
      ------------------------------------------------------------------- */
 
   const FONT_MIN = 0.85;
@@ -244,9 +282,9 @@
   function applyFontScale(scale) {
     const clamped = Math.min(FONT_MAX, Math.max(FONT_MIN, scale));
     document.documentElement.style.setProperty("--font-scale", clamped.toFixed(2));
-    fontSizeValue.textContent = `${Math.round(clamped * 100)}%`;
-    fontDecreaseBtn.disabled = clamped <= FONT_MIN;
-    fontIncreaseBtn.disabled = clamped >= FONT_MAX;
+    if (fontSizeValue) fontSizeValue.textContent = `${Math.round(clamped * 100)}%`;
+    if (fontDecreaseBtn) fontDecreaseBtn.disabled = clamped <= FONT_MIN;
+    if (fontIncreaseBtn) fontIncreaseBtn.disabled = clamped >= FONT_MAX;
     try { localStorage.setItem(FONT_STORAGE_KEY, String(clamped)); } catch (e) { /* ignore */ }
     return clamped;
   }
@@ -258,15 +296,21 @@
   } catch (e) { /* ignore */ }
   currentFontScale = applyFontScale(currentFontScale);
 
-  fontDecreaseBtn.addEventListener("click", () => {
-    currentFontScale = applyFontScale(currentFontScale - FONT_STEP);
-  });
-  fontIncreaseBtn.addEventListener("click", () => {
-    currentFontScale = applyFontScale(currentFontScale + FONT_STEP);
-  });
-  fontResetBtn.addEventListener("click", () => {
-    currentFontScale = applyFontScale(1);
-  });
+  if (fontDecreaseBtn) {
+    fontDecreaseBtn.addEventListener("click", () => {
+      currentFontScale = applyFontScale(currentFontScale - FONT_STEP);
+    });
+  }
+  if (fontIncreaseBtn) {
+    fontIncreaseBtn.addEventListener("click", () => {
+      currentFontScale = applyFontScale(currentFontScale + FONT_STEP);
+    });
+  }
+  if (fontResetBtn) {
+    fontResetBtn.addEventListener("click", () => {
+      currentFontScale = applyFontScale(1);
+    });
+  }
 
   function applyTheme(theme) {
     const key = theme || "default";
@@ -295,12 +339,12 @@
   });
 
   /* -------------------------------------------------------------------
-     Live code runner
+     Live code runner — active on every page, deck or not.
      Each .code-panel with a data-runner attribute gets a textarea
      (pre-filled with starter code), an output panel, and Run/Reset
      buttons. Code runs inside a Function() sandbox with console.log
      captured into the output panel. Errors are caught and shown in
-     the brick-red error state rather than breaking the deck.
+     the error state rather than breaking the page.
 
      Accessibility wiring per panel:
      - the textarea gets a real aria-label built from its panel title
@@ -308,7 +352,7 @@
        bare, unlabelled text box.
      - the Run/Reset buttons get aria-describedby pointing at the same
        title, so a screen reader announces "Run, button, hello.js"
-       instead of nine identical unlabelled "Run" buttons.
+       instead of several identical unlabelled "Run" buttons.
      - the output panel already carries role="status" + aria-live in
        the markup, so a screen reader speaks the result automatically
        after Run is pressed — no extra focus movement required.
