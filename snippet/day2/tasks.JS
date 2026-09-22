@@ -13,7 +13,7 @@ TASK[X]
 
 TASK[X] 
 /**
- * Calcular se um numero é positivo ou negativo: 
+ * Calcular se um numero é positivo, negativo ou zero: 
  * ENTRADA: 
  * LOGICA: 
  *  * LOGICA: 
