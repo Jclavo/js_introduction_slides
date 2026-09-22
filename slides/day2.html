@@ -316,6 +316,37 @@ if (nota >= 7) {
 } else {
   console.log("Reprovado");
 }
+</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>Regras rápidas</h2>
+          <ul>
+            <li><code>else</code> nunca tem sua própria condição &mdash; ele é "todo o resto"</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+        <!-- Estruturas condicionais - else -->
+    <section class="slide" data-title="Estruturas condicionais: else">
+      <p class="slide-label">Estruturas condicionais</p>
+      <h1><code>else</code> e <code>else if</code></h1>
+      <p class="slide-sub"><code>else</code> executa quando a condição do <code>if</code> é falsa. <code>else if</code> permite encadear mais de uma condição.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">else-basico.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="12">let nota = 6.5;
+
+if (nota >= 7) {
+  console.log("Aprovado");
+} else {
+  console.log("Reprovado");
+}
 
 // Encadeando mais de uma condição com else if
 if (nota >= 9) {
