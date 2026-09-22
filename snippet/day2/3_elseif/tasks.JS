@@ -7,7 +7,7 @@ TASK[X]
  *  * LOGICA: 
  *    - ???
  * SAIDA: Mensaje sobre se foi aprovado ou não
- * EXTRA: Mostrar um mensage de error se o valor ingressado está fora do rango
+ * VALIDAÇÃO: Mostrar um mensage de error se o valor ingressado está fora do rango
  */
 
 
@@ -18,7 +18,7 @@ TASK[X]
  * LOGICA: 
  *  * LOGICA: 
  *    - ???
- * EXTRA: 
+ * VALIDAÇÃO: 
  */
 
 
@@ -29,7 +29,18 @@ TASK[X]
  * LOGICA: 
  *  * LOGICA: 
  *    - ???
- * EXTRA: 
+ * VALIDAÇÃO: 
+ */
+
+
+TASK[X] 
+/**
+ * Calcular se o letra ingressada é um vocal: 
+ * ENTRADA: 
+ * LOGICA: 
+ *  * LOGICA: 
+ *    - ???
+ * VALIDAÇÃO: 
  */
 
 
@@ -41,7 +52,7 @@ TASK[X]
  *  * LOGICA: 
  *    - ???
   * SAIDA: Mensaje sobre o como está o clima
- * EXTRA: Mostrar um mensage de error se o valor ingressado está fora do rango
+ * VALIDAÇÃO: Mostrar um mensage de error se o valor ingressado está fora do rango
  */
 
 
@@ -59,5 +70,5 @@ TASK[X]
 TASK[X] 
 /* Solicitar um numero ao usuario (1-12) e mostrar o nome do mes desse numero.
 Por exemplo: 1 seria "Janeiro", ......
-EXTRA: Mostrar um mensage de error se o valor ingressado está fora do rango
+VALIDAÇÃO: Mostrar um mensage de error se o valor ingressado está fora do rango
 */
