@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workshop de JavaScript — Dia 3 — Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<style>
+  /* Page-specific additions for Day 3's live DOM-manipulation demos.
+     These only add new, uniquely-named classes on top of the shared
+     styles.css — nothing here overrides or duplicates it. */
+  .dom-preview {
+    border: 2px dashed var(--yellow);
+    border-radius: var(--radius-card);
+    padding: 16px;
+    margin-top: 14px;
+    background: var(--bg-page);
+    font-family: var(--font-ui);
+    color: var(--text-lighter);
+    transition: background-color .15s ease, color .15s ease;
+  }
+  .dom-preview-label {
+    font-family: var(--font-mono);
+    font-size: .72rem;
+    color: var(--text-faint);
+    margin: 0 0 8px;
+  }
+  .demo-btn {
+    font-family: var(--font-ui);
+    font-weight: 600;
+    font-size: .85rem;
+    padding: 9px 18px;
+    min-height: 44px;
+    border-radius: var(--radius-pill);
+    border: 1px solid var(--border-control);
+    background: var(--bg-card);
+    color: var(--text-white);
+    cursor: pointer;
+  }
+  .demo-btn:hover { border-color: var(--yellow); }
+  .demo-input {
+    font-family: var(--font-mono);
+    font-size: .9rem;
+    padding: 10px 14px;
+    min-height: 44px;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-control);
+    background: var(--bg-page);
+    color: var(--text-white);
+    width: 100%;
+  }
+  .demo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 10px;
+  }
+  .restore-btn {
+    font-family: var(--font-ui);
+    font-size: .78rem;
+    color: var(--text-faint);
+    background: transparent;
+    border: 1px dashed var(--border-control);
+    border-radius: var(--radius-pill);
+    padding: 7px 14px;
+    min-height: 44px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
+  .restore-btn:hover { color: var(--text-white); border-color: var(--yellow); }
+  /* Demo class used only by the classList.add() teaching example */
+  .destaque {
+    outline: 3px solid var(--green);
+    outline-offset: 2px;
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#deck-stage">Pular para o conteúdo do slide</a>
+
+<!-- Ícones reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 4.9 4.9 6.4 10.6 12l-5.7 5.6 1.5 1.5L12 13.4l5.6 5.7 1.5-1.5-5.7-5.6 5.7-5.6-1.5-1.5L12 10.6z"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
+    <symbol id="icon-pair" viewBox="0 0 24 24"><path fill="currentColor" d="M8 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM8 13.5c-2.7 0-6 1.3-6 3.8V19h9v-1.7c0-1 .4-1.9 1.1-2.7-.9-.7-2.3-1.1-4.1-1.1zm8 0c-.5 0-1 0-1.5.1 1 .8 1.5 1.9 1.5 3.1V19h6v-1.7c0-2.5-3.3-3.8-6-3.8z"/></symbol>
+    <symbol id="icon-flag" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2v20H4V2h2zm2 1h11l-2.5 4L19 11H8V3z"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H8l-4 4V4zm3 3v2h10V7H7zm0 4v2h7v-2H7z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M2 4h20v16H2V4zm2 2v.51l8 5.33 8-5.33V6H4zm16 2.87-7.44 4.96a1 1 0 0 1-1.12 0L4 8.87V18h16V8.87z"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.55.55.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76 4.9 4.9 0 0 1-1.76 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76A4.9 4.9 0 0 1 5.44 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.21 9.01 4.2 9.33 4.2 12s.01 2.99.06 4.04c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65a2.77 2.77 0 0 0-.67-1.03 2.77 2.77 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Anuncia trocas de slide para leitores de tela, sem roubar o foco do teclado -->
+<div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="deck-app">
+
+  <!-- Barra superior -->
+  <div class="deck-topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+      <span class="brand-text">Workshop de JavaScript — Dia 3</span>
+    </div>
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progresso dos slides" aria-valuemin="1" aria-valuemax="14" aria-valuenow="1" aria-valuetext="Slide 1 de 14">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 14</div>
+    <button class="a11y-toggle" id="a11y-toggle" aria-label="Configurações de acessibilidade" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-drawer">Aa</button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
+    </button>
+  </div>
+
+  <!-- Palco -->
+  <div class="deck-stage" id="deck-stage" tabindex="-1">
+    <!-- 1. Capa -->
+    <section class="slide active" data-title="Manipulação do DOM">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:760px; margin:auto;">
+        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+        <p class="slide-label" style="text-align:center;">Dia 3 de 5</p>
+        <h1 style="font-size:clamp(2.2rem,6vw,3.8rem); margin-bottom:10px;">Manipulação do DOM</h1>
+        <p class="slide-sub" style="margin:0 auto 8px; max-width:52ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">JavaScript encontra o HTML: conteúdos, estilos e interação</p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px;">
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Data do workshop]</span>
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Apresentado por [nome do(s) instrutor(es)]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Recapitulando o Dia 2 -->
+    <section class="slide" data-title="Recapitulando o Dia 2">
+      <p class="slide-label">Antes de começar</p>
+      <h1>O que vimos no Dia 2</h1>
+      <p class="slide-sub">Uma passada rápida pelo que já construímos, já que hoje vamos usar tudo isso para deixar páginas web vivas.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>O que é um algoritmo, com exemplos do dia a dia</li>
+            <li>Estruturas condicionais: <code>if</code>, <code>else</code> e <code>else if</code></li>
+            <li>Um primeiro roteiro para depurar um bug</li>
+            <li><code>prompt()</code> para capturar valores de quem usa o programa</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>O que muda hoje</h2>
+          <p>Até agora, todo resultado do seu código aparecia só no console &mdash; um espaço que só quem programa enxerga.</p>
+          <p>Hoje o JavaScript vai aprender a mudar <strong>a própria página</strong> que a pessoa está vendo: trocar textos, cores, e reagir a cliques e teclas. É o primeiro passo para criar interfaces de verdade.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Agenda do Dia 3 -->
+    <section class="slide" data-title="Agenda do Dia 3">
+      <p class="slide-label">Roteiro</p>
+      <h1>O que vamos ver hoje</h1>
+      <p class="slide-sub">De uma revisão rápida de HTML até fazer a página reagir a quem está usando ela.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Agenda do Dia 3</h2>
+          <ol>
+            <li>Breve introdução sobre o HTML</li>
+            <li>O que é o DOM e como a página é estruturada</li>
+            <li>Seleção de elementos: <code>getElementById</code> e <code>querySelector</code></li>
+            <li>Manipulação de conteúdo e de estilos</li>
+            <li>Eventos com <code>addEventListener</code> &mdash; cliques e teclas</li>
+            <li>Exercício prático</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h2>Objetivos de aprendizagem</h2>
+          <p>Ao final deste dia, você será capaz de:</p>
+          <ul>
+            <li>Explicar o que é o DOM e como ele se relaciona com o HTML</li>
+            <li>Selecionar um elemento da página com <code>getElementById</code> ou <code>querySelector</code></li>
+            <li>Alterar o conteúdo e o estilo de um elemento com JavaScript</li>
+            <li>Reagir a cliques e teclas do usuário com <code>addEventListener</code></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Breve introdução sobre o HTML -->
+    <section class="slide" data-title="Breve introdução sobre o HTML">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Uma revisão rápida de HTML</h1>
+      <p class="slide-sub">Antes de manipular a página com JavaScript, vale relembrar como ela é montada.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>As peças básicas</h2>
+          <ul>
+            <li>Um <strong>elemento</strong> é escrito com uma tag de abertura e fechamento: <code>&lt;p&gt;texto&lt;/p&gt;</code></li>
+            <li>Um elemento pode ter <strong>atributos</strong>, como <code>id</code> e <code>class</code>, que ajudam a identificá-lo</li>
+            <li>Elementos podem ficar <strong>aninhados</strong> dentro de outros, formando uma hierarquia de pai e filho</li>
+          </ul>
+        </div>
+        <div class="code-panel">
+          <div class="code-panel-head"><span class="code-panel-title">pagina.html</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <pre class="code-block">&lt;div <span class="tok-kw">id</span>=<span class="tok-str">"app"</span>&gt;
+  &lt;h1 <span class="tok-kw">class</span>=<span class="tok-str">"titulo"</span>&gt;Olá!&lt;/h1&gt;
+  &lt;p <span class="tok-kw">id</span>=<span class="tok-str">"texto"</span>&gt;
+    Este parágrafo está <span class="tok-com">dentro</span>
+    da div "app".
+  &lt;/p&gt;
+&lt;/div&gt;</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. O que é o DOM -->
+    <section class="slide" data-title="O que é o DOM?">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>O que é o DOM?</h1>
+      <p class="slide-sub">DOM significa <strong>Document Object Model</strong> &mdash; a representação da sua página HTML como uma árvore de objetos que o JavaScript consegue ler e alterar.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Por que isso importa</h2>
+          <p>Quando o navegador carrega uma página HTML, ele constrói essa árvore automaticamente na memória. Cada tag vira um "nó" que o JavaScript pode acessar através do objeto global <code>document</code>.</p>
+          <p>É por isso que um clique em um botão consegue, na mesma página e sem recarregar nada, trocar um texto, mudar uma cor ou mostrar uma nova seção.</p>
+        </div>
+        <div class="card">
+          <h2>O HTML do slide anterior, como árvore</h2>
+          <ul style="font-family:var(--font-mono); font-size:.85rem; line-height:2;">
+            <li>document
+              <ul>
+                <li>div<span style="color:var(--text-faint);">#app</span>
+                  <ul>
+                    <li>h1<span style="color:var(--text-faint);">.titulo</span></li>
+                    <li>p<span style="color:var(--text-faint);">#texto</span></li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Seleção de elementos - getElementById -->
+    <section class="slide" data-title="Selecionando com getElementById">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1><code>getElementById</code></h1>
+      <p class="slide-sub">A forma mais direta de pegar um elemento: pelo valor exato do seu atributo <code>id</code>.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Como funciona</h2>
+          <ul>
+            <li><code>document.getElementById("meuId")</code> devolve o elemento com aquele <code>id</code></li>
+            <li>Como <code>id</code> deve ser único na página, o retorno é sempre um único elemento (ou <code>null</code>, se não existir)</li>
+            <li>A partir do elemento, você pode ler ou mudar o que quiser nele</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">getbyid.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="6">let alvo = document.getElementById("alvo-getbyid");
+
+alvo.style.border = "2px solid orange";
+console.log("Elemento encontrado:", alvo.textContent);</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Pré-visualização ao vivo</p>
+            <div id="alvo-getbyid">Este é o elemento alvo (id="alvo-getbyid")</div>
+            <button type="button" class="restore-btn" data-restore-target="alvo-getbyid">Restaurar visual</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Seleção de elementos - querySelector -->
+    <section class="slide" data-title="Selecionando com querySelector">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1><code>querySelector</code></h1>
+      <p class="slide-sub">Mais flexível: usa os mesmos seletores do CSS para encontrar elementos.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Como funciona</h2>
+          <ul>
+            <li><code>document.querySelector(".minhaClasse")</code> devolve o <strong>primeiro</strong> elemento que combina com o seletor</li>
+            <li>Funciona com classe (<code>.classe</code>), id (<code>#id</code>), tag (<code>p</code>) e combinações</li>
+            <li><code>querySelectorAll(...)</code> devolve <strong>todos</strong> os elementos que combinam, não só o primeiro</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">queryselector.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="6">let alvo = document.querySelector(".alvo-consulta");
+
+alvo.style.fontWeight = "bold";
+console.log("Elemento encontrado:", alvo.textContent);</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Pré-visualização ao vivo</p>
+            <div id="alvo-consulta" class="alvo-consulta">Este elemento tem a classe "alvo-consulta"</div>
+            <button type="button" class="restore-btn" data-restore-target="alvo-consulta">Restaurar visual</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Manipulação de conteúdo -->
+    <section class="slide" data-title="Manipulando conteúdo">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Trocando o conteúdo de um elemento</h1>
+      <p class="slide-sub"><code>textContent</code> troca só o texto. <code>innerHTML</code> também entende tags HTML dentro do valor.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Duas opções, uma diferença importante</h2>
+          <ul>
+            <li><code>elemento.textContent = "..."</code> troca o texto puro, sem interpretar tags</li>
+            <li><code>elemento.innerHTML = "..."</code> interpreta tags HTML dentro do texto</li>
+            <li><code>innerHTML</code> é poderoso, mas nunca deve receber texto digitado por um usuário sem cuidado &mdash; é uma porta de entrada comum para ataques</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">conteudo.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="6">let caixa = document.getElementById("alvo-conteudo");
+
+caixa.innerHTML = "Texto trocado com <strong>innerHTML</strong>!";
+console.log("Conteúdo atualizado!");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Pré-visualização ao vivo</p>
+            <div id="alvo-conteudo">Texto original, ainda não trocado</div>
+            <button type="button" class="restore-btn" data-restore-target="alvo-conteudo">Restaurar visual</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Manipulação de estilos -->
+    <section class="slide" data-title="Manipulando estilos">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Trocando o estilo de um elemento</h1>
+      <p class="slide-sub">Você pode mudar propriedades de CSS direto pelo JavaScript, ou ligar/desligar classes inteiras com <code>classList</code>.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Duas formas de mudar o estilo</h2>
+          <ul>
+            <li><code>elemento.style.propriedade = "valor"</code> muda uma propriedade CSS específica</li>
+            <li>Nomes com hífen no CSS viram camelCase no JS: <code>background-color</code> vira <code>backgroundColor</code></li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">estilos.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="7">let caixa = document.getElementById("alvo-estilo");
+
+caixa.style.backgroundColor = "gold";
+caixa.style.color = "black";
+alert("Estilo atualizado!");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Pré-visualização ao vivo</p>
+            <div id="alvo-estilo">Este elemento vai mudar de estilo</div>
+            <button type="button" class="restore-btn" data-restore-target="alvo-estilo">Restaurar visual</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Eventos - conceito -->
+    <section class="slide" data-title="Eventos: addEventListener">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Reagindo ao que a pessoa faz na página</h1>
+      <p class="slide-sub">Um <strong>evento</strong> é algo que acontece na página &mdash; um clique, uma tecla pressionada, um campo preenchido. <code>addEventListener</code> "escuta" esse evento e roda uma função quando ele acontece.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel">
+          <div class="code-panel-head"><span class="code-panel-title">sintaxe.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <pre class="code-block"><span class="tok-kw">let</span> elemento = document.<span class="tok-fn">getElementById</span>(<span class="tok-str">"meuId"</span>);
+
+elemento.<span class="tok-fn">addEventListener</span>(<span class="tok-str">"click"</span>, <span class="tok-kw">function</span> () {
+  <span class="tok-com">// roda toda vez que o elemento for clicado</span>
+  console.<span class="tok-fn">log</span>(<span class="tok-str">"Cliquei!"</span>);
+});</pre>
+        </div>
+        <div class="card">
+          <h2>Alguns eventos comuns</h2>
+          <ul>
+            <li><code>"click"</code> &mdash; a pessoa clicou no elemento</li>
+            <li><code>"keydown"</code> / <code>"keyup"</code> &mdash; uma tecla foi pressionada ou solta</li>
+            <li><code>"input"</code> &mdash; o valor de um campo de texto mudou</li>
+            <li><code>"submit"</code> &mdash; um formulário foi enviado</li>
+            <li><code>"mouseover"</code> &mdash; o mouse passou por cima do elemento</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Eventos - cliques -->
+    <section class="slide" data-title="Eventos: cliques">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Na prática: reagindo a um clique</h1>
+      <p class="slide-sub">Primeiro clique em "Executar" para registrar o evento. Depois, clique quantas vezes quiser no botão de demonstração abaixo.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">cliques.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="10">let contador = 0;
+let botao = document.getElementById("botao-demo-clique");
+let mostrador = document.getElementById("contador-cliques");
+
+botao.addEventListener("click", function () {
+  contador = contador + 1;
+  mostrador.textContent = "Cliques: " + contador;
+});
+
+console.log("Listener registrado! Clique no botão de demonstração.");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Elemento de demonstração</p>
+            <div class="demo-row">
+              <button type="button" class="demo-btn" id="botao-demo-clique">Clique aqui</button>
+              <span id="contador-cliques">Cliques: 0</span>
+            </div>
+            <button type="button" class="restore-btn" data-restore-target="botao-demo-clique" data-restore-extra="contador-cliques">Restaurar demonstração</button>
+          </div>
+        </div>
+        <div class="note note--pairing">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
+          <div><h4>Cuidado, um bug comum</h4><p>Se você clicar em "Executar" mais de uma vez sem restaurar antes, cada clique no botão vai contar em dobro (ou triplo) &mdash; isso acontece porque cada execução registra um novo listener, sem remover o anterior. Use "Restaurar demonstração" para recomeçar do zero.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Eventos - teclas -->
+    <section class="slide" data-title="Eventos: teclas">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Na prática: reagindo ao teclado</h1>
+      <p class="slide-sub">Clique em "Executar" para registrar o evento. Depois, clique no campo abaixo e digite algo.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">teclas.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">let campo = document.getElementById("campo-demo-tecla");
+let ultimaTecla = document.getElementById("ultima-tecla");
+
+campo.addEventListener("keydown", function (evento) {
+  ultimaTecla.textContent = "Última tecla: " + evento.key;
+});
+
+console.log("Listener registrado! Digite no campo de demonstração.");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Elemento de demonstração</p>
+            <input type="text" class="demo-input" id="campo-demo-tecla" placeholder="Digite aqui..." aria-label="Campo de demonstração para o evento de teclado">
+            <p id="ultima-tecla" style="margin:10px 0 0;">Última tecla: (nenhuma ainda)</p>
+            <button type="button" class="restore-btn" data-restore-target="campo-demo-tecla" data-restore-extra="ultima-tecla">Restaurar demonstração</button>
+          </div>
+        </div>
+        <div class="card">
+          <h2>O objeto do evento</h2>
+          <p>A função registrada com <code>addEventListener</code> recebe automaticamente um objeto (aqui chamado <code>evento</code>) com detalhes do que aconteceu.</p>
+          <p>Para teclado, <code>evento.key</code> diz exatamente qual tecla foi pressionada &mdash; de letras a teclas especiais como <code>"Enter"</code> ou <code>"Backspace"</code>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Exercício -->
+    <section class="slide" data-title="Exercício: alternador de tema">
+      <p class="slide-label">Exercício</p>
+      <h1>Crie um alternador de tema</h1>
+      <p class="slide-sub">Combine tudo o que vimos hoje: seleção, conteúdo, estilo e eventos.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Alternador de tema</h3><span class="pill">15 min</span></div>
+          <p style="margin:0 0 10px;">Complete o código para que, ao clicar no botão "Alternar", a caixa abaixo troque o texto entre "Modo claro" e "Modo escuro" <strong>e</strong> troque sua cor de fundo entre um tom claro e um tom escuro.</p>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">exercicio-tema.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="8">let caixa = document.getElementById("caixa-exercicio");
+let botao = document.getElementById("botao-exercicio");
+
+// TODO: adicione um addEventListener de "click" no botão
+// que alterna o texto e a cor de fundo da caixa entre
+// "Modo claro" (fundo claro) e "Modo escuro" (fundo escuro)</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+            <div class="dom-preview" style="margin:0 14px 14px;">
+              <p class="dom-preview-label">Elemento de demonstração</p>
+              <div id="caixa-exercicio" style="padding:14px; border-radius:var(--radius-card); margin-bottom:10px;">Modo claro</div>
+              <button type="button" class="demo-btn" id="botao-exercicio">Alternar</button>
+              <button type="button" class="restore-btn" data-restore-target="caixa-exercicio" data-restore-extra="botao-exercicio">Restaurar demonstração</button>
+            </div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Crie uma variável <code>let escuro = false;</code> fora do listener. Dentro da função do clique, inverta o valor (<code>escuro = !escuro;</code>) e use <code>if</code>/<code>else</code> para decidir o texto e a cor com base nela &mdash; igual ao <code>if</code>/<code>else</code> do Dia 2.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>let escuro = false; botao.addEventListener("click", function () { escuro = !escuro; if (escuro) { caixa.textContent = "Modo escuro"; caixa.style.backgroundColor = "#111111"; caixa.style.color = "#ffffff"; } else { caixa.textContent = "Modo claro"; caixa.style.backgroundColor = "#ffffff"; caixa.style.color = "#111111"; } });</code></div>
+          </details>
+        </div>
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+          <div><h4>Desafio opcional</h4><p>Adicione uma terceira opção de tema (por exemplo, "Modo colorido") e use uma variável numérica em vez de um booleano para alternar entre os três.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Encerramento do Dia 3 -->
+    <section class="slide" data-title="Encerramento do Dia 3">
+      <p class="slide-label">Encerramento do Dia 3</p>
+      <h1>O que construímos hoje</h1>
+      <p class="slide-sub">Do HTML estático até uma página que responde a cliques e teclas &mdash; o primeiro passo para interfaces de verdade.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>O que é o DOM e como o navegador constrói essa árvore a partir do HTML</li>
+            <li>Seleção de elementos com <code>getElementById</code> e <code>querySelector</code></li>
+            <li>Alteração de conteúdo (<code>textContent</code>, <code>innerHTML</code>) e de estilo (<code>style</code>, <code>classList</code>)</li>
+            <li>Reação a eventos com <code>addEventListener</code> &mdash; cliques e teclas</li>
+          </ul>
+          <h2 style="margin-top:14px;">O que vem no Dia 4</h2>
+          <p>Ainda vamos definir juntos os próximos passos &mdash; é um ótimo momento para sugerir o que você gostaria de aprofundar antes do próximo encontro.</p>
+        </div>
+        <div class="note note--feedback" style="align-self:start;">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
+          <div><h4>Momento de feedback</h4><p>Em uma escala de 1 a 5, o quão confiante você se sente para selecionar um elemento e reagir a um clique sozinho? Compartilhe seu número em voz alta ou no chat &mdash; isso ajusta o ritmo do Dia 4.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="deck-bottombar">
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Anterior</button>
+    <span class="nav-center">As setas do teclado ou Page Up/Down também navegam</span>
+    <button class="nav-btn" id="next-btn">Próximo<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<!-- Painel de índice de slides e painel de acessibilidade -->
+<div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+
+<div class="a11y-drawer" id="a11y-drawer" role="dialog" aria-modal="true" aria-labelledby="a11y-drawer-title" inert>
+  <div class="a11y-drawer-head">
+    <h2 id="a11y-drawer-title">Acessibilidade</h2>
+    <button class="a11y-close" id="a11y-close" aria-label="Fechar configurações de acessibilidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <fieldset class="a11y-section">
+    <legend>Tamanho do texto</legend>
+    <p class="a11y-section-hint">Ajusta o tamanho de todo o texto dos slides, de 85% até 200%.</p>
+    <div class="font-size-control">
+      <button type="button" class="font-size-btn small" id="font-decrease" aria-label="Diminuir tamanho do texto">A−</button>
+      <span class="font-size-value" id="font-size-value" aria-live="polite">100%</span>
+      <button type="button" class="font-size-btn large" id="font-increase" aria-label="Aumentar tamanho do texto">A+</button>
+    </div>
+    <button type="button" class="font-size-reset" id="font-reset">Redefinir tamanho</button>
+  </fieldset>
+
+  <fieldset class="a11y-section">
+    <legend>Esquema de cores</legend>
+    <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
+
+    <div class="theme-preview" aria-hidden="true">
+      <span class="theme-preview-swatch" style="background:var(--yellow)"></span>
+      <span class="theme-preview-swatch" style="background:var(--green)"></span>
+      <span class="theme-preview-swatch" style="background:var(--red)"></span>
+      <span class="theme-preview-swatch" style="background:var(--blue)"></span>
+      <span class="theme-preview-label">Pré-visualização em tempo real</span>
+    </div>
+    <p class="visually-hidden" id="theme-status" role="status" aria-live="polite"></p>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="default" checked>
+      <span class="theme-option-label">
+        <span class="theme-option-title">Padrão</span>
+        <span class="theme-option-desc">Preto e amarelo, o tema original</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#131313"></span><span style="background:#F7DF1E"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="high-contrast">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Alto contraste</span>
+        <span class="theme-option-desc">Preto puro e branco, para baixa visão</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#000000"></span><span style="background:#FFEE58"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="colorblind">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Daltonismo (vermelho-verde)</span>
+        <span class="theme-option-desc">Troca verde/vermelho por azul-turquesa/laranja</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#26C6DA"></span><span style="background:#FF8A3D"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="grayscale">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Escala de cinza</span>
+        <span class="theme-option-desc">Remove toda cor; usa só contraste, ícone e texto</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#4d4d4d"></span><span style="background:#bdbdbd"></span></span>
+    </label>
+  </fieldset>
+</div>
+
+<div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
+  <div class="menu-drawer-head">
+    <h2 id="menu-drawer-title">Todos os slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Fechar índice de slides">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+  <ul id="menu-list" class="menu-list"></ul>
+</div>
+
+<script src="script.js"></script>
+<script>
+  /* Page-specific helper for Day 3's live DOM demos: a generic
+     "Restaurar" behavior that puts a demo element back to its exact
+     pristine state — including removing any event listeners a
+     learner's code attached to it, by rebuilding the element fresh
+     from its original markup rather than just resetting text/style.
+     This does not touch the shared script.js. */
+  (function () {
+    "use strict";
+    var originals = {};
+
+    document.querySelectorAll("[data-restore-target]").forEach(function (btn) {
+      var targetId = btn.getAttribute("data-restore-target");
+      var extraId = btn.getAttribute("data-restore-extra");
+
+      [targetId, extraId].forEach(function (id) {
+        if (id && !(id in originals)) {
+          var el = document.getElementById(id);
+          if (el) originals[id] = el.outerHTML;
+        }
+      });
+
+      btn.addEventListener("click", function () {
+        [targetId, extraId].forEach(function (id) {
+          if (!id) return;
+          var current = document.getElementById(id);
+          var html = originals[id];
+          if (current && html) {
+            var wrapper = document.createElement("div");
+            wrapper.innerHTML = html;
+            var fresh = wrapper.firstElementChild;
+            current.replaceWith(fresh);
+          }
+        });
+      });
+    });
+  })();
+</script>
+</body>
+</html>
