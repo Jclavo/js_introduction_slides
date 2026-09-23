@@ -319,7 +319,7 @@ console.log("Elemento encontrado:", alvo.textContent);</textarea>
           <h2>Duas opções, uma diferença importante</h2>
           <ul>
             <li><code>elemento.textContent = "..."</code> troca o texto puro, sem interpretar tags</li>
-            <li><code>elemento.innerHTML = "..."</code> interpreta tags HTML dentro do texto</li>
+            <!-- <li><code>elemento.innerHTML = "..."</code> interpreta tags HTML dentro do texto</li> -->
             <li><code>innerHTML</code> é poderoso, mas nunca deve receber texto digitado por um usuário sem cuidado &mdash; é uma porta de entrada comum para ataques</li>
           </ul>
         </div>
@@ -327,8 +327,8 @@ console.log("Elemento encontrado:", alvo.textContent);</textarea>
           <div class="code-panel-head"><span class="code-panel-title">conteudo.js</span><div class="dots"><span></span><span></span><span></span></div></div>
           <textarea class="code-input" spellcheck="false" rows="6">let caixa = document.getElementById("alvo-conteudo");
 
-caixa.innerHTML = "Texto trocado com <strong>innerHTML</strong>!";
-console.log("Conteúdo atualizado!");</textarea>
+caixa.textContent = "Texto trocado!";
+alert("Conteúdo atualizado!");</textarea>
           <div class="code-actions">
             <button class="run-btn">Executar ▸</button>
             <button class="reset-btn">Reiniciar</button>
