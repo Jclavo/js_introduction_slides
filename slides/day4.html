@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workshop de JavaScript — Dia 4 — Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#deck-stage">Pular para o conteúdo do slide</a>
+
+<!-- Ícones reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 4.9 4.9 6.4 10.6 12l-5.7 5.6 1.5 1.5L12 13.4l5.6 5.7 1.5-1.5-5.7-5.6 5.7-5.6-1.5-1.5L12 10.6z"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
+    <symbol id="icon-pair" viewBox="0 0 24 24"><path fill="currentColor" d="M8 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM8 13.5c-2.7 0-6 1.3-6 3.8V19h9v-1.7c0-1 .4-1.9 1.1-2.7-.9-.7-2.3-1.1-4.1-1.1zm8 0c-.5 0-1 0-1.5.1 1 .8 1.5 1.9 1.5 3.1V19h6v-1.7c0-2.5-3.3-3.8-6-3.8z"/></symbol>
+    <symbol id="icon-flag" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2v20H4V2h2zm2 1h11l-2.5 4L19 11H8V3z"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H8l-4 4V4zm3 3v2h10V7H7zm0 4v2h7v-2H7z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M2 4h20v16H2V4zm2 2v.51l8 5.33 8-5.33V6H4zm16 2.87-7.44 4.96a1 1 0 0 1-1.12 0L4 8.87V18h16V8.87z"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.55.55.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76 4.9 4.9 0 0 1-1.76 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76A4.9 4.9 0 0 1 5.44 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.21 9.01 4.2 9.33 4.2 12s.01 2.99.06 4.04c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65a2.77 2.77 0 0 0-.67-1.03 2.77 2.77 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Anuncia trocas de slide para leitores de tela, sem roubar o foco do teclado -->
+<div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="deck-app">
+
+  <!-- Barra superior -->
+  <div class="deck-topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+      <span class="brand-text">Workshop de JavaScript — Dia 4</span>
+    </div>
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progresso dos slides" aria-valuemin="1" aria-valuemax="15" aria-valuenow="1" aria-valuetext="Slide 1 de 15">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 15</div>
+    <button class="a11y-toggle" id="a11y-toggle" aria-label="Configurações de acessibilidade" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-drawer">Aa</button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
+    </button>
+  </div>
+
+  <!-- Palco -->
+  <div class="deck-stage" id="deck-stage" tabindex="-1">
+    <!-- 1. Capa -->
+    <section class="slide active" data-title="Funções">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:760px; margin:auto;">
+        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+        <p class="slide-label" style="text-align:center;">Dia 4 de 5</p>
+        <h1 style="font-size:clamp(2.4rem,6.5vw,4rem); margin-bottom:10px;">Funções</h1>
+        <p class="slide-sub" style="margin:0 auto 8px; max-width:52ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">Organizando código em blocos reutilizáveis</p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px;">
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Data do workshop]</span>
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Apresentado por [nome do(s) instrutor(es)]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Recapitulando o Dia 3 -->
+    <section class="slide" data-title="Recapitulando o Dia 3">
+      <p class="slide-label">Antes de começar</p>
+      <h1>O que vimos no Dia 3</h1>
+      <p class="slide-sub">Uma passada rápida pelo que já construímos, já que hoje vamos organizar tudo isso em blocos reutilizáveis.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>O que é o DOM e como o navegador constrói essa árvore a partir do HTML</li>
+            <li>Seleção de elementos com <code>getElementById</code> e <code>querySelector</code></li>
+            <li>Alteração de conteúdo e de estilo de um elemento</li>
+            <li>Reação a eventos com <code>addEventListener</code></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>O que muda hoje</h2>
+          <p>Até agora, cada pedaço de lógica que escrevemos rodava uma única vez, de cima para baixo. Se quiséssemos repetir algo, tínhamos que copiar e colar o código de novo.</p>
+          <p>Hoje aprendemos a empacotar um pedaço de lógica em uma <strong>função</strong> &mdash; algo que podemos chamar quantas vezes quisermos, com dados diferentes a cada vez.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Agenda do Dia 4 -->
+    <section class="slide" data-title="Agenda do Dia 4">
+      <p class="slide-label">Roteiro</p>
+      <h1>O que vamos ver hoje</h1>
+      <p class="slide-sub">De declarar sua primeira função até escopo &mdash; a base para organizar qualquer programa maior.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Agenda do Dia 4</h2>
+          <ol>
+            <li>Declaração de funções e parâmetros</li>
+            <li>Envio de parâmetros</li>
+            <li>Retorno de valores</li>
+            <li>Arrow functions (funções de seta)</li>
+            <li>Escopo global vs. escopo local</li>
+            <li>Exercícios</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h2>Objetivos de aprendizagem</h2>
+          <p>Ao final deste dia, você será capaz de:</p>
+          <ul>
+            <li>Declarar uma função e chamá-la quantas vezes precisar</li>
+            <li>Enviar informações para uma função por meio de parâmetros</li>
+            <li>Usar <code>return</code> para devolver um valor de dentro de uma função</li>
+            <li>Escrever uma arrow function e saber quando ela é útil</li>
+            <li>Explicar a diferença entre uma variável global e uma variável local</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Por que usar funções -->
+    <section class="slide" data-title="Por que usar funções?">
+      <p class="slide-label">Funções</p>
+      <h1>Evitando repetir o mesmo código</h1>
+      <p class="slide-sub">Uma função empacota um pedaço de lógica com um nome, para que você possa reaproveitá-lo em vez de copiar e colar.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>O que funções trazem</h2>
+          <ul>
+            <li><strong>Reutilização</strong> &mdash; escreva a lógica uma vez, use quantas vezes precisar</li>
+            <li><strong>Organização</strong> &mdash; um nome bem escolhido explica o que aquele bloco faz</li>
+            <li><strong>Manutenção</strong> &mdash; precisou corrigir algo? Muda em um lugar só, não em cada cópia espalhada pelo código</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">antes-e-depois.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="14">// Sem função: código repetido três vezes
+console.log("Bem-vindo(a)!");
+console.log("Confira nossas novidades.");
+
+console.log("Bem-vindo(a)!");
+console.log("Confira nossas novidades.");
+
+// Com função: a mesma mensagem, reaproveitada
+function mensagemBoasVindas() {
+  console.log("Bem-vindo(a)!");
+  console.log("Confira nossas novidades.");
+}
+
+mensagemBoasVindas();
+mensagemBoasVindas();
+mensagemBoasVindas();</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Declarando uma função -->
+    <section class="slide" data-title="Declarando uma função">
+      <p class="slide-label">Funções</p>
+      <h1>Sua primeira função</h1>
+      <p class="slide-sub"><code>function</code> declara a função; o nome dela seguido de <code>()</code> a executa ("chama").</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Anatomia de uma função</h2>
+          <ul>
+            <li><code>function</code> &mdash; palavra-chave que inicia a declaração</li>
+            <li><code>nomeDaFuncao</code> &mdash; escolhido por você, segue as mesmas regras de nomes de variáveis</li>
+            <li><code>()</code> &mdash; onde ficam os parâmetros (vazio por enquanto)</li>
+            <li><code>{ }</code> &mdash; o bloco de código que roda quando a função é chamada</li>
+            <li>Declarar a função <strong>não</strong> executa o código dentro dela &mdash; isso só acontece quando você a chama</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">declaracao.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">// Declarando a função — isso ainda não executa nada
+function saudar() {
+  console.log("Olá! Esta função pode ser chamada quantas vezes você quiser.");
+}
+
+// Chamando (executando) a função
+saudar();
+saudar();
+saudar();</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. Envio de parâmetros -->
+    <section class="slide" data-title="Enviando parâmetros">
+      <p class="slide-label">Funções</p>
+      <h1>Parâmetros: dados que entram na função</h1>
+      <p class="slide-sub">Parâmetros deixam a mesma função se comportar diferente a cada chamada.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Regras importantes</h2>
+          <ul>
+            <li>Os valores enviados na chamada (<strong>argumentos</strong>) são recebidos na <strong>ordem</strong> em que os parâmetros foram declarados</li>
+            <li>Trocar a ordem na chamada muda o resultado &mdash; a função não "adivinha" o que cada valor significa</li>
+            <li>Um parâmetro pode ter um <strong>valor padrão</strong>, usado quando nada é enviado naquela posição</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">parametros.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="14">function apresentar(nome, idade) {
+  console.log("Nome: " + nome + ", Idade: " + idade);
+}
+
+apresentar("Ana", 25);
+apresentar("Bruno", 30);
+
+// A ordem importa! Isso troca nome por idade:
+apresentar(25, "Ana");
+
+// Parâmetro com valor padrão
+function saudar(nome = "visitante") {
+  console.log("Olá, " + nome + "!");
+}
+
+saudar("Carla");
+saudar(); // usa o valor padrão, "visitante"</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Retorno de valores -->
+    <section class="slide" data-title="Retorno de valores">
+      <p class="slide-label">Funções</p>
+      <h1><code>return</code>: devolvendo um valor</h1>
+      <p class="slide-sub">Uma função pode <em>devolver</em> um valor para quem a chamou, usando <code>return</code> &mdash; diferente de apenas imprimir algo no console.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>console.log vs. return</h2>
+          <ul>
+            <li><code>console.log(...)</code> só mostra algo no console &mdash; o valor não fica disponível para o resto do código</li>
+            <li><code>return valor;</code> devolve o valor para quem chamou a função, que pode guardá-lo em uma variável</li>
+            <li>Uma função sem <code>return</code> devolve <code>undefined</code> automaticamente</li>
+            <li><code>return</code> também encerra a função na hora &mdash; nenhuma linha depois dele é executada</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">retorno.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="14">function somar(a, b) {
+  return a + b;
+}
+
+let resultado = somar(3, 4);
+console.log(resultado); // 7
+
+// Sem return, a função devolve "undefined"
+function semRetorno(a, b) {
+  console.log(a + b); // só imprime, não devolve
+}
+
+let outroResultado = semRetorno(3, 4);
+console.log(outroResultado); // undefined</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. Arrow Functions -->
+    <section class="slide" data-title="Arrow Functions">
+      <p class="slide-label">Funções</p>
+      <h1>Arrow functions (funções de seta)</h1>
+      <p class="slide-sub">Uma forma mais curta de escrever uma função, usando <code>=&gt;</code> no lugar da palavra <code>function</code>.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">arrow.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="14">// Função tradicional
+function multiplicar(a, b) {
+  return a * b;
+}
+
+// A mesma função, como arrow function
+const multiplicarSeta = (a, b) => {
+  return a * b;
+};
+
+// Com uma única expressão, o return pode ficar implícito
+const multiplicarCurta = (a, b) => a * b;
+
+console.log(multiplicar(3, 4));
+console.log(multiplicarSeta(3, 4));
+console.log(multiplicarCurta(3, 4));</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>O que muda, na prática</h2>
+          <ul>
+            <li>Arrow functions são guardadas em uma variável (<code>const</code>), não têm um nome próprio como <code>function nome()</code></li>
+            <li>Com <strong>um único</strong> parâmetro, os parênteses podem ser omitidos: <code>a =&gt; a * 2</code></li>
+            <li>Com <strong>uma única</strong> expressão no corpo, as chaves <code>{ }</code> e o <code>return</code> podem ser omitidos</li>
+          </ul>
+          <div class="note note--realworld" style="margin-top:14px;">
+            <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
+            <div><h4>Cenário do mundo real</h4><p>Arrow functions aparecem o tempo todo como "funções de uma linha" passadas para outras funções &mdash; algo muito comum quando você começar a trabalhar com listas de dados no futuro.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Escopo -->
+    <section class="slide" data-title="Escopo global vs. local">
+      <p class="slide-label">Funções</p>
+      <h1>Escopo: onde uma variável "existe"</h1>
+      <p class="slide-sub">Uma variável declarada <strong>dentro</strong> de uma função só existe ali dentro &mdash; esse é o escopo local.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Duas regras simples</h2>
+          <ul>
+            <li><strong>Escopo global</strong>: uma variável declarada fora de qualquer função pode ser usada em qualquer lugar do código</li>
+            <li><strong>Escopo local</strong>: uma variável declarada dentro de uma função só existe enquanto essa função está rodando, e só é visível ali dentro</li>
+            <li>Tentar usar uma variável local fora da função onde ela foi criada gera um erro (<code>ReferenceError</code>)</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">escopo.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="10">function calcularDobro(numero) {
+  let resultado = numero * 2; // "resultado" só existe aqui dentro
+  return resultado;
+}
+
+console.log(calcularDobro(5)); // 10
+
+// Descomente a linha abaixo e rode de novo para ver o erro:
+// console.log(resultado);</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+      <div class="note note--pairing">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
+        <div><h4>Programação em dupla</h4><p>Antes de descomentar a última linha, peça para a pessoa ao lado prever: vai dar erro, ou vai funcionar? Descomentem juntos e confiram &mdash; depois expliquem um para o outro, com suas próprias palavras, por que aconteceu isso.</p></div>
+      </div>
+    </section>
+
+    <!-- 10. Exercícios - intro -->
+    <section class="slide" data-title="Exercícios: como vamos trabalhar">
+      <p class="slide-label">Exercícios</p>
+      <h1>Quatro exercícios, do mais simples ao mais completo</h1>
+      <p class="slide-sub">Trabalhe na ordem. Cada exercício tem uma dica e uma solução escondidas &mdash; tente sozinho antes de abrir.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Nesta sequência</h2>
+          <ol>
+            <li>Função de saudação</li>
+            <li>Calculadora de área</li>
+            <li>Verificação de maioridade</li>
+            <li>Convertendo para arrow function</li>
+          </ol>
+        </div>
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+          <div><h4>Desafio opcional</h4><p>Terminou os quatro? Volte ao Exercício 2 e adicione um parâmetro padrão para <code>altura</code>, para que a função também funcione quando só a largura for informada.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Exercício 1 -->
+    <section class="slide" data-title="Exercício: Função de saudação">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 1 &mdash; Função de saudação</h1>
+      <p class="slide-sub">Escreva uma função <code>saudacao(nome)</code> que <strong>retorna</strong> a frase "Olá, &lt;nome&gt;! Seja bem-vindo(a).". Depois, chame a função e mostre o resultado com <code>console.log</code>.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Função de saudação</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">saudacao.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">// TODO: declare a função saudacao(nome) que RETORNA a saudação
+// depois chame a função e logue o resultado</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Lembre-se de usar <code>return</code> dentro da função. Chamar a função sozinha (<code>saudacao("Ana");</code>) não mostra nada &mdash; você precisa colocar a chamada dentro de um <code>console.log(...)</code>.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>function saudacao(nome) { return "Olá, " + nome + "! Seja bem-vindo(a)."; } console.log(saudacao("Ana"));</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Exercício 2 -->
+    <section class="slide" data-title="Exercício: Calculadora de área">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 2 &mdash; Calculadora de área</h1>
+      <p class="slide-sub">Escreva uma função <code>areaRetangulo(largura, altura)</code> que retorna a área (largura × altura). Teste com pelo menos dois retângulos diferentes.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Calculadora de área</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">area.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">// TODO: declare a função areaRetangulo(largura, altura)
+// e teste com pelo menos dois retângulos diferentes</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">É o mesmo cálculo de área do Dia 1 (multiplicação), só que agora empacotado dentro de uma função com dois parâmetros.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>function areaRetangulo(largura, altura) { return largura * altura; } console.log(areaRetangulo(4, 5)); console.log(areaRetangulo(10, 2));</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Exercício 3 -->
+    <section class="slide" data-title="Exercício: Verificação de maioridade">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 3 &mdash; Verificação de maioridade</h1>
+      <p class="slide-sub">Escreva uma função <code>verificarMaioridade(idade)</code> que retorna "Maior de idade" ou "Menor de idade". Teste com pelo menos dois valores diferentes.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Verificação de maioridade</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">maioridade.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">// TODO: declare a função verificarMaioridade(idade)
+// usando if / else, e teste com dois valores diferentes</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">É o mesmo <code>if</code>/<code>else</code> do Dia 2, só que agora, em vez de usar <code>console.log</code> dentro de cada bloco, use <code>return</code> para devolver o texto.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>function verificarMaioridade(idade) { if (idade >= 18) { return "Maior de idade"; } else { return "Menor de idade"; } } console.log(verificarMaioridade(15)); console.log(verificarMaioridade(20));</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Exercício 4 -->
+    <section class="slide" data-title="Exercício: Convertendo para arrow function">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 4 &mdash; Convertendo para arrow function</h1>
+      <p class="slide-sub">Reescreva a função abaixo como uma arrow function, guardada em uma <code>const</code> chamada <code>verificarMaioridadeSeta</code>.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Convertendo para arrow function</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">arrow-exercicio.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="11">function verificarMaioridade(idade) {
+  if (idade >= 18) {
+    return "Maior de idade";
+  } else {
+    return "Menor de idade";
+  }
+}
+
+// TODO: reescreva a função acima como arrow function,
+// guardada em uma const chamada verificarMaioridadeSeta</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Troque <code>function nome(parametros) { ... }</code> por <code>const nome = (parametros) => { ... };</code>. O conteúdo de dentro do corpo pode continuar exatamente igual.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>const verificarMaioridadeSeta = (idade) => { if (idade >= 18) { return "Maior de idade"; } else { return "Menor de idade"; } }; console.log(verificarMaioridadeSeta(20));</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. Encerramento do Dia 4 -->
+    <section class="slide" data-title="Encerramento do Dia 4">
+      <p class="slide-label">Encerramento do Dia 4</p>
+      <h1>O que construímos hoje</h1>
+      <p class="slide-sub">Do primeiro <code>function</code> até saber quando algo é global ou local &mdash; a base para organizar qualquer programa maior.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>Por que funções evitam repetição e facilitam manutenção</li>
+            <li>Declaração de funções, parâmetros e a ordem dos argumentos</li>
+            <li><code>return</code> para devolver um valor, e a diferença para <code>console.log</code></li>
+            <li>Arrow functions e quando usar a forma curta</li>
+            <li>Escopo global vs. escopo local</li>
+          </ul>
+          <h2 style="margin-top:14px;">O que vem no Dia 5</h2>
+          <p>Ainda vamos definir juntos os próximos passos &mdash; é um ótimo momento para sugerir o que você gostaria de aprofundar antes do último encontro.</p>
+        </div>
+        <div class="note note--feedback" style="align-self:start;">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
+          <div><h4>Momento de feedback</h4><p>Em uma escala de 1 a 5, o quão confiante você se sente para escrever uma função com parâmetros e retorno sozinho? Compartilhe seu número em voz alta ou no chat &mdash; isso ajusta o ritmo do Dia 5.</p></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="deck-bottombar">
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Anterior</button>
+    <span class="nav-center">As setas do teclado ou Page Up/Down também navegam</span>
+    <button class="nav-btn" id="next-btn">Próximo<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<!-- Painel de índice de slides e painel de acessibilidade -->
+<div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+
+<div class="a11y-drawer" id="a11y-drawer" role="dialog" aria-modal="true" aria-labelledby="a11y-drawer-title" inert>
+  <div class="a11y-drawer-head">
+    <h2 id="a11y-drawer-title">Acessibilidade</h2>
+    <button class="a11y-close" id="a11y-close" aria-label="Fechar configurações de acessibilidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <fieldset class="a11y-section">
+    <legend>Tamanho do texto</legend>
+    <p class="a11y-section-hint">Ajusta o tamanho de todo o texto dos slides, de 85% até 200%.</p>
+    <div class="font-size-control">
+      <button type="button" class="font-size-btn small" id="font-decrease" aria-label="Diminuir tamanho do texto">A−</button>
+      <span class="font-size-value" id="font-size-value" aria-live="polite">100%</span>
+      <button type="button" class="font-size-btn large" id="font-increase" aria-label="Aumentar tamanho do texto">A+</button>
+    </div>
+    <button type="button" class="font-size-reset" id="font-reset">Redefinir tamanho</button>
+  </fieldset>
+
+  <fieldset class="a11y-section">
+    <legend>Esquema de cores</legend>
+    <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
+
+    <div class="theme-preview" aria-hidden="true">
+      <span class="theme-preview-swatch" style="background:var(--yellow)"></span>
+      <span class="theme-preview-swatch" style="background:var(--green)"></span>
+      <span class="theme-preview-swatch" style="background:var(--red)"></span>
+      <span class="theme-preview-swatch" style="background:var(--blue)"></span>
+      <span class="theme-preview-label">Pré-visualização em tempo real</span>
+    </div>
+    <p class="visually-hidden" id="theme-status" role="status" aria-live="polite"></p>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="default" checked>
+      <span class="theme-option-label">
+        <span class="theme-option-title">Padrão</span>
+        <span class="theme-option-desc">Preto e amarelo, o tema original</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#131313"></span><span style="background:#F7DF1E"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="high-contrast">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Alto contraste</span>
+        <span class="theme-option-desc">Preto puro e branco, para baixa visão</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#000000"></span><span style="background:#FFEE58"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="colorblind">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Daltonismo (vermelho-verde)</span>
+        <span class="theme-option-desc">Troca verde/vermelho por azul-turquesa/laranja</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#26C6DA"></span><span style="background:#FF8A3D"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="grayscale">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Escala de cinza</span>
+        <span class="theme-option-desc">Remove toda cor; usa só contraste, ícone e texto</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#4d4d4d"></span><span style="background:#bdbdbd"></span></span>
+    </label>
+  </fieldset>
+</div>
+
+<div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
+  <div class="menu-drawer-head">
+    <h2 id="menu-drawer-title">Todos os slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Fechar índice de slides">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+  <ul id="menu-list" class="menu-list"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
