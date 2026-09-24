@@ -522,6 +522,51 @@ let botao = document.getElementById("botao-exercicio");
       </div>
     </section>
 
+    <!-- Lendo o valor de um input -->
+    <section class="slide" data-title="Lendo o valor de um input">
+      <p class="slide-label">Manipulação do DOM</p>
+      <h1>Lendo o valor de um campo de texto</h1>
+      <p class="slide-sub">Todo <code>&lt;input&gt;</code> tem uma propriedade <code>.value</code> com o que está digitado nele &mdash; você pode ler ou até escrever nela diretamente pelo JavaScript.</p>
+      
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">valor-input.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">let campo = document.getElementById("campo-nome");
+let botao = document.getElementById("botao-nome");
+let resultado = document.getElementById("resultado-nome");
+
+botao.addEventListener("click", function () {
+  let valorDigitado = campo.value;
+  resultado.textContent = "Você digitou: " + valorDigitado;
+});
+
+console.log("Listener registrado! Digite algo e clique no botão.");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          <div class="dom-preview" style="margin:0 14px 14px;">
+            <p class="dom-preview-label">Elemento de demonstração</p>
+            <input type="text" class="demo-input" id="campo-nome" placeholder="Digite seu nome..." aria-label="Campo de demonstração para leitura de valor">
+            <div class="demo-row">
+              <button type="button" class="demo-btn" id="botao-nome">Mostrar valor</button>
+              <span id="resultado-nome">Você digitou: (nada ainda)</span>
+            </div>
+            <button type="button" class="restore-btn" data-restore-target="campo-nome" data-restore-extra="resultado-nome">Restaurar demonstração</button>
+          </div>
+        </div>
+        
+        <div class="card">
+          <p><code>[campo].value</code> sempre tem o <strong>texto completo</strong> que está no campo agora, pronto para ser lido quando você quiser &mdash; geralmente ao clicar em um botão, como neste exemplo.</p>
+          <div class="note note--realworld" style="margin-top:14px;">
+            <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
+            <div><h4>Cenário do mundo real</h4><p>Formulários de login, campos de busca e caixas de comentário funcionam assim: o navegador só lê o <code>.value</code> do campo no momento em que você clica em "Entrar", "Buscar" ou "Enviar".</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Encerramento do Dia 3 -->
     <section class="slide" data-title="Encerramento do Dia 3">
       <p class="slide-label">Encerramento do Dia 3</p>
