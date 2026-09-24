@@ -7,6 +7,10 @@ componenteBotao.style.color = "red";
 
 componenteBotao.addEventListener("click", function () {
     let nome = componenteNome.value;
+
+
+
+    
     componenteParagrafo.textContent = "Bem-vindo " + nome;
 });
 
