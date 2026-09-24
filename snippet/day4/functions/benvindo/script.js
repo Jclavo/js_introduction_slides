@@ -1,10 +1,6 @@
 
-mostrarMensagem();
+let elementBotao = document.getElementById("botao-memsagem");
 
-/**
- * Area de funçoes
- */
-
-function mostrarMensagem() {
-    alert("Benvindo ao Dia 4");
-}
+elementBotao.addEventListener("click", function () {
+  alert("Benvindo ao dia 4.");
+});
