@@ -8,10 +8,11 @@ componenteBotao.style.color = "red";
 componenteBotao.addEventListener("click", function () {
     let nome = componenteNome.value;
 
-
-
-    
-    componenteParagrafo.textContent = "Bem-vindo " + nome;
+    if (nome == "" ) {
+        alert("Digite seu nome!!!!");
+    } else {
+        componenteParagrafo.textContent = "Bem-vindo " + nome;
+    }
 });
 
 componenteBotaoLimpar.addEventListener("click", function () {
