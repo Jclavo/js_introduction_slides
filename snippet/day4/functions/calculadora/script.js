@@ -6,10 +6,14 @@ const componenteResultado = document.getElementById("resultado");
 componente_divisor.addEventListener("click", function () {
     let numeroA = componenteValorA.value;
     let numeroB = componenteValorB.value;
-    if (numeroB == 0) {
+    dividir(numeroA, numeroB);
+});
+
+function dividir(dividendo, divisor) {
+    if (divisor == 0) {
         alert("Zero não é divisor valido");
     } else {
-        let resultado = Number(numeroA) / Number(numeroB);
+        let resultado = Number(dividendo) / Number(divisor);
         componenteResultado.value = resultado;
     }
-});
+}
