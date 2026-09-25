@@ -7,13 +7,16 @@
  * SAIDA: Mensagem
  */
 
-const idade = prompt("Ingresse sua idade");
+const minhaIdade = prompt("Ingresse sua idade");
+verificarIdade(minhaIdade);
 
-if (idade >=18) {
+function verificarIdade(idade) {
+    if (idade >=18) {
     alert("maior de idade");
-} 
-else {
-    alert("menor de idade")
+    } 
+    else {
+        alert("menor de idade")
+    }
 }
 
 
