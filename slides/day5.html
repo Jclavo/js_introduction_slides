@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Workshop de JavaScript — Dia 5 — Slides</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip-link" href="#deck-stage">Pular para o conteúdo do slide</a>
+
+<!-- Ícones reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="icon-braces" viewBox="0 0 24 24"><path fill="currentColor" d="M8.5 3c-1.8 0-2.9 1.1-2.9 3v2.6c0 1.1-.4 1.6-1.6 1.6v2c1.2 0 1.6.5 1.6 1.6V16c0 1.9 1.1 3 2.9 3h.8v-1.8h-.5c-.9 0-1.3-.4-1.3-1.4v-2.5c0-1.3-.5-2-1.3-2.3.8-.3 1.3-1 1.3-2.3V6.2c0-1 .4-1.4 1.3-1.4h.5V3h-.8zm7 0h-.8v1.8h.5c.9 0 1.3.4 1.3 1.4v2.5c0 1.3.5 2 1.3 2.3-.8.3-1.3 1-1.3 2.3V16c0 1-.4 1.4-1.3 1.4h-.5V19h.8c1.8 0 2.9-1.1 2.9-3v-2.2c0-1.1.4-1.6 1.6-1.6v-2c-1.2 0-1.6-.5-1.6-1.6V6c0-1.9-1.1-3-2.9-3z"/></symbol>
+    <symbol id="icon-menu" viewBox="0 0 24 24"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path fill="currentColor" d="M6.4 4.9 4.9 6.4 10.6 12l-5.7 5.6 1.5 1.5L12 13.4l5.6 5.7 1.5-1.5-5.7-5.6 5.7-5.6-1.5-1.5L12 10.6z"/></symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path fill="currentColor" d="M15 4l-8 8 8 8 1.4-1.4L9.8 12l6.6-6.6z"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path fill="currentColor" d="M9 4l8 8-8 8-1.4-1.4L14.2 12 7.6 5.4z"/></symbol>
+    <symbol id="icon-globe" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2a10 10 0 100 20 10 10 0 000-20zm7.9 9h-3.3a15.6 15.6 0 00-1.2-5.4A8 8 0 0119.9 11zM12 4c.9 1.2 1.9 3.4 2.1 7H9.9C10.1 7.4 11.1 5.2 12 4zM4.1 13h3.3c.2 2 .6 3.8 1.2 5.4A8 8 0 014.1 13zm3.3-2H4.1a8 8 0 014.5-5.4A15.6 15.6 0 007.4 11zM12 20c-.9-1.2-1.9-3.4-2.1-7h4.2c-.2 3.6-1.2 5.8-2.1 7zm2.6-1.6c.6-1.6 1-3.4 1.2-5.4h3.3a8 8 0 01-4.5 5.4z"/></symbol>
+    <symbol id="icon-pair" viewBox="0 0 24 24"><path fill="currentColor" d="M8 12a3.5 3.5 0 100-7 3.5 3.5 0 000 7zm8 0a3.5 3.5 0 100-7 3.5 3.5 0 000 7zM8 13.5c-2.7 0-6 1.3-6 3.8V19h9v-1.7c0-1 .4-1.9 1.1-2.7-.9-.7-2.3-1.1-4.1-1.1zm8 0c-.5 0-1 0-1.5.1 1 .8 1.5 1.9 1.5 3.1V19h6v-1.7c0-2.5-3.3-3.8-6-3.8z"/></symbol>
+    <symbol id="icon-flag" viewBox="0 0 24 24"><path fill="currentColor" d="M6 2v20H4V2h2zm2 1h11l-2.5 4L19 11H8V3z"/></symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24"><path fill="currentColor" d="M4 4h16v11H8l-4 4V4zm3 3v2h10V7H7zm0 4v2h7v-2H7z"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><path fill="currentColor" d="M2 4h20v16H2V4zm2 2v.51l8 5.33 8-5.33V6H4zm16 2.87-7.44 4.96a1 1 0 0 1-1.12 0L4 8.87V18h16V8.87z"/></symbol>
+    <symbol id="icon-linkedin" viewBox="0 0 24 24"><path fill="currentColor" d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45z"/></symbol>
+    <symbol id="icon-instagram" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2c2.72 0 3.06.01 4.12.06 1.06.05 1.79.22 2.43.47.66.26 1.21.6 1.76 1.15.55.55.9 1.1 1.15 1.76.25.64.42 1.37.47 2.43.05 1.06.06 1.4.06 4.12s-.01 3.06-.06 4.12c-.05 1.06-.22 1.79-.47 2.43a4.9 4.9 0 0 1-1.15 1.76 4.9 4.9 0 0 1-1.76 1.15c-.64.25-1.37.42-2.43.47-1.06.05-1.4.06-4.12.06s-3.06-.01-4.12-.06c-1.06-.05-1.79-.22-2.43-.47a4.9 4.9 0 0 1-1.76-1.15 4.9 4.9 0 0 1-1.15-1.76c-.25-.64-.42-1.37-.47-2.43C2.01 15.06 2 14.72 2 12s.01-3.06.06-4.12c.05-1.06.22-1.79.47-2.43.26-.66.6-1.21 1.15-1.76A4.9 4.9 0 0 1 5.44 2.53c.64-.25 1.37-.42 2.43-.47C8.94 2.01 9.28 2 12 2zm0 1.8c-2.67 0-2.99.01-4.04.06-.87.04-1.34.18-1.65.3-.42.16-.72.36-1.03.67-.31.31-.51.61-.67 1.03-.12.31-.26.78-.3 1.65C4.21 9.01 4.2 9.33 4.2 12s.01 2.99.06 4.04c.04.87.18 1.34.3 1.65.16.42.36.72.67 1.03.31.31.61.51 1.03.67.31.12.78.26 1.65.3 1.05.05 1.37.06 4.04.06s2.99-.01 4.04-.06c.87-.04 1.34-.18 1.65-.3.42-.16.72-.36 1.03-.67.31-.31.51-.61.67-1.03.12-.31.26-.78.3-1.65.05-1.05.06-1.37.06-4.04s-.01-2.99-.06-4.04c-.04-.87-.18-1.34-.3-1.65a2.77 2.77 0 0 0-.67-1.03 2.77 2.77 0 0 0-1.03-.67c-.31-.12-.78-.26-1.65-.3C14.99 3.81 14.67 3.8 12 3.8zm0 3.05a5.15 5.15 0 1 1 0 10.3 5.15 5.15 0 0 1 0-10.3zm0 1.8a3.35 3.35 0 1 0 0 6.7 3.35 3.35 0 0 0 0-6.7zm5.35-1.99a1.2 1.2 0 1 1-2.4 0 1.2 1.2 0 0 1 2.4 0z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Anuncia trocas de slide para leitores de tela, sem roubar o foco do teclado -->
+<div id="sr-announcer" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<div id="deck-app">
+
+  <!-- Barra superior -->
+  <div class="deck-topbar">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+      <span class="brand-text">Workshop de JavaScript — Dia 5</span>
+    </div>
+    <div class="progress-track" id="progress-track" role="progressbar" aria-label="Progresso dos slides" aria-valuemin="1" aria-valuemax="16" aria-valuenow="1" aria-valuetext="Slide 1 de 16">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
+    <div class="slide-counter" id="slide-counter" aria-hidden="true">01 / 16</div>
+    <button class="a11y-toggle" id="a11y-toggle" aria-label="Configurações de acessibilidade" aria-haspopup="dialog" aria-expanded="false" aria-controls="a11y-drawer">Aa</button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Abrir índice de slides" aria-haspopup="dialog" aria-expanded="false" aria-controls="menu-drawer">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-menu"/></svg>
+    </button>
+  </div>
+
+  <!-- Palco -->
+  <div class="deck-stage" id="deck-stage" tabindex="-1">
+    <!-- 1. Capa -->
+    <section class="slide active" data-title="Controle de Fluxo (II)">
+      <div class="slide-body cols-1" style="justify-content:center; align-self:center; text-align:center; max-width:760px; margin:auto;">
+        <svg class="brand-mark" viewBox="0 0 24 24" style="color:var(--yellow); width:40px; height:40px; margin:0 auto 22px;" aria-hidden="true" focusable="false"><use href="#icon-braces"/></svg>
+        <p class="slide-label" style="text-align:center;">Dia 5 de 5 &middot; Último encontro</p>
+        <h1 style="font-size:clamp(2.2rem,6vw,3.8rem); margin-bottom:10px;">Controle de Fluxo (II)</h1>
+        <p class="slide-sub" style="margin:0 auto 8px; max-width:52ch; font-size:clamp(1.05rem,2vw,1.3rem); color:var(--yellow);">Laços de repetição: while e for</p>
+        <div style="display:flex; justify-content:center; gap:14px; flex-wrap:wrap; margin-top:22px;">
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">[Data do workshop]</span>
+          <span class="pill" style="background:var(--bg-card); color:var(--text-lighter); border:1px solid var(--border-soft);">Apresentado por [nome do(s) instrutor(es)]</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Recapitulando o Dia 4 -->
+    <section class="slide" data-title="Recapitulando o Dia 4">
+      <p class="slide-label">Antes de começar</p>
+      <h1>O que vimos no Dia 4</h1>
+      <p class="slide-sub">Uma passada rápida pelo que já construímos, já que hoje vamos usar tudo isso para repetir ações automaticamente.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Recapitulando</h2>
+          <ul>
+            <li>Declaração de funções, parâmetros e a ordem dos argumentos</li>
+            <li><code>return</code> para devolver um valor de dentro de uma função</li>
+            <li>Arrow functions e a forma curta de escrevê-las</li>
+            <li>Escopo global vs. escopo local</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>O que muda hoje</h2>
+          <p>Até agora, cada instrução do seu código rodava uma única vez, na ordem em que foi escrita. Se quiséssemos repetir algo dez vezes, tínhamos que escrever (ou chamar) dez vezes.</p>
+          <p>Hoje aprendemos os <strong>laços de repetição</strong>: uma forma de dizer "repita isso enquanto uma condição for verdadeira" ou "repita isso um número específico de vezes" &mdash; sem copiar e colar nada.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Agenda do Dia 5 -->
+    <section class="slide" data-title="Agenda do Dia 5">
+      <p class="slide-label">Roteiro</p>
+      <h1>O que vamos ver hoje</h1>
+      <p class="slide-sub">Nosso último encontro &mdash; e o fechamento de tudo o que vimos até aqui.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Agenda do Dia 5</h2>
+          <ol>
+            <li>Por que repetir código automaticamente</li>
+            <li>Laço <code>while</code></li>
+            <li>Cuidado com loops infinitos</li>
+            <li>Laço <code>for</code></li>
+            <li>Combinando repetição com condicionais e funções</li>
+            <li>Exercícios</li>
+          </ol>
+        </div>
+        <div class="card">
+          <h2>Objetivos de aprendizagem</h2>
+          <p>Ao final deste dia, você será capaz de:</p>
+          <ul>
+            <li>Escrever um laço <code>while</code> e um laço <code>for</code></li>
+            <li>Explicar por que um loop pode travar a página, e como evitar isso</li>
+            <li>Combinar um loop com <code>if</code>/<code>else</code> para resolver problemas com mais de uma condição</li>
+            <li>Usar um loop dentro de uma função para calcular um resultado</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Por que repetir automaticamente -->
+    <section class="slide" data-title="Por que repetir automaticamente?">
+      <p class="slide-label">Laços de repetição</p>
+      <h1>Evitando repetir o mesmo código à mão</h1>
+      <p class="slide-sub">Um loop repete um bloco de código automaticamente, enquanto uma condição for verdadeira.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>O problema que loops resolvem</h2>
+          <ul>
+            <li>Repetir uma linha 5 vezes é chato de escrever &mdash; e repetir 500 vezes é inviável</li>
+            <li>Um loop deixa o número de repetições no controle de uma <strong>condição</strong> ou de um <strong>contador</strong>, não do quanto você copiou e colou</li>
+            <li>É a mesma ideia das funções (Dia 4): escrever a lógica uma vez, reaproveitar quantas vezes precisar</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">antes-e-depois.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="12">// Sem loop: repetido à mão
+console.log("Contando: 1");
+console.log("Contando: 2");
+console.log("Contando: 3");
+console.log("Contando: 4");
+console.log("Contando: 5");
+
+// Com loop: a mesma contagem, automática
+for (let i = 1; i <= 5; i++) {
+  console.log("Contando: " + i);
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Laço while -->
+    <section class="slide" data-title="Laço while">
+      <p class="slide-label">Laços de repetição</p>
+      <h1><code>while</code>: repita enquanto for verdadeiro</h1>
+      <p class="slide-sub"><code>while (condição) { ... }</code> repete o bloco enquanto a condição continuar verdadeira.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Como funciona</h2>
+          <ul>
+            <li>Antes de cada repetição, o JavaScript verifica a condição</li>
+            <li>Se for <code>true</code>, o bloco roda de novo; se for <code>false</code>, o loop termina</li>
+            <li>É essencial que <strong>algo dentro do loop</strong> eventualmente torne a condição falsa &mdash; senão o loop nunca para (mais sobre isso no próximo slide)</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">while.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">let contador = 1;
+
+while (contador <= 5) {
+  console.log("Contando: " + contador);
+  contador = contador + 1; // sem isso, o loop nunca termina
+}
+
+console.log("Loop terminou!");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+      <div class="note note--pairing">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--green)" aria-hidden="true" focusable="false"><use href="#icon-pair"/></svg>
+        <div><h4>Programação em dupla</h4><p>Antes de executar, peça para a pessoa ao lado prever quantas linhas de "Contando" vão aparecer. Depois tentem juntos: e se o loop começasse com <code>contador = 0</code>? E se a condição fosse <code>contador &lt; 5</code>?</p></div>
+      </div>
+    </section>
+
+    <!-- 6. Cuidado com loops infinitos -->
+    <section class="slide" data-title="Cuidado com loops infinitos">
+      <p class="slide-label">Laços de repetição</p>
+      <h1>O bug mais clássico de todo loop</h1>
+      <p class="slide-sub">Se a condição de um <code>while</code> nunca ficar falsa, o loop roda para sempre &mdash; e trava a aba do navegador.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Como esse bug acontece</h2>
+          <p>É muito comum esquecer de atualizar a variável que controla a condição. Sem isso, a condição nunca muda, e o loop nunca termina.</p>
+          <p style="margin-top:10px;"><strong>Não execute</strong> o código ao lado &mdash; ele foi propositalmente deixado sem o Run, exatamente para mostrar o erro sem travar a página.</p>
+        </div>
+        <div class="code-panel">
+          <div class="code-panel-head"><span class="code-panel-title">nao-execute.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <pre class="code-block"><span class="tok-com">// ⚠️ Este código nunca termina — é só para leitura</span>
+<span class="tok-kw">let</span> contador = <span class="tok-num">1</span>;
+
+<span class="tok-kw">while</span> (contador &lt;= <span class="tok-num">5</span>) {
+  console.<span class="tok-fn">log</span>(<span class="tok-str">"Contando: "</span> + contador);
+  <span class="tok-com">// Faltou "contador = contador + 1;"
+  // Sem isso, "contador" nunca muda, e a
+  // condição nunca fica falsa.</span>
+}</pre>
+        </div>
+      </div>
+      <div class="note note--challenge">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+        <div><h4>Se a sua aba travar</h4><p>Se você acidentalmente rodar um loop infinito de verdade, a aba pode parar de responder. Feche a aba (ou a janela) e abra o material de novo &mdash; nenhum progresso salvo é perdido, já que os slides não guardam o código entre uma execução e outra.</p></div>
+      </div>
+    </section>
+
+    <!-- 7. Laço for -->
+    <section class="slide" data-title="Laço for">
+      <p class="slide-label">Laços de repetição</p>
+      <h1><code>for</code>: contando em uma única linha</h1>
+      <p class="slide-sub"><code>for (início; condição; incremento) { ... }</code> junta as três partes de um loop contado em um só lugar.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>As três partes do for</h2>
+          <ul>
+            <li><code>let i = 1</code> &mdash; roda uma vez, antes de tudo (a inicialização)</li>
+            <li><code>i &lt;= 5</code> &mdash; verificada antes de cada repetição (a condição)</li>
+            <li><code>i++</code> &mdash; roda ao final de cada repetição (o incremento)</li>
+          </ul>
+          <p style="margin-top:10px;">Como o incremento já faz parte da própria linha do <code>for</code>, é mais difícil esquecer de atualizar a variável &mdash; por isso <code>for</code> é a escolha mais comum quando você sabe quantas vezes quer repetir.</p>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">for.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="7">for (let i = 1; i <= 5; i++) {
+  console.log("Contando: " + i);
+}
+
+console.log("Loop terminou!");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. for vs while -->
+    <section class="slide" data-title="for ou while: quando usar cada um">
+      <p class="slide-label">Laços de repetição</p>
+      <h1>Escolhendo entre <code>for</code> e <code>while</code></h1>
+      <p class="slide-sub">Os dois repetem código &mdash; a diferença está em quando cada um encaixa melhor.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Uma regra prática</h2>
+          <ul>
+            <li>Use <code>for</code> quando você sabe (ou consegue calcular) quantas vezes quer repetir</li>
+            <li>Use <code>while</code> quando a repetição depende de uma condição que só se resolve com o tempo, não de uma contagem fixa</li>
+          </ul>
+        </div>
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">while-condicao.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="9">// Quantas vezes dividir 100 por 2 até ficar menor que 1?
+// Não dá para saber de cabeça — o while resolve isso
+let valor = 100;
+let passos = 0;
+
+while (valor >= 1) {
+  valor = valor / 2;
+  passos = passos + 1;
+}
+
+console.log("Foram necessários " + passos + " passos.");</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. Combinando loops com condicionais -->
+    <section class="slide" data-title="Loops + condicionais">
+      <p class="slide-label">Laços de repetição</p>
+      <h1>Combinando repetição com decisões</h1>
+      <p class="slide-sub">Um <code>if</code>/<code>else</code> dentro de um loop permite tratar cada repetição de um jeito diferente.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">par-ou-impar.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="7">for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) {
+    console.log(i + " é par");
+  } else {
+    console.log(i + " é ímpar");
+  }
+}</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>Um padrão extremamente comum</h2>
+          <p>"Percorrer uma sequência de itens e decidir algo sobre cada um" é um dos padrões mais usados em programação &mdash; e é só um loop com um <code>if</code> dentro.</p>
+          <div class="note note--realworld" style="margin-top:14px;">
+            <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--yellow)" aria-hidden="true" focusable="false"><use href="#icon-globe"/></svg>
+            <div><h4>Cenário do mundo real</h4><p>Uma loja online que mostra só os produtos "em promoção", ou um app de mensagens que destaca só as conversas "não lidas", está fazendo exatamente isso: percorrendo uma lista e aplicando uma condição a cada item.</p></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. Loops dentro de funções -->
+    <section class="slide" data-title="Loops dentro de funções">
+      <p class="slide-label">Laços de repetição</p>
+      <h1>Juntando Dia 4 e Dia 5</h1>
+      <p class="slide-sub">Uma função pode usar um loop por dentro, e devolver só o resultado final com <code>return</code>.</p>
+      <div class="slide-body cols-2">
+        <div class="code-panel" data-runner>
+          <div class="code-panel-head"><span class="code-panel-title">somar-ate.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+          <textarea class="code-input" spellcheck="false" rows="10">function somarAte(numero) {
+  let soma = 0;
+
+  for (let i = 1; i <= numero; i++) {
+    soma = soma + i;
+  }
+
+  return soma;
+}
+
+console.log(somarAte(5));  // 1+2+3+4+5
+console.log(somarAte(10)); // 1+2+...+10</textarea>
+          <div class="code-actions">
+            <button class="run-btn">Executar ▸</button>
+            <button class="reset-btn">Reiniciar</button>
+          </div>
+          <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+        </div>
+        <div class="card">
+          <h2>Por que isso é poderoso</h2>
+          <ul>
+            <li>Quem chama <code>somarAte(5)</code> não precisa saber que existe um loop lá dentro &mdash; só se importa com o resultado</li>
+            <li>A variável <code>soma</code> é local à função (escopo, Dia 4): cada chamada começa do zero</li>
+            <li>Esse é o mesmo padrão por trás de praticamente qualquer cálculo "some todos", "conte quantos" ou "encontre o maior" que você vai escrever no futuro</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11. Exercícios - intro -->
+    <section class="slide" data-title="Exercícios: como vamos trabalhar">
+      <p class="slide-label">Exercícios</p>
+      <h1>Quatro exercícios para fechar os cinco dias</h1>
+      <p class="slide-sub">Trabalhe na ordem. Cada exercício tem uma dica e uma solução escondidas &mdash; tente sozinho antes de abrir.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>Nesta sequência</h2>
+          <ol>
+            <li>Tabuada de um número</li>
+            <li>Contagem regressiva</li>
+            <li>Soma dos números pares</li>
+            <li>Função com loop (fatorial)</li>
+          </ol>
+        </div>
+        <div class="note note--challenge">
+          <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--red)" aria-hidden="true" focusable="false"><use href="#icon-flag"/></svg>
+          <div><h4>Desafio opcional</h4><p>Terminou os quatro? Transforme o Exercício 1 (tabuada) em uma função <code>tabuada(numero)</code>, reaproveitando o loop de dentro dela para qualquer número que você passar.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12. Exercício 1 -->
+    <section class="slide" data-title="Exercício: Tabuada">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 1 &mdash; Tabuada de um número</h1>
+      <p class="slide-sub">Use um <code>for</code> para imprimir a tabuada de <code>numero</code>, de 1 até 10 (ex.: "7 x 1 = 7").</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Tabuada</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">tabuada.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="6">const numero = 7;
+
+// TODO: use um for para imprimir a tabuada de "numero"
+// de 1 até 10 (ex.: "7 x 1 = 7")</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Use um <code>for</code> de <code>i = 1</code> até <code>i &lt;= 10</code>, e dentro dele monte a string com <code>numero * i</code>.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>for (let i = 1; i &lt;= 10; i++) { console.log(numero + " x " + i + " = " + (numero * i)); }</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13. Exercício 2 -->
+    <section class="slide" data-title="Exercício: Contagem regressiva">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 2 &mdash; Contagem regressiva</h1>
+      <p class="slide-sub">Use um <code>while</code> para contar de 10 até 1, e depois mostre "Fim!".</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Contagem regressiva</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">regressiva.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="6">let numero = 10;
+
+// TODO: use um while para contar de 10 até 1,
+// e depois logue "Fim!"</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Lembre-se de <strong>diminuir</strong> <code>numero</code> a cada volta do loop &mdash; sem isso, ele nunca termina (o bug do slide de loops infinitos).</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>while (numero &gt;= 1) { console.log(numero); numero = numero - 1; } console.log("Fim!");</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14. Exercício 3 -->
+    <section class="slide" data-title="Exercício: Soma dos números pares">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 3 &mdash; Soma dos números pares</h1>
+      <p class="slide-sub">Some todos os números pares de 1 a 20, usando <code>for</code> + <code>if</code>, e mostre o resultado.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Soma dos números pares</h3><span class="pill">10 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">soma-pares.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="6">let soma = 0;
+
+// TODO: percorra de 1 a 20 com for, e some só os
+// números pares em "soma"</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Use <code>i % 2 === 0</code> (Dia 1) para saber se um número é par, e some só esses em <code>soma</code>.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>for (let i = 1; i &lt;= 20; i++) { if (i % 2 === 0) { soma = soma + i; } } console.log(soma);</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15. Exercício 4 -->
+    <section class="slide" data-title="Exercício: Função com loop">
+      <p class="slide-label">Exercícios</p>
+      <h1>Exercício 4 &mdash; Função com loop (fatorial)</h1>
+      <p class="slide-sub">Escreva uma função <code>fatorial(numero)</code> que calcula o fatorial (ex.: fatorial de 5 é 5×4×3×2×1 = 120), usando um <code>for</code> dentro dela.</p>
+      <div class="slide-body cols-1">
+        <div class="exercise">
+          <div class="exercise-head"><h3>Função com loop</h3><span class="pill">15 min</span></div>
+          <div class="code-panel" data-runner>
+            <div class="code-panel-head"><span class="code-panel-title">fatorial.js</span><div class="dots"><span></span><span></span><span></span></div></div>
+            <textarea class="code-input" spellcheck="false" rows="5">// TODO: declare a função fatorial(numero) usando um for
+// dentro dela, e teste com pelo menos dois valores</textarea>
+            <div class="code-actions"><button class="run-btn">Executar ▸</button><button class="reset-btn">Reiniciar</button></div>
+            <div class="output-panel" role="status" aria-live="polite" aria-atomic="true"></div>
+          </div>
+          <details class="disclosure">
+            <summary>Dica</summary>
+            <div class="disclosure-body">Comece com <code>let resultado = 1;</code> antes do loop, e multiplique <code>resultado</code> por <code>i</code> a cada volta &mdash; parecido com o <code>somarAte</code> que vimos antes, mas multiplicando em vez de somar.</div>
+          </details>
+          <details class="disclosure">
+            <summary>Solução</summary>
+            <div class="disclosure-body"><code>function fatorial(numero) { let resultado = 1; for (let i = 1; i &lt;= numero; i++) { resultado = resultado * i; } return resultado; } console.log(fatorial(5)); console.log(fatorial(3));</code></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16. Encerramento do Dia 5 -->
+    <section class="slide" data-title="Encerramento do workshop">
+      <p class="slide-label">Encerramento &middot; Fim dos 5 dias</p>
+      <h1>Você completou o workshop!</h1>
+      <p class="slide-sub">De uma aba em branco a programas com decisões, repetição, funções e páginas interativas &mdash; parabéns pela jornada.</p>
+      <div class="slide-body cols-2">
+        <div class="card">
+          <h2>O que vimos nos 5 dias</h2>
+          <ul>
+            <li><strong>Dia 1</strong> &mdash; Fundamentos: variáveis, tipos, operadores aritméticos</li>
+            <li><strong>Dia 2</strong> &mdash; Condicionais: <code>if</code>/<code>else</code>, debug, <code>prompt()</code></li>
+            <li><strong>Dia 3</strong> &mdash; DOM: selecionar, alterar conteúdo/estilo, eventos</li>
+            <li><strong>Dia 4</strong> &mdash; Funções: parâmetros, retorno, arrow functions, escopo</li>
+            <li><strong>Dia 5</strong> &mdash; Repetição: <code>while</code>, <code>for</code>, combinando tudo</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Para onde ir a partir daqui</h2>
+          <ul>
+            <li>Continue praticando livremente no <strong>Sandbox</strong> deste material</li>
+            <li>Próximos temas naturais: arrays, objetos, e mais interações no DOM</li>
+            <li>O melhor jeito de fixar tudo isso é construir um projeto pequeno seu, do zero</li>
+          </ul>
+        </div>
+      </div>
+      <div class="note note--feedback">
+        <svg class="note-icon" viewBox="0 0 24 24" style="color:var(--blue)" aria-hidden="true" focusable="false"><use href="#icon-chat"/></svg>
+        <div><h4>Momento de feedback</h4><p>Comparando com o início da semana, de 1 a 5, o quanto sua confiança para programar em JavaScript mudou? Compartilhe em voz alta ou no chat &mdash; esse feedback ajuda a moldar a próxima turma.</p></div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Barra inferior -->
+  <div class="deck-bottombar">
+    <button class="nav-btn" id="prev-btn"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-left"/></svg>Anterior</button>
+    <span class="nav-center">As setas do teclado ou Page Up/Down também navegam</span>
+    <button class="nav-btn" id="next-btn">Próximo<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-arrow-right"/></svg></button>
+  </div>
+</div>
+
+<!-- Painel de índice de slides e painel de acessibilidade -->
+<div class="menu-scrim" id="menu-scrim" aria-hidden="true"></div>
+
+<div class="a11y-drawer" id="a11y-drawer" role="dialog" aria-modal="true" aria-labelledby="a11y-drawer-title" inert>
+  <div class="a11y-drawer-head">
+    <h2 id="a11y-drawer-title">Acessibilidade</h2>
+    <button class="a11y-close" id="a11y-close" aria-label="Fechar configurações de acessibilidade">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+
+  <fieldset class="a11y-section">
+    <legend>Tamanho do texto</legend>
+    <p class="a11y-section-hint">Ajusta o tamanho de todo o texto dos slides, de 85% até 200%.</p>
+    <div class="font-size-control">
+      <button type="button" class="font-size-btn small" id="font-decrease" aria-label="Diminuir tamanho do texto">A−</button>
+      <span class="font-size-value" id="font-size-value" aria-live="polite">100%</span>
+      <button type="button" class="font-size-btn large" id="font-increase" aria-label="Aumentar tamanho do texto">A+</button>
+    </div>
+    <button type="button" class="font-size-reset" id="font-reset">Redefinir tamanho</button>
+  </fieldset>
+
+  <fieldset class="a11y-section">
+    <legend>Esquema de cores</legend>
+    <p class="a11y-section-hint">Escolha uma paleta mais confortável, incluindo opções pensadas para daltonismo e baixa visão.</p>
+
+    <div class="theme-preview" aria-hidden="true">
+      <span class="theme-preview-swatch" style="background:var(--yellow)"></span>
+      <span class="theme-preview-swatch" style="background:var(--green)"></span>
+      <span class="theme-preview-swatch" style="background:var(--red)"></span>
+      <span class="theme-preview-swatch" style="background:var(--blue)"></span>
+      <span class="theme-preview-label">Pré-visualização em tempo real</span>
+    </div>
+    <p class="visually-hidden" id="theme-status" role="status" aria-live="polite"></p>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="default" checked>
+      <span class="theme-option-label">
+        <span class="theme-option-title">Padrão</span>
+        <span class="theme-option-desc">Preto e amarelo, o tema original</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#131313"></span><span style="background:#F7DF1E"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="high-contrast">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Alto contraste</span>
+        <span class="theme-option-desc">Preto puro e branco, para baixa visão</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#000000"></span><span style="background:#FFEE58"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="colorblind">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Daltonismo (vermelho-verde)</span>
+        <span class="theme-option-desc">Troca verde/vermelho por azul-turquesa/laranja</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#26C6DA"></span><span style="background:#FF8A3D"></span></span>
+    </label>
+
+    <label class="theme-option">
+      <input type="radio" name="a11y-theme" value="grayscale">
+      <span class="theme-option-label">
+        <span class="theme-option-title">Escala de cinza</span>
+        <span class="theme-option-desc">Remove toda cor; usa só contraste, ícone e texto</span>
+      </span>
+      <span class="theme-swatch" aria-hidden="true"><span style="background:#4d4d4d"></span><span style="background:#bdbdbd"></span></span>
+    </label>
+  </fieldset>
+</div>
+
+<div class="menu-drawer" id="menu-drawer" role="dialog" aria-modal="true" aria-labelledby="menu-drawer-title" inert>
+  <div class="menu-drawer-head">
+    <h2 id="menu-drawer-title">Todos os slides</h2>
+    <button class="menu-close" id="menu-close" aria-label="Fechar índice de slides">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#icon-close"/></svg>
+    </button>
+  </div>
+  <ul id="menu-list" class="menu-list"></ul>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
