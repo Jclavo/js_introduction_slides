@@ -188,32 +188,74 @@
   }
   .source-grid {
     display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-  }
-  .source-link {
-    display: inline-flex;
-    align-items: center;
+    flex-direction: column;
     gap: 10px;
+  }
+
+  /* Each day is a native <details> — expand/collapse, keyboard and
+     screen-reader accessible with no extra JS needed. */
+  .source-day {
     background: var(--bg-card);
     border: 1px solid var(--border-soft);
-    border-radius: var(--radius-pill);
-    padding: 9px 18px;
-    min-height: 44px;
-    color: var(--text-white);
-    text-decoration: none;
-    font-family: var(--font-ui);
-    font-size: .88rem;
-    font-weight: 600;
+    border-radius: var(--radius-card);
+    overflow: hidden;
   }
-  .source-link:hover { border-color: var(--yellow); }
-  .source-link svg { width: 17px; height: 17px; color: var(--text-lighter); flex: none; }
-  .source-link .source-day-badge {
+  .source-day summary {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    min-height: 44px;
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-ui);
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--text-white);
+  }
+  .source-day summary::-webkit-details-marker { display: none; }
+  .source-day summary:hover { color: var(--yellow); }
+  .source-day summary svg {
+    width: 17px;
+    height: 17px;
+    color: var(--text-lighter);
+    flex: none;
+  }
+  .source-day .source-day-badge {
     font-family: var(--font-mono);
     font-size: .72rem;
     font-weight: 400;
     color: var(--yellow);
   }
+  .source-chevron {
+    margin-left: auto;
+    color: var(--text-faint);
+    transition: transform .15s ease;
+    font-size: .8rem;
+  }
+  .source-day[open] .source-chevron { transform: rotate(90deg); }
+
+  .source-exercise-list {
+    list-style: none;
+    margin: 0;
+    padding: 4px 18px 12px 46px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .source-exercise-list a {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 8px 10px;
+    color: var(--text-lighter);
+    text-decoration: none;
+    font-family: var(--font-ui);
+    font-size: .86rem;
+    border-radius: 6px;
+  }
+  .source-exercise-list a:hover { color: var(--yellow); background: var(--bg-page); }
 </style>
 </head>
 <body>
@@ -304,36 +346,75 @@
   <h2>Código-fonte no GitHub</h2>
   <p class="source-hint">Todo exemplo de código ao vivo mostrado nos slides também está disponível como arquivo <code>.js</code> no repositório do workshop, organizado por dia. <strong>Atualize os links abaixo</strong> com o endereço do seu repositório antes de publicar.</p>
   <div class="source-grid">
-    <a class="source-link" href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/tree/main/dia-1" target="_blank" rel="noopener noreferrer">
-      <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
-      <span class="source-day-badge">Dia 1</span>
-      Fundamentos
-      <span class="visually-hidden"> (abre em nova aba)</span>
-    </a>
-    <a class="source-link" href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/tree/main/dia-2" target="_blank" rel="noopener noreferrer">
-      <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
-      <span class="source-day-badge">Dia 2</span>
-      Controle de Fluxo (I)
-      <span class="visually-hidden"> (abre em nova aba)</span>
-    </a>
-    <a class="source-link" href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/tree/main/dia-3" target="_blank" rel="noopener noreferrer">
-      <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
-      <span class="source-day-badge">Dia 3</span>
-      Manipulação do DOM
-      <span class="visually-hidden"> (abre em nova aba)</span>
-    </a>
-    <a class="source-link" href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/tree/main/dia-4" target="_blank" rel="noopener noreferrer">
-      <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
-      <span class="source-day-badge">Dia 4</span>
-      Funções
-      <span class="visually-hidden"> (abre em nova aba)</span>
-    </a>
-    <a class="source-link" href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/tree/main/dia-5" target="_blank" rel="noopener noreferrer">
-      <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
-      <span class="source-day-badge">Dia 5</span>
-      Controle de Fluxo (II)
-      <span class="visually-hidden"> (abre em nova aba)</span>
-    </a>
+    <details class="source-day">
+      <summary>
+        <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
+        <span class="source-day-badge">Dia 1</span>
+        Fundamentos
+        <span class="source-chevron" aria-hidden="true">›</span>
+      </summary>
+      <ul class="source-exercise-list">
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-1/exercicio-banana.js" target="_blank" rel="noopener noreferrer">Exercício: Banana<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-1/exercicio-foguete.js" target="_blank" rel="noopener noreferrer">Exercício: Foguete<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-1/exercicio-tartaruga.js" target="_blank" rel="noopener noreferrer">Exercício: Tartaruga<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      </ul>
+    </details>
+
+    <details class="source-day">
+      <summary>
+        <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
+        <span class="source-day-badge">Dia 2</span>
+        Controle de Fluxo (I)
+        <span class="source-chevron" aria-hidden="true">›</span>
+      </summary>
+      <ul class="source-exercise-list">
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-2/exercicio-nuvem.js" target="_blank" rel="noopener noreferrer">Exercício: Nuvem<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-2/exercicio-vulcao.js" target="_blank" rel="noopener noreferrer">Exercício: Vulcão<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-2/exercicio-pinguim.js" target="_blank" rel="noopener noreferrer">Exercício: Pinguim<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      </ul>
+    </details>
+
+    <details class="source-day">
+      <summary>
+        <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
+        <span class="source-day-badge">Dia 3</span>
+        Manipulação do DOM
+        <span class="source-chevron" aria-hidden="true">›</span>
+      </summary>
+      <ul class="source-exercise-list">
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-3/exercicio-labirinto.js" target="_blank" rel="noopener noreferrer">Exercício: Labirinto<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-3/exercicio-cometa.js" target="_blank" rel="noopener noreferrer">Exercício: Cometa<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-3/exercicio-golfinho.js" target="_blank" rel="noopener noreferrer">Exercício: Golfinho<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      </ul>
+    </details>
+
+    <details class="source-day">
+      <summary>
+        <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
+        <span class="source-day-badge">Dia 4</span>
+        Funções
+        <span class="source-chevron" aria-hidden="true">›</span>
+      </summary>
+      <ul class="source-exercise-list">
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-4/exercicio-montanha.js" target="_blank" rel="noopener noreferrer">Exercício: Montanha<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-4/exercicio-borboleta.js" target="_blank" rel="noopener noreferrer">Exercício: Borboleta<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-4/exercicio-satelite.js" target="_blank" rel="noopener noreferrer">Exercício: Satélite<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      </ul>
+    </details>
+
+    <details class="source-day">
+      <summary>
+        <svg aria-hidden="true" focusable="false"><use href="#icon-github"/></svg>
+        <span class="source-day-badge">Dia 5</span>
+        Controle de Fluxo (II)
+        <span class="source-chevron" aria-hidden="true">›</span>
+      </summary>
+      <ul class="source-exercise-list">
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-5/exercicio-cacto.js" target="_blank" rel="noopener noreferrer">Exercício: Cacto<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-5/exercicio-farol.js" target="_blank" rel="noopener noreferrer">Exercício: Farol<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+        <li><a href="https://github.com/SEU-USUARIO/SEU-REPOSITORIO/blob/main/dia-5/exercicio-nebulosa.js" target="_blank" rel="noopener noreferrer">Exercício: Nebulosa<span class="visually-hidden"> (abre em nova aba)</span></a></li>
+      </ul>
+    </details>
   </div>
 </section>
 
