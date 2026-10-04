@@ -1,1 +1,0 @@
-alert("Benvindo ao Dia 3");
