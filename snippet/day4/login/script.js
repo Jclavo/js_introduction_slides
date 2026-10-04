@@ -14,13 +14,16 @@ componentBotaoEntrar.addEventListener("click", function () {
 
   if (email == EMAIL_CERTO && senha == SENHA_CERTA) {
     componentMemsagem.textContent = "Logim com sucesso";
+    componentMemsagem.style.color = "green";
   }
   else {
     componentMemsagem.textContent = "Credencias Invalidas";
+    componentMemsagem.style.color = "red";
   }
 });
 
 componentBotaoLimpar.addEventListener("click", function () {
   componentEmail.value = "";
   componentSenha.value = "";
+  componentMemsagem.style.color = "gray";
 });
