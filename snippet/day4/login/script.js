@@ -12,7 +12,7 @@ componentBotaoEntrar.addEventListener("click", function () {
   let email = componentEmail.value;
   let senha = componentSenha.value;
 
-  if (email == EMAIL_CERTO && senha == SENHA_CERTA) {
+  if (login(email, senha)) {
     componentMemsagem.textContent = "Logim com sucesso";
     componentMemsagem.style.color = "green";
   }
@@ -23,7 +23,24 @@ componentBotaoEntrar.addEventListener("click", function () {
 });
 
 componentBotaoLimpar.addEventListener("click", function () {
+  limpar();
+});
+
+
+/**
+ * Area das funçoes
+ */
+function login(email, senha) {
+  if (email == EMAIL_CERTO && senha == SENHA_CERTA) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function limpar() {
   componentEmail.value = "";
   componentSenha.value = "";
   componentMemsagem.style.color = "gray";
-});
+}
