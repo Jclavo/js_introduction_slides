@@ -6,5 +6,5 @@ mostrarMensagem();
  */
 
 function mostrarMensagem() {
-    alert("Benvindo ao Dia 4");
+    alert("Bem-vindo ao Dia 4");
 }
