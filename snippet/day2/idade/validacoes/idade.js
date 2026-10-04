@@ -1,4 +1,3 @@
-//alert("Task: idade");
 /**
  * TAREFA: Mostrar se o usuario é maior de idade.
  * ENTRADA: A idade do usuario
@@ -10,19 +9,19 @@
 const idade = prompt("Ingresse sua idade");
 
 if (idade < 0) {
-    alert("Idade invalidade");
+    alert("Idade invalida.");
 }
 
 if (idade >= 0 && idade < 18) {
-    alert("Voce é menor de idade");
+    alert("Voce é menor de idade.");
 }
 
 if (idade >= 18 && idade <= 120) {
-    alert("Voce é maior de idade");
+    alert("Voce é maior de idade.");
 }
 
 if (idade > 120) {
-    alert("Idade invalidade");
+    alert("Idade invalida.");
 }
 
 
