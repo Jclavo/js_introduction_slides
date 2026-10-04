@@ -7,20 +7,20 @@
  * SAIDA: memsagem
  */
 
-let letra = prompt("letra");
+let letra = prompt("Ingresse uma letra:");
 
 if (letra == "a" || letra == "e" 
     || letra == "i" || letra == "o" 
     || letra == "u") 
 {
-    alert("é vogal");
+    alert("É vogal.");
 }
 
 if (letra != "a" && letra != "e" 
     && letra != "i" && letra != "o" 
     && letra != "u") 
 {
-    alert("não é uma vogal");
+    alert("Não é uma vogal.");
 }
 
 
